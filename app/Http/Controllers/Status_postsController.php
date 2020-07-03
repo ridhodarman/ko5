@@ -27,7 +27,7 @@ class Status_postsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.status.tambah');
     }
 
     /**
@@ -38,7 +38,12 @@ class Status_postsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:status_posts|not_regex:/`/i'
+        ]);
+        Status_post::create($request->all());
+        $pesan = "<b>".$request->nama.'</b> berhasil ditambahkan';
+        return redirect('/status')->with('status', $pesan);
     }
 
     /**
@@ -47,7 +52,7 @@ class Status_postsController extends Controller
      * @param  \App\Status_post  $status_post
      * @return \Illuminate\Http\Response
      */
-    public function show($status_post)
+    public function show($id)
     {
         $query = Status_post::select('status_posts.*')
                     ->selectRaw('count(posts.id) as jumlah')
@@ -55,7 +60,7 @@ class Status_postsController extends Controller
                     ->groupBy('status_posts.id')
                     ->orderBy('status_posts.nama')
                     ->where('status_posts.id', '=', '?')
-                    ->setBindings([$status_post])
+                    ->setBindings([$id])
                     ->get();
         //return $query;
         return view ('admin.status.view',['status' => $query]);
@@ -69,7 +74,7 @@ class Status_postsController extends Controller
      */
     public function edit(Status_post $status_post)
     {
-        //
+        return view ('admin.status.edit', compact('status_post') );
     }
 
     /**
@@ -81,7 +86,15 @@ class Status_postsController extends Controller
      */
     public function update(Request $request, Status_post $status_post)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:status_posts|not_regex:/`/i'
+        ]);
+        Status_post::where('id', $status_post->id)
+            ->update([
+                'nama' => $request->nama
+            ]);
+        $pesan = "Nama status berhasil diubah menjadi <b>".$request->nama.'</b>';
+        return redirect('/status')->with('status', $pesan);
     }
 
     /**
@@ -92,6 +105,10 @@ class Status_postsController extends Controller
      */
     public function destroy(Status_post $status_post)
     {
-        //
+        Status_post::destroy($status_post->id);
+        $pesan = "Status '<b>".$status_post->nama."</b>' berhasil dihapus !";
+        return redirect('/status')->with('status-hapus', $pesan);
+        //return $status_post;
     }
+
 }

@@ -28,7 +28,7 @@ class Jenis_postsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.jenis.tambah');
     }
 
     /**
@@ -39,7 +39,12 @@ class Jenis_postsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:jenis_posts|not_regex:/`/i'
+        ]);
+        Jenis_post::create($request->all());
+        $pesan = "<b>".$request->nama.'</b> berhasil ditambahkan';
+        return redirect('/jenis')->with('jenis', $pesan);
     }
 
     /**
@@ -48,7 +53,7 @@ class Jenis_postsController extends Controller
      * @param  \App\Jenis_post  $jenis_post
      * @return \Illuminate\Http\Response
      */
-    public function show($jenis_post)
+    public function show($id)
     {
         $query = Jenis_post::select('jenis_posts.*')
                     ->selectRaw('count(posts.id) as jumlah')
@@ -56,7 +61,7 @@ class Jenis_postsController extends Controller
                     ->groupBy('jenis_posts.id')
                     ->orderBy('jenis_posts.nama')
                     ->where('jenis_posts.id', '=', '?')
-                    ->setBindings([$jenis_post])
+                    ->setBindings([$id])
                     ->get();
         //return $query;
         return view ('admin.jenis.view',['jenis' => $query]);
@@ -70,7 +75,7 @@ class Jenis_postsController extends Controller
      */
     public function edit(Jenis_post $jenis_post)
     {
-        //
+        return view ('admin.jenis.edit', compact('jenis_post') );
     }
 
     /**
@@ -82,7 +87,15 @@ class Jenis_postsController extends Controller
      */
     public function update(Request $request, Jenis_post $jenis_post)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:jenis_posts|not_regex:/`/i'
+        ]);
+        Jenis_post::where('id', $jenis_post->id)
+            ->update([
+                'nama' => $request->nama
+            ]);
+        $pesan = "Nama jenis berhasil diubah menjadi <b>".$request->nama.'</b>';
+        return redirect('/jenis')->with('status', $pesan);
     }
 
     /**
@@ -93,6 +106,8 @@ class Jenis_postsController extends Controller
      */
     public function destroy(Jenis_post $jenis_post)
     {
-        //
+        Jenis_post::destroy($jenis_post->id);
+        $pesan = "Jenis post '<b>".$jenis_post->nama."</b>' berhasil dihapus !";
+        return redirect('/jenis')->with('hapus', $pesan);
     }
 }

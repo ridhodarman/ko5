@@ -3,10 +3,10 @@
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Daftar Jenis Post</h4>
+                <h4 class="font-weight-bold mb-0">Daftar Kecamatan</h4>
             </div>
             <div>
-                <a href="/jenis/tambah">
+                <a href="/kecamatan/tambah">
                     <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
                         <i class="ti-clipboard btn-icon-prepend"></i>Tambah
                     </button>
@@ -23,9 +23,9 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@elseif (session('hapus'))
+@elseif (session('status-hapus'))
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {!! session('hapus') !!}
+    {!! session('status-hapus') !!}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -40,17 +40,17 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
+                            <th>Kecamatan</th>
                             <th>-</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jenis as $j)
+                        @foreach ($kecamatan as $s)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{$j->nama}}</td>
+                            <td>{{$s->nama}}</td>
                             <td>
-                                <a href="jenis/{{$j->id}}">
+                                <a href="/kecamatan/{{$s->id}}">
                                     <button class="btn btn-primary btn-xs">
                                         <i class="fa fa-edit"></i>
                                         <b>D E T A I L</b>

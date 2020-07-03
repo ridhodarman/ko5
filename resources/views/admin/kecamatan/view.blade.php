@@ -7,16 +7,16 @@
                 <h4 class="font-weight-bold mb-0"> </h4>
             </div>
             <div>
-                <a href="/jenis">
+                <a href="/kecamatan">
                     <button type="button" class="btn btn-outline-info btn-fw">
-                        <i class=" ti-angle-double-left "></i> Kembali ke jenis post
+                        <i class=" ti-angle-double-left "></i> Kembali ke kecamatan
                     </button>
                 </a>
             </div>
         </div>
     </div>
 </div>
-@foreach ($jenis as $s)
+@foreach ($kecamatan as $s)
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -24,10 +24,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">
-                            Informasi Jenis</p>
+                            Informasi Kecamatan</p>
                         <table class="table table-hover">
                             <tr>
-                                <td>Nama Jenis</td>
+                                <td>Nama Kecamatan</td>
                                 <td>:</td>
                                 <td>{{$s->nama}}</td>
                             </tr>
@@ -42,6 +42,11 @@
                                 <td>{{$s->updated_at}}</td>
                             </tr>
                             <tr>
+                                <td>Jumlah Kelurahan</td>
+                                <td>:</td>
+                                <td>{{$s->jumlah_kel}}</td>
+                            </tr>
+                            <tr>
                                 <td>Jumlah Post</td>
                                 <td>:</td>
                                 <td>{{$s->jumlah}}</td>
@@ -53,7 +58,7 @@
         </div>
     </div>
 </div>
-<form action="/jenis/{{$s->id}}" method="POST" class="d-inline">
+<form action="/kecamatan/{{$s->id}}" method="POST" class="d-inline">
     @method('delete')
     @csrf
     <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
@@ -83,7 +88,7 @@
     });
 </script>
 
-<a href="/jenis/{{$s->id}}/edit">
+<a href="/kecamatan/{{$s->id}}/edit">
     <button type="button" class="btn btn-outline-warning btn-fw">
         <i class="ti-edit"></i> Edit
     </button>
@@ -95,7 +100,7 @@
         $('#example').DataTable();
         $("#post2").css("color", "black");
         $( "#kelola" ).addClass( "active" );
-        $( "#jenis_post" ).css("color", "black");
+        $( "#kecamatan_post" ).css("color", "black");
     });
 </script>
 @endsection

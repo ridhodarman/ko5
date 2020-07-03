@@ -7,7 +7,7 @@
         <h4 class="font-weight-bold mb-0">Daftar Post</h4>
       </div>
       <div>
-        <a href="/post-tambah">
+        <a href="/post/tambah">
           <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
             <i class="ti-clipboard btn-icon-prepend"></i>Tambah
           </button>

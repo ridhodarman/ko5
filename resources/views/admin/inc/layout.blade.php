@@ -19,6 +19,7 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -135,7 +136,7 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="images/faces/face28.jpg" alt="profile" />
+                            <img src="images/faces/face27.jpg" alt="profile" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
@@ -184,24 +185,26 @@
                         </div>
                     </li>
                     <li class="nav-item" id="post">
-                        <a class="nav-link" href="post">
-                            <i class="ti-layout-list-post menu-icon"></i>
+                        <a class="nav-link" href="/post">
+                            <i class="ti-write menu-icon"></i>
                             <span class="menu-title" id="post2">Post</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="kelola">
                         <a class="nav-link" data-toggle="collapse" href="#kelola-data" aria-expanded="false"
                             aria-controls="kelola-data">
-                            <i class="ti-palette menu-icon"></i>
+                            <i class="ti-layout-list-post menu-icon"></i>
                             <span class="menu-title">Kelola Data</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="kelola-data">
                             <ul class="nav flex-column sub-menu">
+                                <li class="nav-item active"> <a class="nav-link" id="jenis_post"
+                                        href="/jenis">Jenis Post</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                        href="jenis">Jenis</a></li>
+                                        href="/status">Status</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                        href="status">Status</a></li>
+                                    href="/kecamatan">Kecamatan</a></li>
                             </ul>
                         </div>
                     </li>
