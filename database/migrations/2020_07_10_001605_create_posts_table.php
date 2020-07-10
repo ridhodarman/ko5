@@ -24,7 +24,7 @@ class CreatePostsTable extends Migration
             $table->string('cover')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pemilik_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

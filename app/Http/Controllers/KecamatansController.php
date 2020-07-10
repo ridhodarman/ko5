@@ -106,7 +106,7 @@ class KecamatansController extends Controller
     public function destroy(Kecamatan $kecamatan)
     {
         Kecamatan::destroy($kecamatan->id);
-        $pesan = "Kecamaran '<b>".$kecamatan->nama."</b>' berhasil dihapus !";
+        $pesan = "Kecamatan '<b>".$kecamatan->nama."</b>' berhasil dihapus !";
         return redirect('/kecamatan')->with('status-hapus', $pesan);
     }
 }

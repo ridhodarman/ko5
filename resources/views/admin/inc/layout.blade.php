@@ -205,6 +205,8 @@
                                         href="/status">Status</a></li>
                                 <li class="nav-item"> <a class="nav-link"
                                     href="/kecamatan">Kecamatan</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                    href="/kelurahan">Kelurahan</a></li>
                             </ul>
                         </div>
                     </li>

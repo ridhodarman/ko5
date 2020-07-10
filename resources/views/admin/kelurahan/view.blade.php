@@ -7,16 +7,16 @@
                 <h4 class="font-weight-bold mb-0"> </h4>
             </div>
             <div>
-                <a href="/kecamatan">
+                <a href="/kelurahan">
                     <button type="button" class="btn btn-outline-info btn-fw">
-                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kecamatan
+                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kelurahan
                     </button>
                 </a>
             </div>
         </div>
     </div>
 </div>
-@foreach ($kecamatan as $s)
+@foreach ($kelurahan as $k)
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -24,32 +24,32 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">
-                            Informasi Kecamatan</p>
+                            Informasi Kelurahan</p>
                         <table class="table table-hover">
+                            <tr>
+                                <td>Nama Kelurahan</td>
+                                <td>:</td>
+                                <td>{{$k->nama}}</td>
+                            </tr>
                             <tr>
                                 <td>Nama Kecamatan</td>
                                 <td>:</td>
-                                <td>{{$s->nama}}</td>
+                                <td>{{$k->kecamatan}}</td>
                             </tr>
                             <tr>
                                 <td>Dibuat Pada</td>
                                 <td>:</td>
-                                <td>{{$s->created_at}}</td>
+                                <td>{{$k->created_at}}</td>
                             </tr>
                             <tr>
                                 <td>Terakhir diubah</td>
                                 <td>:</td>
-                                <td>{{$s->updated_at}}</td>
-                            </tr>
-                            <tr>
-                                <td>Jumlah Kelurahan</td>
-                                <td>:</td>
-                                <td>{{$s->jumlah_kel}}</td>
+                                <td>{{$k->updated_at}}</td>
                             </tr>
                             <tr>
                                 <td>Jumlah Post</td>
                                 <td>:</td>
-                                <td>{{$s->jumlah}}</td>
+                                <td>{{$k->jumlah}}</td>
                             </tr>
                         </table>
                     </div>
@@ -58,7 +58,7 @@
         </div>
     </div>
 </div>
-<form action="/kecamatan/{{$s->id}}" method="POST" class="d-inline">
+<form action="/kelurahan/{{$k->id}}" method="POST" class="d-inline">
     @method('delete')
     @csrf
     <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
@@ -88,7 +88,7 @@
     });
 </script>
 
-<a href="/kecamatan/{{$s->id}}/edit">
+<a href="/kelurahan/{{$k->id}}/edit">
     <button type="button" class="btn btn-outline-warning btn-fw">
         <i class="ti-edit"></i> Edit
     </button>
@@ -100,7 +100,7 @@
         $('#example').DataTable();
         $("#post2").css("color", "black");
         $( "#kelola" ).addClass( "active" );
-        $( "#kecamatan_post" ).css("color", "black");
+        $( "#kelurahan_post" ).css("color", "black");
     });
 </script>
 @endsection

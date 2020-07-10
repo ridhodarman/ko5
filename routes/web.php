@@ -52,3 +52,11 @@ Route::get('/kecamatan/{id}', 'KecamatansController@show')->middleware('auth');
 Route::get('/kecamatan/{kecamatan}/edit', 'KecamatansController@edit')->middleware('auth');
 Route::patch('/kecamatan/{kecamatan}/edit', 'KecamatansController@update')->middleware('auth');
 Route::delete('/kecamatan/{kecamatan}', 'KecamatansController@destroy')->middleware('auth');
+
+Route::get('/kelurahan', 'KelurahansController@index')->middleware('auth');
+Route::get('/kelurahan/tambah', 'KelurahansController@create')->middleware('auth');
+Route::post('/kelurahan', 'KelurahansController@store')->middleware('auth');
+Route::get('/kelurahan/{id}', 'KelurahansController@show')->middleware('auth');
+Route::get('/kelurahan/{kelurahan}/edit', 'KelurahansController@edit')->middleware('auth');
+Route::patch('/kelurahan/{kelurahan}/edit', 'KelurahansController@update')->middleware('auth');
+Route::delete('/kelurahan/{kelurahan}', 'KelurahansController@destroy')->middleware('auth');
