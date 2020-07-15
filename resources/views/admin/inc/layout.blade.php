@@ -185,7 +185,7 @@
                         </div>
                     </li>
                     <li class="nav-item" id="post">
-                        <a class="nav-link" href="/post">
+                        <a class="nav-link" href="{{ route('post') }}">
                             <i class="ti-write menu-icon"></i>
                             <span class="menu-title" id="post2">Post</span>
                         </a>
@@ -199,14 +199,18 @@
                         </a>
                         <div class="collapse" id="kelola-data">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item active"> <a class="nav-link" id="jenis_post"
-                                        href="/jenis">Jenis Post</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                        href="/status">Status</a></li>
+                                    href="{{ route('pemilik') }}">Pemilik</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                    href="/kecamatan">Kecamatan</a></li>
+                                        href="{{ route('jenis') }}">Jenis Post</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                    href="/kelurahan">Kelurahan</a></li>
+                                        href="{{ route('status') }}">Status</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('kecamatan') }}">Kecamatan</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('kelurahan') }}">Kelurahan</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('kampus') }}">Kampus</a></li>
                             </ul>
                         </div>
                     </li>

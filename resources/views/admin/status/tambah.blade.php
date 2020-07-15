@@ -7,7 +7,7 @@
                 <h4 class="font-weight-bold mb-0">Tambah Status</h4>
             </div>
             <div>
-                <a href="/status">
+                <a href="{{ route('status') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke daftar status
                     </button>
@@ -21,7 +21,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="/status" method="post">
+                <form class="forms-sample" action="{{ route('status') }}" method="post">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama Status</label>

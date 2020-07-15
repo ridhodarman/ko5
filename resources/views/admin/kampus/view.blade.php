@@ -7,16 +7,16 @@
                 <h4 class="font-weight-bold mb-0"> </h4>
             </div>
             <div>
-                <a href="{{ route('kelurahan') }}">
+                <a href="{{ route('kampus') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
-                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kelurahan
+                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kampus
                     </button>
                 </a>
             </div>
         </div>
     </div>
 </div>
-@foreach ($kelurahan as $k)
+@foreach ($kampus as $s)
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -24,33 +24,24 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">
-                            Informasi Kelurahan</p>
+                            Informasi Kampus</p>
                         <table class="table table-hover">
                             <tr>
-                                <td>Nama Kelurahan</td>
+                                <td>Nama Kampus</td>
                                 <td>:</td>
-                                <td>{{$k->nama}}</td>
-                            </tr>
-                            <tr>
-                                <td>Nama Kecamatan</td>
-                                <td>:</td>
-                                <td>{{$k->kecamatan}}</td>
+                                <td>{{$s->nama}}</td>
                             </tr>
                             <tr>
                                 <td>Dibuat Pada</td>
                                 <td>:</td>
-                                <td>{{$k->created_at}}</td>
+                                <td>{{$s->created_at}}</td>
                             </tr>
                             <tr>
                                 <td>Terakhir diubah</td>
                                 <td>:</td>
-                                <td>{{$k->updated_at}}</td>
+                                <td>{{$s->updated_at}}</td>
                             </tr>
-                            <tr>
-                                <td>Jumlah Post</td>
-                                <td>:</td>
-                                <td>{{$k->jumlah}}</td>
-                            </tr>
+                            
                         </table>
                     </div>
                 </div>
@@ -58,7 +49,7 @@
         </div>
     </div>
 </div>
-<form action="{{ route('kelurahan') }}/{{$k->id}}" method="POST" class="d-inline">
+<form action="{{ route('kampus') }}/{{$s->id}}" method="POST" class="d-inline">
     @method('delete')
     @csrf
     <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
@@ -88,7 +79,7 @@
     });
 </script>
 
-<a href="{{ route('kelurahan') }}/{{$k->id}}/edit">
+<a href="{{ route('kampus') }}/{{$s->id}}/edit">
     <button type="button" class="btn btn-outline-warning btn-fw">
         <i class="ti-edit"></i> Edit
     </button>
@@ -100,7 +91,7 @@
         $('#example').DataTable();
         $("#post2").css("color", "black");
         $( "#kelola" ).addClass( "active" );
-        $( "#kelurahan_post" ).css("color", "black");
+        $( "#kampus_post" ).css("color", "black");
     });
 </script>
 @endsection

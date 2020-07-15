@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Jenis_post;
+use App\Status_post;
+use App\Kecamatan;
+use App\Pemilik;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -27,7 +31,16 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        $jenis = Jenis_post::select('id','nama')->get();
+        $status = Status_post::select('id','nama')->get();
+        $kecamatan = Kecamatan::select('id','nama')->get();
+        $pemilik = Pemilik::select('id','nama')->get();
+        return view('admin.post.tambah',[
+                                        'jenis' => $jenis,
+                                        'status' => $status,
+                                        'kecamatan' => $kecamatan,
+                                        'pemilik' => $pemilik
+                                        ]);
     }
 
     /**
@@ -44,36 +57,39 @@ class PostsController extends Controller
 		]);
         
         $file = $request->file('file');
- 
-            // nama file
-        echo 'File Name: '.$file->getClientOriginalName();
-        echo '<br>';
+        
+        if ($request->file){
+                    // nama file
+        
+            echo 'File Name: '.$file->getClientOriginalName();
+            echo '<br>';
 
-                // ekstensi file
-        echo 'File Extension: '.$file->getClientOriginalExtension();
-        echo '<br>';
+                    // ekstensi file
+            echo 'File Extension: '.$file->getClientOriginalExtension();
+            echo '<br>';
 
-                // real path
-        echo 'File Real Path: '.$file->getRealPath();
-        echo '<br>';
+                    // real path
+            echo 'File Real Path: '.$file->getRealPath();
+            echo '<br>';
 
-                // ukuran file
-        echo 'File Size: '.$file->getSize();
-        echo '<br>';
+                    // ukuran file
+            echo 'File Size: '.$file->getSize();
+            echo '<br>';
 
-                // tipe mime
-        echo 'File Mime Type: '.$file->getMimeType();
-        echo '<br>';
+                    // tipe mime
+            echo 'File Mime Type: '.$file->getMimeType();
+            echo '<br>';
 
-        $nama_file = $request->nama."_".time().".".$file->getClientOriginalExtension();
- 
-      	        // isi dengan nama folder tempat kemana file diupload
-		$tujuan_upload = 'foto';
-        $file->move($tujuan_upload,$nama_file);
+            $nama_file = $request->nama."_".time().".".$file->getClientOriginalExtension();
+    
+                    // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'foto';
+            $file->move($tujuan_upload,$nama_file);
 
-        $request->merge([
-            'cover' => $nama_file,
-        ]);
+            $request->merge([
+                'cover' => $nama_file,
+            ]);
+        }
         
         
 
@@ -90,16 +106,20 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($post)
     {
         $query = Post::select('posts.*', 
                             'kelurahans.nama AS kelurahan',
                             'kecamatans.nama AS kecamatan',
-                            'users.name AS pemilik'
+                            'pemiliks.nama AS pemilik',
+                            'jenis_posts.nama AS jenis',
+                            'status_posts.nama AS status'
                             )
                     ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
                     ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
-                    ->leftJoin('users', 'users.id', '=', 'posts.user_id')
+                    ->leftJoin('jenis_posts', 'jenis_posts.id', '=', 'posts.jenis_posts')
+                    ->leftJoin('status_posts', 'status_posts.id', '=', 'posts.status_posts')
+                    ->leftJoin('pemiliks', 'pemiliks.id', '=', 'posts.pemilik_id')
                     ->where('posts.id', '=', '?')
                     ->setBindings([$post])
                     ->get();

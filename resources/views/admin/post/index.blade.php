@@ -7,7 +7,7 @@
         <h4 class="font-weight-bold mb-0">Daftar Post</h4>
       </div>
       <div>
-        <a href="/post/tambah">
+        <a href="{{ route('post') }}/tambah">
           <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
             <i class="ti-clipboard btn-icon-prepend"></i>Tambah
           </button>
@@ -48,7 +48,7 @@
               <td>{{$p->alamat}}</td>
               <td>{{$p->created_at}}</td>
               <td>
-                <a href="post-detail/{{$p->id}}">
+                <a href="{{ route('post') }}/{{$p->id}}">
                   <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> <b>D E T A I L</b> </button>
                 </a>
               </td>

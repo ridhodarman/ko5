@@ -7,7 +7,7 @@
                 <h4 class="font-weight-bold mb-0">Tambah Kecamatan</h4>
             </div>
             <div>
-                <a href="/kecamatan">
+                <a href="{{ route('kecamatan') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke daftar kecamatan
                     </button>
@@ -21,7 +21,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="/kecamatan" method="post">
+                <form class="forms-sample" action="{{ route('kecamatan') }}" method="post">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama Kecamatan</label>

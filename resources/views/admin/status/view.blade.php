@@ -7,7 +7,7 @@
                 <h4 class="font-weight-bold mb-0"> </h4>
             </div>
             <div>
-                <a href="/status">
+                <a href="{{ route('status') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke status post
                     </button>
@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-<form action="/status/{{$s->id}}" method="POST" class="d-inline">
+<form action="{{ route('status') }}/{{$s->id}}" method="POST" class="d-inline">
     @method('delete')
     @csrf
     <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
@@ -67,7 +67,7 @@
         if(peringatan==true){
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
+                text: "Once deleted, you will not be able to recover this data!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -83,7 +83,7 @@
     });
 </script>
 
-<a href="/status/{{$s->id}}/edit">
+<a href="{{ route('status') }}/{{$s->id}}/edit">
     <button type="button" class="btn btn-outline-warning btn-fw">
         <i class="ti-edit"></i> Edit
     </button>

@@ -6,7 +6,7 @@
                 <h4 class="font-weight-bold mb-0">Daftar Kelurahan</h4>
             </div>
             <div>
-                <a href="/kelurahan/tambah">
+                <a href="{{ route('kelurahan') }}/tambah">
                     <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
                         <i class="ti-clipboard btn-icon-prepend"></i>Tambah
                     </button>
@@ -52,7 +52,7 @@
                             <td>{{$s->nama}}</td>
                             <td>{{$s->kecamatan}}</td>
                             <td>
-                                <a href="/kelurahan/{{$s->id}}">
+                                <a href="{{ route('kelurahan') }}/{{$s->id}}">
                                     <button class="btn btn-primary btn-xs">
                                         <i class="fa fa-edit"></i>
                                         <b>D E T A I L</b>

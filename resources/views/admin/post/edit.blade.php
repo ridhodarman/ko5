@@ -8,7 +8,7 @@
                 <h4 class="font-weight-bold mb-0">Edit Post: <font color="gray">{{$p->nama}}</font> </h4>
             </div>
             <div>
-                <a href="/post-detail/{{$p->id}}">
+                <a href="{{ route('post') }}/{{$p->id}}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail post
                     </button>

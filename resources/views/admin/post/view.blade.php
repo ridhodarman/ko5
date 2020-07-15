@@ -7,7 +7,7 @@
                 <h4 class="font-weight-bold mb-0">Detail Post</h4>
             </div>
             <div>
-                <a href="/post">
+                <a href="{{ route('post') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke post
                     </button>
@@ -90,7 +90,7 @@
                                 height: 60vh;
                             }
                         </style>
-                        <a href="/post/{{$p->id}}">
+                        <a href="{{ route('post') }}/{{$p->id}}">
                             <button class="btn btn-inverse-info btn-fw">Edit</button>
                         </a>
                         <br/><br/>
@@ -130,7 +130,7 @@
         </div>
     </div>
 </div>
-<a href="/post">
+<a href="{{ route('post') }}">
     <button type="button" class="btn btn-outline-danger btn-fw">
         <i class="ti-trash"></i> Hapus
     </button>

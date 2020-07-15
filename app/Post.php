@@ -8,14 +8,14 @@ class Post extends Model
 {
     protected $fillable = [
                             'nama',
-                            'jenis',
+                            'jenis_posts',
                             'alamat',
-                            'status',
+                            'status_posts',
                             'deskripsi',
                             'kelurahan_id',
                             'cover',
                             'lat',
                             'lng',
-                            'user_id'
+                            'pemilik_id'
     ];
 }

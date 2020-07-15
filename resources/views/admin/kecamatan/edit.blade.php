@@ -9,7 +9,7 @@
                 </h4>
             </div>
             <div>
-                <a href="/kecamatan/{{ $kecamatan->id }}">
+                <a href="{{ route('kecamatan') }}/{{ $kecamatan->id }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail kecamatan
                     </button>

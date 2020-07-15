@@ -9,7 +9,7 @@
                 </h4>
             </div>
             <div>
-                <a href="/status/{{ $status_post->id }}">
+                <a href="{{ route('status') }}/{{ $status_post->id }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail status
                     </button>

@@ -7,16 +7,16 @@
                 <h4 class="font-weight-bold mb-0"> </h4>
             </div>
             <div>
-                <a href="{{ route('kelurahan') }}">
+                <a href="{{ route('pemilik') }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
-                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kelurahan
+                        <i class=" ti-angle-double-left "></i> Kembali ke daftar pemilik
                     </button>
                 </a>
             </div>
         </div>
     </div>
 </div>
-@foreach ($kelurahan as $k)
+@foreach ($pemilik as $k)
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -24,17 +24,25 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">
-                            Informasi Kelurahan</p>
+                            Informasi Pemilik</p>
                         <table class="table table-hover">
+                            @php $n=1 @endphp
+                            @foreach ($pemilik as $k)
+                            @if ($n==1)
                             <tr>
-                                <td>Nama Kelurahan</td>
+                                <td>Nama Pemilik</td>
                                 <td>:</td>
                                 <td>{{$k->nama}}</td>
                             </tr>
                             <tr>
-                                <td>Nama Kecamatan</td>
+                                <td>Kontak</td>
                                 <td>:</td>
-                                <td>{{$k->kecamatan}}</td>
+                                <td>{{$k->kontak}}</td>
+                            </tr>
+                            <tr>
+                                <td>Deskripsi</td>
+                                <td>:</td>
+                                <td>{{$k->deskripsi}}</td>
                             </tr>
                             <tr>
                                 <td>Dibuat Pada</td>
@@ -46,10 +54,17 @@
                                 <td>:</td>
                                 <td>{{$k->updated_at}}</td>
                             </tr>
+                            @endif
+                            @php $n=$n+1 @endphp
+                            @endforeach
                             <tr>
-                                <td>Jumlah Post</td>
+                                <td>Post</td>
                                 <td>:</td>
-                                <td>{{$k->jumlah}}</td>
+                                <td>
+                                    @foreach ($pemilik as $k)
+                                    <a href="{{ route('post') }}/{{$k->post_id}}">{{$k->post}}</a>&emsp;
+                                    @endforeach
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -58,7 +73,7 @@
         </div>
     </div>
 </div>
-<form action="{{ route('kelurahan') }}/{{$k->id}}" method="POST" class="d-inline">
+<form action="{{ route('pemilik') }}/{{$k->id}}" method="POST" class="d-inline">
     @method('delete')
     @csrf
     <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
@@ -88,7 +103,7 @@
     });
 </script>
 
-<a href="{{ route('kelurahan') }}/{{$k->id}}/edit">
+<a href="{{ route('pemilik') }}/{{$k->id}}/edit">
     <button type="button" class="btn btn-outline-warning btn-fw">
         <i class="ti-edit"></i> Edit
     </button>
@@ -100,7 +115,7 @@
         $('#example').DataTable();
         $("#post2").css("color", "black");
         $( "#kelola" ).addClass( "active" );
-        $( "#kelurahan_post" ).css("color", "black");
+        $( "#pemilik_post" ).css("color", "black");
     });
 </script>
 @endsection

@@ -1,7 +1,3 @@
-@php
-    return $kecamatan;
-@endphp
-
 @extends('admin.inc.layout')
 @section('isi')
 <div class="row">
@@ -13,7 +9,7 @@
                 </h4>
             </div>
             <div>
-                <a href="/kelurahan/{{ $kelurahan->id }}">
+                <a href="{{ route('kelurahan') }}/{{ $kelurahan->id }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail kelurahan
                     </button>
@@ -32,24 +28,22 @@
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama Kelurahan</label>
-                        @foreach ($kelurahan as $l)
                         <div class="col-sm-10">
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                                value="{{ old('nama', $l->nama) }}">
+                                value="{{ old('nama', $kelurahan->nama) }}">
                             @error('nama')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
                             @enderror
-                            <input type="hidden" value="{{ $l->id }}">
+                            <input type="hidden" value="{{ $kelurahan->id }}">
                         </div>
-                        @endforeach
                         <label class="col-sm-2 col-form-label">Kecamatan</label>
                         <div class="col-sm-10">
-                            <select name="kecamatan_id" class="form-control">
+                            <select name="kecamatan" class="form-control" style="color: black;" id="kecamatan">
                                 <option></option>
                                 @foreach ($kecamatan as $k)
-                                <option value="{{$k->id}}">{{$k->nama}}</option>
+                                <option value="{{$k->kecamatan_id}}">{{$k->kecamatan}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -63,4 +57,8 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $("#kecamatan").val("{{$kelurahan->kecamatan_id}}").change();
+    </script>
 @endsection

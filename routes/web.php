@@ -21,15 +21,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/post', 'PostsController@index')->middleware('auth');
-Route::get('/post/tambah', function () { return view('admin.post.tambah'); })->middleware('auth');
-Route::get('/post-detail/{post}', 'PostsController@show')->middleware('auth');
+Route::get('/post', 'PostsController@index')->middleware('auth')->name('post');
+Route::get('/post/tambah', 'PostsController@create')->middleware('auth');
+Route::post('/post', 'PostsController@store')->middleware('auth');
+Route::get('/post/{post}', 'PostsController@show')->middleware('auth');
 
 Route::get('/post-tambah', 'PostsController@view_add')->middleware('auth');
 Route::post('/post', 'PostsController@store')->middleware('auth');
-Route::get('/post/{post}', 'PostsController@view_edit')->middleware('auth');
+//Route::get('/post/{post}', 'PostsController@view_edit')->middleware('auth');
 
-Route::get('/jenis', 'Jenis_postsController@index')->middleware('auth');
+Route::get('/jenis', 'Jenis_postsController@index')->middleware('auth')->name('jenis');
 Route::get('/jenis/tambah', 'Jenis_postsController@create')->middleware('auth');
 Route::post('/jenis', 'Jenis_postsController@store')->middleware('auth');
 Route::get('/jenis/{id}', 'Jenis_postsController@show')->middleware('auth');
@@ -37,7 +38,7 @@ Route::get('/jenis/{jenis_post}/edit', 'Jenis_postsController@edit')->middleware
 Route::patch('/jenis/{jenis_post}/edit', 'Jenis_postsController@update')->middleware('auth');
 Route::delete('/jenis/{jenis_post}', 'Jenis_postsController@destroy')->middleware('auth');
 
-Route::get('/status', 'Status_postsController@index')->middleware('auth');
+Route::get('/status', 'Status_postsController@index')->middleware('auth')->name('status');
 Route::get('/status/tambah', 'Status_postsController@create')->middleware('auth');
 Route::post('/status', 'Status_postsController@store')->middleware('auth');
 Route::get('/status/{id}', 'Status_postsController@show')->middleware('auth');
@@ -45,7 +46,7 @@ Route::get('/status/{status_post}/edit', 'Status_postsController@edit')->middlew
 Route::patch('/status/{status_post}/edit', 'Status_postsController@update')->middleware('auth');
 Route::delete('/status/{status_post}', 'Status_postsController@destroy')->middleware('auth');
 
-Route::get('/kecamatan', 'KecamatansController@index')->middleware('auth');
+Route::get('/kecamatan', 'KecamatansController@index')->middleware('auth')->name('kecamatan');
 Route::get('/kecamatan/tambah', 'KecamatansController@create')->middleware('auth');
 Route::post('/kecamatan', 'KecamatansController@store')->middleware('auth');
 Route::get('/kecamatan/{id}', 'KecamatansController@show')->middleware('auth');
@@ -53,10 +54,27 @@ Route::get('/kecamatan/{kecamatan}/edit', 'KecamatansController@edit')->middlewa
 Route::patch('/kecamatan/{kecamatan}/edit', 'KecamatansController@update')->middleware('auth');
 Route::delete('/kecamatan/{kecamatan}', 'KecamatansController@destroy')->middleware('auth');
 
-Route::get('/kelurahan', 'KelurahansController@index')->middleware('auth');
+Route::get('/kelurahan', 'KelurahansController@index')->middleware('auth')->name('kelurahan');
 Route::get('/kelurahan/tambah', 'KelurahansController@create')->middleware('auth');
 Route::post('/kelurahan', 'KelurahansController@store')->middleware('auth');
 Route::get('/kelurahan/{id}', 'KelurahansController@show')->middleware('auth');
 Route::get('/kelurahan/{kelurahan}/edit', 'KelurahansController@edit')->middleware('auth');
 Route::patch('/kelurahan/{kelurahan}/edit', 'KelurahansController@update')->middleware('auth');
 Route::delete('/kelurahan/{kelurahan}', 'KelurahansController@destroy')->middleware('auth');
+Route::get('/kelurahan/kecamatan/{value}', 'KelurahansController@view')->middleware('auth');
+
+Route::get('/pemilik', 'PemiliksController@index')->middleware('auth')->name('pemilik');
+Route::get('/pemilik/tambah', 'PemiliksController@create')->middleware('auth');
+Route::post('/pemilik', 'PemiliksController@store')->middleware('auth');
+Route::get('/pemilik/{id}', 'PemiliksController@show')->middleware('auth');
+Route::get('/pemilik/{pemilik}/edit', 'PemiliksController@edit')->middleware('auth');
+Route::patch('/pemilik/{pemilik}/edit', 'PemiliksController@update')->middleware('auth');
+Route::delete('/pemilik/{pemilik}', 'PemiliksController@destroy')->middleware('auth');
+
+Route::get('/kampus', 'Kampus_sekolahsController@index')->middleware('auth')->name('kampus');
+Route::get('/kampus/tambah', 'Kampus_sekolahsController@create')->middleware('auth');
+Route::post('/kampus', 'Kampus_sekolahsController@store')->middleware('auth');
+Route::get('/kampus/{id}', 'Kampus_sekolahsController@show')->middleware('auth');
+Route::get('/kampus/{pemilik}/edit', 'Kampus_sekolahsController@edit')->middleware('auth');
+Route::patch('/kampus/{pemilik}/edit', 'Kampus_sekolahsController@update')->middleware('auth');
+Route::delete('/kampus/{pemilik}', 'Kampus_sekolahsController@destroy')->middleware('auth');

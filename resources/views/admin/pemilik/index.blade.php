@@ -3,10 +3,10 @@
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Daftar Kecamatan</h4>
+                <h4 class="font-weight-bold mb-0">Daftar Pemilik</h4>
             </div>
             <div>
-                <a href="{{ route('kecamatan') }}/tambah">
+                <a href="{{ route('pemilik') }}/tambah">
                     <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
                         <i class="ti-clipboard btn-icon-prepend"></i>Tambah
                     </button>
@@ -40,17 +40,17 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kecamatan</th>
+                            <th>Pemilik</th>
                             <th>-</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kecamatan as $k)
+                        @foreach ($pemilik as $k)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{$k->nama}}</td>
                             <td>
-                                <a href="{{ route('kecamatan') }}/{{$k->id}}">
+                                <a href="{{ route('pemilik') }}/{{$k->id}}">
                                     <button class="btn btn-primary btn-xs">
                                         <i class="fa fa-edit"></i>
                                         <b>D E T A I L</b>

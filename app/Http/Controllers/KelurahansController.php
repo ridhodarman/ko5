@@ -29,8 +29,7 @@ class KelurahansController extends Controller
      */
     public function create()
     {
-        $kecamatan = Kecamatan::select('id','nama')
-                            ->get();
+        $kecamatan = Kecamatan::select('id','nama')->get();
 
         return view('admin.kelurahan.tambah',['kecamatan' => $kecamatan]);
     }
@@ -80,8 +79,7 @@ class KelurahansController extends Controller
      */
     public function edit(Kelurahan $kelurahan)
     {
-        $kecamatan = Kecamatan::select('id AS kecamatan_id','nama AS kecamatan')
-                            ->get();
+        $kecamatan = Kecamatan::select('id AS kecamatan_id','nama AS kecamatan')->get();
         return view ('admin.kelurahan.edit', ['kelurahan' => $kelurahan, 'kecamatan' => $kecamatan] );
     }
 
@@ -94,7 +92,16 @@ class KelurahansController extends Controller
      */
     public function update(Request $request, Kelurahan $kelurahan)
     {
-        //
+        $request->validate([
+            'nama' => 'required|not_regex:/`/i|unique:kelurahans,id'
+        ]);
+        Kelurahan::where('id', $kelurahan->id)
+            ->update([
+                'nama' => $request->nama,
+                'kecamatan_id' => $request->kecamatan
+            ]);
+        $pesan = "Kelurahan <b>".$request->nama."</b> berhasil diubah";
+        return redirect('/kelurahan')->with('status', $pesan);
     }
 
     /**
@@ -108,5 +115,14 @@ class KelurahansController extends Controller
         Kelurahan::destroy($kelurahan->id);
         $pesan = "Kelurahan '<b>".$kelurahan->nama."</b>' berhasil dihapus !";
         return redirect('/kelurahan')->with('status-hapus', $pesan);
+    }
+
+    public function view($value)
+    {
+        $query = Kelurahan::select('id', 'nama')
+                    ->where('kecamatan_id', '=', '?')
+                    ->setBindings([$value])
+                    ->get();
+        return $query;
     }
 }

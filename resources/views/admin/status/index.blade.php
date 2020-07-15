@@ -6,7 +6,7 @@
                 <h4 class="font-weight-bold mb-0">Daftar Status</h4>
             </div>
             <div>
-                <a href="/status/tambah">
+                <a href="{{ route('status') }}/tambah">
                     <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
                         <i class="ti-clipboard btn-icon-prepend"></i>Tambah
                     </button>

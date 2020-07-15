@@ -6,7 +6,7 @@
                 <h4 class="font-weight-bold mb-0">Daftar Jenis Post</h4>
             </div>
             <div>
-                <a href="/jenis/tambah">
+                <a href="{{ route('jenis') }}/tambah">
                     <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
                         <i class="ti-clipboard btn-icon-prepend"></i>Tambah
                     </button>

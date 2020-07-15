@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePemiliksTable extends Migration
+class CreateKampusSekolahsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreatePemiliksTable extends Migration
      */
     public function up()
     {
-        Schema::create('pemiliks', function (Blueprint $table) {
+        Schema::create('kampus_sekolahs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kontak');
-            $table->text('deskripsi')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade')->unique();
+            $table->string('nama')->unique();
+            $table->double('lat');
+            $table->double('lng');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreatePemiliksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pemiliks');
+        Schema::dropIfExists('kampus_sekolahs');
     }
 }
