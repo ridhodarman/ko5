@@ -52,8 +52,12 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8000|unique:posts,cover',
-			'nama' => 'required',
+			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover',
+            'nama' => 'required|not_regex:/`/i',
+            'alamat' => 'not_regex:/`/i',
+            'deskripsi' => 'not_regex:/`/i',
+            'lat' => 'numeric',
+            'lng' => 'numeric'
 		]);
         
         $file = $request->file('file');
@@ -110,13 +114,13 @@ class PostsController extends Controller
     {
         $query = Post::select('posts.*', 
                             'kelurahans.nama AS kelurahan',
-                            'kecamatans.nama AS kecamatan',
+                            'posts.nama AS post',
                             'pemiliks.nama AS pemilik',
                             'jenis_posts.nama AS jenis',
                             'status_posts.nama AS status'
                             )
                     ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
-                    ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
+                    ->leftJoin('posts', 'posts.id', '=', 'kelurahans.post_id')
                     ->leftJoin('jenis_posts', 'jenis_posts.id', '=', 'posts.jenis_posts')
                     ->leftJoin('status_posts', 'status_posts.id', '=', 'posts.status_posts')
                     ->leftJoin('pemiliks', 'pemiliks.id', '=', 'posts.pemilik_id')
@@ -127,41 +131,6 @@ class PostsController extends Controller
         return view ('admin.post.view',['post' => $query]);
     }
 
-    public function view_edit($post)
-    {
-        $query = Post::select('posts.*', 
-                            'kelurahans.nama AS kelurahan', 'kelurahans.id AS kelurahan_id',
-                            'kecamatans.nama AS kecamatan', 'kecamatans.id AS kecamatan_id',
-                            'users.name AS pemilik'
-                            )
-                    ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
-                    ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
-                    ->leftJoin('users', 'users.id', '=', 'posts.user_id')
-                    ->where('posts.id', '=', '?')
-                    ->setBindings([$post])
-                    ->get();
-        //return $query;
-        return view ('admin.post.edit',['post' => $query]);
-    }
-
-    public function view_add()
-    {
-        $query = Post::select('posts.*', 
-                            'kelurahans.nama AS kelurahan', 'kelurahans.id AS kelurahan_id',
-                            'kecamatans.nama AS kecamatan', 'kecamatans.id AS kecamatan_id',
-                            'users.name AS pemilik'
-                            )
-                    ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
-                    ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
-                    ->leftJoin('users', 'users.id', '=', 'posts.user_id')
-                    ->where('posts.id', '=', '?')
-                    ->setBindings([1])
-                    ->get();
-        //return $query;
-        return view ('admin.post.tambah',
-                        ['post' => $query]
-                    );
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -171,7 +140,18 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $jenis = Jenis_post::select('id','nama')->get();
+        $status = Status_post::select('id','nama')->get();
+        $post = Post::select('*')->get();
+        $pemilik = Pemilik::select('id','nama')->get();
+        $kecamatan = Kecamatan::select('id','nama')->get();
+        return view('admin.post.edit',[
+                                        'jenis' => $jenis,
+                                        'status' => $status,
+                                        'post' => $post,
+                                        'kecamatan' => $kecamatan,
+                                        'pemilik' => $pemilik
+                                        ]);
     }
 
     /**
@@ -183,7 +163,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:posts|not_regex:/`/i'
+        ]);
+        Post::where('id', $post->id)
+            ->update([
+                'nama' => $request->nama
+            ]);
+        $pesan = "Nama post berhasil diubah menjadi <b>".$request->nama.'</b>';
+        return redirect('/post')->with('status', $pesan);
     }
 
     /**
@@ -194,6 +182,8 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        $pesan = "Post '<b>".$post->nama."</b>' berhasil dihapus !";
+        return redirect('/post')->with('status-hapus', $pesan);
     }
 }

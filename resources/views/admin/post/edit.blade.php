@@ -22,7 +22,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="post" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama</label>
@@ -39,73 +39,29 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Jenis</label>
                         <div class="col-sm-10">
-                            <select name="jenis" class="form-control @error('jenis') is-invalid @enderror"
-                                style="color: black;">
+                            <select name="jenis_posts" class="form-control" style="color: black;">
                                 <option></option>
-                                <option value="Kos">Kos</option>
-                                <option value="Kontrakan">Kontrakan</option>
-                                <option value="Kos/Kontrakan">Kos/Kontrakan</option>
+                                @foreach ($jenis as $j)
+                                <option value="{{$j->id}}">{{$j->nama}}</option>
+                                @endforeach
                             </select>
-                            @error('jenis')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat', $p->alamat) }}">
+                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Status</label>
-                        <div class="col-sm-1">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="radio"
-                                        onclick='$("#status").hide();document.getElementById("status").value=" "'>
-                                    -
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="radio"
-                                        onclick='$("#status").hide();document.getElementById("status").value="Masih tersedia"'>
-                                    Masih tersedia
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="radio"
-                                        onclick='$("#status").hide();document.getElementById("status").value="Sold Out"'>
-                                    Sold Out
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="radio"
-                                        id="membershipRadios1" onclick='$("#status").show();'>
-                                    Other
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="text" name="status" class="form-control @error('status') is-invalid @enderror"
-                                value="{{old('title', $p->alamat)}}" id="status">
-                            @error('status')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                        <div class="col-sm-10">
+                            <select name="status_posts" class="form-control" style="color: black;">
+                                <option></option>
+                                @foreach ($status as $s)
+                                <option value="{{$s->id}}">{{$s->nama}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -113,30 +69,43 @@
                         <div class="col-sm-10">
                             <select name="kecamatan" class="form-control" style="color: black;" id="kecamatan">
                                 <option></option>
-                                <option value="1">1</option>
+                                @foreach ($kecamatan as $k)
+                                <option value="{{$k->id}}">{{$k->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Kelurahan</label>
                         <div class="col-sm-10">
-                            <select name="kelurahan_id" style="color: black;"
-                                class="form-control @error('kelurahan_id') is-invalid @enderror">
+                            <select name="kelurahan_id" style="color: black;" id="kelurahan" class="form-control">
                                 <option></option>
-                                <option value="1">1</option>
                             </select>
-                            @error('kelurahan_id')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                     </div>
+                    <script>
+                        $(function(){
+                            $("#kecamatan").change(function(){
+                                if($(this).val() != 0){
+                                    $.get("/kelurahan/kecamatan/"+$(this).val(),function(kelurahan){
+                                        var p_html = "<option></option>";
+                                        for(var i=0;i<kelurahan.length;i++){
+                                            p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";
+                                        }
+                                        $("#kelurahan").html(p_html);
+                                    },"json");
+                                }
+                                else{
+                                    $("#kelurahan").html("<option></option>");
+                                }
+                            });
+                        });
+                    </script>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Deskripsi</label>
                         <div class="col-sm-10">
                             <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi"
-                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi', $p->deskripsi) }}</textarea>
+                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -144,14 +113,6 @@
                             @enderror
                         </div>
                     </div>
-                    @php
-                        echo "
-                            <script>
-                                let l = ".old('lat', $p->lat) .";
-                                let b = ". old('lat', $p->lng) .";
-                            </script>
-                        ";
-                    @endphp
                     <div class="row">
                         <div class="col-md-6">
                             <link rel="stylesheet"
@@ -167,7 +128,7 @@
                             <script type="text/javascript">
 
                                 var options = {
-                                    center: [l , b],
+                                    center: [-0.92384, 100.45212],
                                     zoom: 15
                                 }
 
@@ -218,7 +179,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"
-                                    name="lat" placeholder="0.xxxx" value="{{ old('lat', $p->lat) }}">
+                                    name="lat" placeholder="0.xxxx" value="{{ old('lat') }}">
                                 @error('lat')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -228,7 +189,7 @@
                             <div class="form-group">
                                 <label for="exampleInputConfirmPassword1">Bujur</label>
                                 <input type="text" class="form-control @error('lng') is-invalid @enderror" id="lng"
-                                    name="lng" placeholder="100.000" value="{{ old('lat', $p->lng) }}">
+                                    name="lng" placeholder="100.000" value="{{ old('lng') }}">
                                 @error('lng')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -237,20 +198,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputConfirmPassword1">Foto</label>
-                                <input type="file" name="file" value="{{ old('file') }}" id="file"
+                                <input type="file" name="file" value="{{ old('file') }}"
                                 class="form-control @error('file') is-invalid @enderror">
                                 @error('file')
                                 <div class="alert alert-danger">
                                     {{ $message }}
                                 </div>
                                 @enderror
-
-                                @if(old('file')==null)
-                                    <br/>
-                                    <a target="_blank" href="/foto/{{$p->cover}}" id="gambar">
-                                        <img src="/foto/{{$p->cover}}" width="60px">
-                                    </a>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -260,16 +214,13 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>
                         <div class="col-sm-10" style="background-color:#fafafa;">
-                            <select class="selectpicker @error('user_id') is-invalid @enderror" 
-                                data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="user_id">
+                            <select class="selectpicker" 
+                                data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="pemilik_id">
                                 <option></option>
-                                <option value="1">1</option>
+                                @foreach ($pemilik as $m)
+                                <option value="{{$m->id}}">{{$m->nama}}</option>
+                                @endforeach
                             </select>
-                            @error('user_id')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
                     </div>
                     <div style="float: right;">
@@ -292,5 +243,5 @@
             $("#gambar").hide();
         }); 
     </script>
-    @endforeach
-    @endsection
+@endforeach    
+@endsection

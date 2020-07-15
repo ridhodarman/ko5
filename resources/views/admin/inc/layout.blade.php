@@ -202,9 +202,11 @@
                                 <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('pemilik') }}">Pemilik</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                        href="{{ route('jenis') }}">Jenis Post</a></li>
+                                    href="{{ route('jenis') }}">Jenis Post</a></li>
                                 <li class="nav-item"> <a class="nav-link"
-                                        href="{{ route('status') }}">Status</a></li>
+                                    href="{{ route('status') }}">Status Post</a></li>
+                                <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('fasilitas') }}">Fasilitas Post</a></li>
                                 <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('kecamatan') }}">Kecamatan</a></li>
                                 <li class="nav-item"> <a class="nav-link"

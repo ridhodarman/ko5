@@ -90,7 +90,7 @@
                                 height: 60vh;
                             }
                         </style>
-                        <a href="{{ route('post') }}/{{$p->id}}">
+                        <a href="{{ route('post') }}/{{$p->id}}/edit">
                             <button class="btn btn-inverse-info btn-fw">Edit</button>
                         </a>
                         <br/><br/>
