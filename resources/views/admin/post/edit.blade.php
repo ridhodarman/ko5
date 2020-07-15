@@ -28,7 +28,7 @@
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                            value="{{ old('lat', $p->nama) }}">
+                            value="{{ old('nama', $p->nama) }}">
                             @error('nama')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="alamat" value="{{ old('lat', $p->alamat) }}">
+                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat', $p->alamat) }}">
                         </div>
                     </div>
                     <div class="form-group row">

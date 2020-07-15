@@ -70,7 +70,7 @@ class Kampus_sekolahsController extends Controller
      */
     public function edit(Kampus_sekolah $kampus_sekolah)
     {
-        //
+        return view ('admin.kampus.edit', compact('kampus_sekolah') );
     }
 
     /**
@@ -82,7 +82,17 @@ class Kampus_sekolahsController extends Controller
      */
     public function update(Request $request, Kampus_sekolah $kampus_sekolah)
     {
-        //
+        $request->validate([
+            'nama' => 'required|unique:kampus_sekolahs,id|not_regex:/`/i',
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric'
+        ]);
+        Kampus_sekolah::where('id', $kampus_sekolah->id)
+            ->update([
+                'nama' => $request->nama
+            ]);
+        $pesan = "Data kampus <b>".$request->nama.'</b> berhasil diubah';
+        return redirect('/kampus')->with('status', $pesan);
     }
 
     /**
@@ -93,6 +103,8 @@ class Kampus_sekolahsController extends Controller
      */
     public function destroy(Kampus_sekolah $kampus_sekolah)
     {
-        //
+        Kampus_sekolah::destroy($kampus_sekolah->id);
+        $pesan = "Kampus '<b>".$kampus_sekolah->nama."</b>' berhasil dihapus !";
+        return redirect('/kampus')->with('status-hapus', $pesan);
     }
 }

@@ -75,6 +75,6 @@ Route::get('/kampus', 'Kampus_sekolahsController@index')->middleware('auth')->na
 Route::get('/kampus/tambah', 'Kampus_sekolahsController@create')->middleware('auth');
 Route::post('/kampus', 'Kampus_sekolahsController@store')->middleware('auth');
 Route::get('/kampus/{id}', 'Kampus_sekolahsController@show')->middleware('auth');
-Route::get('/kampus/{pemilik}/edit', 'Kampus_sekolahsController@edit')->middleware('auth');
-Route::patch('/kampus/{pemilik}/edit', 'Kampus_sekolahsController@update')->middleware('auth');
-Route::delete('/kampus/{pemilik}', 'Kampus_sekolahsController@destroy')->middleware('auth');
+Route::get('/kampus/{kampus_sekolah}/edit', 'Kampus_sekolahsController@edit')->middleware('auth');
+Route::patch('/kampus/{kampus_sekolah}/edit', 'Kampus_sekolahsController@update')->middleware('auth');
+Route::delete('/kampus/{kampus_sekolah}', 'Kampus_sekolahsController@destroy')->middleware('auth');
