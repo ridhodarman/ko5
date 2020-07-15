@@ -78,7 +78,7 @@
                         <label class="col-sm-2 col-form-label">Kelurahan</label>
                         <div class="col-sm-10">
                             <select name="kelurahan_id" style="color: black;" id="kelurahan" class="form-control">
-                                <option></option>
+                                <option value="{{ old('kelurahan_id') }}"></option>
                             </select>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>
                         <div class="col-sm-10" style="background-color:#fafafa;">
-                            <select class="selectpicker" 
+                            <select class="selectpicker"
                                 data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="pemilik_id">
                                 <option></option>
                                 @foreach ($pemilik as $p)

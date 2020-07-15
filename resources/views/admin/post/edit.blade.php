@@ -1,14 +1,14 @@
 @extends('admin.inc.layout')
 @section('isi')
-@foreach ($post as $p)
+
 <div class="row">
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Edit Post: <font color="gray">{{$p->nama}}</font> </h4>
+                <h4 class="font-weight-bold mb-0">Edit Post: <font color="gray">{{$post->nama}}</font> </h4>
             </div>
             <div>
-                <a href="{{ route('post') }}/{{$p->id}}">
+                <a href="{{ route('post') }}/{{$post->id}}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail post
                     </button>
@@ -28,7 +28,7 @@
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                            value="{{ old('nama', $p->nama) }}">
+                            value="{{ old('nama', $post->nama) }}">
                             @error('nama')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -39,7 +39,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Jenis</label>
                         <div class="col-sm-10">
-                            <select name="jenis_posts" class="form-control" style="color: black;">
+                            <select name="jenis_posts" class="form-control" style="color: black;" id="jenis_posts">
                                 <option></option>
                                 @foreach ($jenis as $j)
                                 <option value="{{$j->id}}">{{$j->nama}}</option>
@@ -50,13 +50,13 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}">
+                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat', $post->alamat) }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
-                            <select name="status_posts" class="form-control" style="color: black;">
+                            <select name="status_posts" class="form-control" style="color: black;" id="status_posts">
                                 <option></option>
                                 @foreach ($status as $s)
                                 <option value="{{$s->id}}">{{$s->nama}}</option>
@@ -79,7 +79,7 @@
                         <label class="col-sm-2 col-form-label">Kelurahan</label>
                         <div class="col-sm-10">
                             <select name="kelurahan_id" style="color: black;" id="kelurahan" class="form-control">
-                                <option></option>
+                                <option value="{{ old('kelurahan_id', $post->kelurahan_id) }}"></option>
                             </select>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                         <label class="col-sm-2 col-form-label">Deskripsi</label>
                         <div class="col-sm-10">
                             <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi"
-                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi') }}</textarea>
+                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi', $post->deskripsi) }}</textarea>
                             @error('deskripsi')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -113,6 +113,24 @@
                             @enderror
                         </div>
                     </div>
+                    @php
+                        if($post->lat!="" && $post->lng!=""){
+                            echo "
+                                <script>
+                                    let l = ".old('lat', $post->lat) .";
+                                    let b = ". old('lng', $post->lng) .";
+                                </script>
+                            ";
+                        }
+                        else {
+                            echo "
+                                <script>
+                                    let l = -0.92384;
+                                    let b = 100.45212;
+                                </script>
+                            ";
+                        }
+                    @endphp
                     <div class="row">
                         <div class="col-md-6">
                             <link rel="stylesheet"
@@ -128,7 +146,7 @@
                             <script type="text/javascript">
 
                                 var options = {
-                                    center: [-0.92384, 100.45212],
+                                    center: [l, b],
                                     zoom: 15
                                 }
 
@@ -159,7 +177,7 @@
                                 // 		L.marker(e.latlng).addTo(map);
                                 // 	});
 
-                                var myMarker = L.marker([-0.92384, 100.45212], { title: "MyPoint", alt: "The Big I", draggable: true })
+                                var myMarker = L.marker([l, b], { title: "MyPoint", alt: "The Big I", draggable: true })
                                     .addTo(map)
                                     .on('dragend', function () {
                                         var coord = String(myMarker.getLatLng()).split(',');
@@ -179,7 +197,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"
-                                    name="lat" placeholder="0.xxxx" value="{{ old('lat') }}">
+                                    name="lat" placeholder="0.xxxx" value="{{ old('lat', $post->lat) }}">
                                 @error('lat')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -189,18 +207,8 @@
                             <div class="form-group">
                                 <label for="exampleInputConfirmPassword1">Bujur</label>
                                 <input type="text" class="form-control @error('lng') is-invalid @enderror" id="lng"
-                                    name="lng" placeholder="100.000" value="{{ old('lng') }}">
+                                    name="lng" placeholder="100.000" value="{{ old('lng', $post->lng) }}">
                                 @error('lng')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputConfirmPassword1">Foto</label>
-                                <input type="file" name="file" value="{{ old('file') }}"
-                                class="form-control @error('file') is-invalid @enderror">
-                                @error('file')
                                 <div class="alert alert-danger">
                                     {{ $message }}
                                 </div>
@@ -214,7 +222,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>
                         <div class="col-sm-10" style="background-color:#fafafa;">
-                            <select class="selectpicker" 
+                            <select class="selectpicker" id="pemilik_id"
                                 data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="pemilik_id">
                                 <option></option>
                                 @foreach ($pemilik as $m)
@@ -232,16 +240,9 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#example').DataTable();
-            $("#post2").css("color", "black");
-            $("#status").hide();
-            $("[name='radio']").prop("checked", false);
-        });
-
-        $("#file").change(function(){
-            $("#gambar").hide();
-        }); 
+        $("#jenis_posts").val("{{ old('jenis_posts', $post->jenis_posts) }}").change();
+        $("#status_posts").val("{{ old('status_posts', $post->status_posts) }}").change();
+        $("#pemilik_id").val("{{ old('pemilik_id', $post->pemilik_id) }}").change();
     </script>
-@endforeach    
+
 @endsection

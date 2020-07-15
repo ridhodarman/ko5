@@ -114,13 +114,13 @@ class PostsController extends Controller
     {
         $query = Post::select('posts.*', 
                             'kelurahans.nama AS kelurahan',
-                            'posts.nama AS post',
+                            'kecamatans.nama AS kecamatan',
                             'pemiliks.nama AS pemilik',
                             'jenis_posts.nama AS jenis',
                             'status_posts.nama AS status'
                             )
                     ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
-                    ->leftJoin('posts', 'posts.id', '=', 'kelurahans.post_id')
+                    ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
                     ->leftJoin('jenis_posts', 'jenis_posts.id', '=', 'posts.jenis_posts')
                     ->leftJoin('status_posts', 'status_posts.id', '=', 'posts.status_posts')
                     ->leftJoin('pemiliks', 'pemiliks.id', '=', 'posts.pemilik_id')
@@ -142,7 +142,6 @@ class PostsController extends Controller
     {
         $jenis = Jenis_post::select('id','nama')->get();
         $status = Status_post::select('id','nama')->get();
-        $post = Post::select('*')->get();
         $pemilik = Pemilik::select('id','nama')->get();
         $kecamatan = Kecamatan::select('id','nama')->get();
         return view('admin.post.edit',[
@@ -152,6 +151,7 @@ class PostsController extends Controller
                                         'kecamatan' => $kecamatan,
                                         'pemilik' => $pemilik
                                         ]);
+        //return $post;
     }
 
     /**
@@ -163,9 +163,13 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $request->validate([
-            'nama' => 'required|unique:posts|not_regex:/`/i'
-        ]);
+        $this->validate($request, [
+            'nama' => 'required|not_regex:/`/i',
+            'alamat' => 'not_regex:/`/i',
+            'deskripsi' => 'not_regex:/`/i',
+            'lat' => 'numeric',
+            'lng' => 'numeric'
+		]);
         Post::where('id', $post->id)
             ->update([
                 'nama' => $request->nama
