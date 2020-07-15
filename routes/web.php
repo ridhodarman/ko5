@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cari', function () {  return view('cari.index'); })->name('cari');
 
 Route::get('/post', 'PostsController@index')->middleware('auth')->name('post');
 Route::get('/post/tambah', 'PostsController@create')->middleware('auth');
