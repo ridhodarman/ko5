@@ -1,14 +1,14 @@
 @extends('admin.inc.layout')
 @section('isi')
-
+@foreach ($post as $p)
 <div class="row">
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Edit Post: <font color="gray">{{$post->nama}}</font> </h4>
+                <h4 class="font-weight-bold mb-0">Edit Post: <font color="gray">{{$p->nama}}</font> </h4>
             </div>
             <div>
-                <a href="{{ route('post') }}/{{$post->id}}">
+                <a href="{{ route('post') }}/{{$p->id}}">
                     <button type="button" class="btn btn-outline-info btn-fw">
                         <i class=" ti-angle-double-left "></i> Kembali ke detail post
                     </button>
@@ -23,12 +23,13 @@
         <div class="card">
             <div class="card-body">
                 <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
-                    {{ csrf_field() }}
+                    @method('patch')
+                    @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                            value="{{ old('nama', $post->nama) }}">
+                            value="{{ old('nama', $p->nama) }}">
                             @error('nama')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -50,7 +51,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat', $post->alamat) }}">
+                            <input type="text" class="form-control" name="alamat" value="{{ old('alamat', $p->alamat) }}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -79,7 +80,7 @@
                         <label class="col-sm-2 col-form-label">Kelurahan</label>
                         <div class="col-sm-10">
                             <select name="kelurahan_id" style="color: black;" id="kelurahan" class="form-control">
-                                <option value="{{ old('kelurahan_id', $post->kelurahan_id) }}"></option>
+                                <option></option>
                             </select>
                         </div>
                     </div>
@@ -105,7 +106,7 @@
                         <label class="col-sm-2 col-form-label">Deskripsi</label>
                         <div class="col-sm-10">
                             <textarea class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi"
-                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi', $post->deskripsi) }}</textarea>
+                                placeholder="* optional, kalau ada penjelasan lain">{{ old('deskripsi', $p->deskripsi) }}</textarea>
                             @error('deskripsi')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -114,11 +115,11 @@
                         </div>
                     </div>
                     @php
-                        if($post->lat!="" && $post->lng!=""){
+                        if($p->lat!="" && $p->lng!=""){
                             echo "
                                 <script>
-                                    let l = ".old('lat', $post->lat) .";
-                                    let b = ". old('lng', $post->lng) .";
+                                    let l = ".old('lat', $p->lat) .";
+                                    let b = ". old('lng', $p->lng) .";
                                 </script>
                             ";
                         }
@@ -197,7 +198,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"
-                                    name="lat" placeholder="0.xxxx" value="{{ old('lat', $post->lat) }}">
+                                    name="lat" placeholder="0.xxxx" value="{{ old('lat', $p->lat) }}">
                                 @error('lat')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -207,7 +208,7 @@
                             <div class="form-group">
                                 <label for="exampleInputConfirmPassword1">Bujur</label>
                                 <input type="text" class="form-control @error('lng') is-invalid @enderror" id="lng"
-                                    name="lng" placeholder="100.000" value="{{ old('lng', $post->lng) }}">
+                                    name="lng" placeholder="100.000" value="{{ old('lng', $p->lng) }}">
                                 @error('lng')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -222,7 +223,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>
                         <div class="col-sm-10" style="background-color:#fafafa;">
-                            <select class="selectpicker" id="pemilik_id"
+                            <select class="selectpicker" id="pemilik"
                                 data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="pemilik_id">
                                 <option></option>
                                 @foreach ($pemilik as $m)
@@ -232,17 +233,30 @@
                         </div>
                     </div>
                     <div style="float: right;">
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="submit" class="btn btn-outline-primary btn-fw">
+                            <i class="ti-save"></i> Simpan
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        $("#jenis_posts").val("{{ old('jenis_posts', $post->jenis_posts) }}").change();
-        $("#status_posts").val("{{ old('status_posts', $post->status_posts) }}").change();
-        $("#pemilik_id").val("{{ old('pemilik_id', $post->pemilik_id) }}").change();
-    </script>
-
+<script type="text/javascript">
+    $("#jenis_posts").val("{{ old('jenis_posts', $p->jenis_posts) }}").change();
+    $("#status_posts").val("{{ old('status_posts', $p->status_posts) }}").change();
+    $("#pemilik").val("{{ old('pemilik_id', $p->pemilik_id) }}").change();
+    $("#kecamatan").val("{{ old('kecamatan', $p->kecamatan_id) }}").change();
+    $( document ).ready(function() {
+        $.get("/kelurahan/kecamatan/"+$('#kecamatan').val(),function(kelurahan){
+                                    var p_html = "<option></option>";
+                                    for(var i=0;i<kelurahan.length;i++){
+                                        p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";
+                                    }
+                                    $("#kelurahan").html(p_html);
+                                    $("#kelurahan").val("{{ old('kelurahan_id', $p->kelurahan_id) }}").change();
+                                },"json");
+    });
+</script>
+@endforeach
 @endsection

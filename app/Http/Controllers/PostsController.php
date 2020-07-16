@@ -8,6 +8,7 @@ use App\Status_post;
 use App\Kecamatan;
 use App\Pemilik;
 use Illuminate\Http\Request;
+use File;
 
 class PostsController extends Controller
 {
@@ -138,20 +139,26 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($post)
     {
         $jenis = Jenis_post::select('id','nama')->get();
         $status = Status_post::select('id','nama')->get();
         $pemilik = Pemilik::select('id','nama')->get();
         $kecamatan = Kecamatan::select('id','nama')->get();
+        $query = Post::select('posts.*', 'kecamatans.id AS kecamatan_id')
+                    ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
+                    ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
+                    ->where('posts.id', '=', '?')
+                    ->setBindings([$post])
+                    ->get();
         return view('admin.post.edit',[
                                         'jenis' => $jenis,
                                         'status' => $status,
-                                        'post' => $post,
+                                        'post' => $query,
                                         'kecamatan' => $kecamatan,
                                         'pemilik' => $pemilik
                                         ]);
-        //return $post;
+        //return $query;
     }
 
     /**
@@ -172,9 +179,17 @@ class PostsController extends Controller
 		]);
         Post::where('id', $post->id)
             ->update([
-                'nama' => $request->nama
+                'nama' => $request->nama,
+                'jenis_posts' => $request->jenis_posts,
+                'alamat' => $request->alamat,
+                'status_posts' => $request->status_posts,
+                'deskripsi' => $request->deskripsi,
+                'kelurahan_id' => $request->kelurahan_id,
+                'lat' => $request->lat,
+                'lng' => $request->lng,
+                'pemilik_id' => $request->pemilik_id
             ]);
-        $pesan = "Nama post berhasil diubah menjadi <b>".$request->nama.'</b>';
+        $pesan = "Data post <b>".$request->nama."</b> berhasil diubah";
         return redirect('/post')->with('status', $pesan);
     }
 
@@ -189,5 +204,42 @@ class PostsController extends Controller
         Post::destroy($post->id);
         $pesan = "Post '<b>".$post->nama."</b>' berhasil dihapus !";
         return redirect('/post')->with('status-hapus', $pesan);
+    }
+
+    public function destroy_foto(Post $post)
+    {   
+        // hapus file
+        $gambar = Post::where('id', $post->id)->first();
+        File::delete('foto/'.$gambar->cover);
+    
+        Post::where('id', $post->id)
+            ->update([
+                'cover' => null
+            ]);
+        $pesan = "Foto depan berhasil dihapus !";
+        return redirect()->back()->with('status-foto', $pesan);
+    }
+
+    public function edit_foto(Post $post)
+    {   
+        return view ('admin.post.edit-foto', compact('post') );
+    }
+
+    public function update_foto(Request $request, Post $post)
+    {   
+        $this->validate($request, [
+			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover,required'
+		]);
+        $file = $request->file('file');
+        $nama_file = $request->nama."_".time().".".$file->getClientOriginalExtension();
+        $tujuan_upload = 'foto';
+        $file->move($tujuan_upload,$nama_file);
+        
+        Post::where('id', $post->id)
+            ->update([
+                'cover' => $nama_file
+            ]);
+        $pesan = "Foto depan berhasil di-upload !";
+        return redirect('/post/'.$post->id)->with('status-foto', $pesan);
     }
 }

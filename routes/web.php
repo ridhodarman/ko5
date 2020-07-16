@@ -29,6 +29,9 @@ Route::get('/post/{id}', 'PostsController@show')->middleware('auth');
 Route::get('/post/{post}/edit', 'PostsController@edit')->middleware('auth');
 Route::patch('/post/{post}/edit', 'PostsController@update')->middleware('auth');
 Route::delete('/post/{post}', 'PostsController@destroy')->middleware('auth');
+Route::delete('/post/{post}/foto', 'PostsController@destroy_foto')->middleware('auth');
+Route::get('/post/{post}/foto', 'PostsController@edit_foto')->middleware('auth');
+Route::patch('/post/{post}/foto', 'PostsController@update_foto')->middleware('auth');
 Route::get('/post/kecamatan/{value}', 'PostsController@view')->middleware('auth');
 
 Route::get('/jenis', 'Jenis_postsController@index')->middleware('auth')->name('jenis');

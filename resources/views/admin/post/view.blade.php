@@ -16,7 +16,14 @@
         </div>
     </div>
 </div>
-
+@if (session('status-foto'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {!! session('status-foto') !!}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -66,9 +73,42 @@
                                 <td>Foto Depan</td>
                                 <td>:</td>
                                 <td>
+                                    @if ($p->cover)
                                     <a target="_blank" href="/foto/{{$p->cover}}">
                                         <img src="/foto/{{$p->cover}}">
                                     </a>
+                                    <form action="{{ route('post') }}/{{$p->id}}/foto" method="POST" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="button" class="btn btn-outline-danger badge badge-danger" id="hapus-foto">
+                                            <i class="fa fa-ban"></i> Hapus
+                                        </button>
+                                    </form>
+                                    <script>
+                                        let peringatan2=true;
+                                        $('#hapus-foto').on('click', function (e) {
+                                            if(peringatan2==true){
+                                                swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                })
+                                                    .then((willDelete) => {
+                                                        if (willDelete) {
+                                                            peringatan2 = false;
+                                                            $('#hapus-foto').removeAttr("type").attr("type", "submit");
+                                                            $('#hapus-foto').trigger( "click" );
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                    </script>
+                                    @else
+                                        <font color="gray">tidak ada</font>
+                                    @endif
+                                    <a href="{{ route('post') }}/{{$p->id}}/foto" class="badge badge-secondary"><i class="ti-file"></i> upload new photo</a>
                                 </td>
                             </tr>
                         </table>
@@ -92,7 +132,36 @@
                         </style>
                         <a href="{{ route('post') }}/{{$p->id}}/edit">
                             <button class="btn btn-inverse-info btn-fw">Edit</button>
-                        </a>
+                        </a> &emsp;
+                        <form action="{{ route('post') }}/{{$p->id}}" method="POST" class="d-inline">
+                            @method('delete')
+                            @csrf
+                            <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
+                                <i class="ti-trash"></i> Hapus
+                            </button>
+                        </form>
+                        
+                        <script>
+                            let peringatan=true;
+                            $('#tombol-hapus').on('click', function (e) {
+                                if(peringatan==true){
+                                    swal({
+                                        title: "Are you sure?",
+                                        text: "Once deleted, you will not be able to recover this data!",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true,
+                                    })
+                                        .then((willDelete) => {
+                                            if (willDelete) {
+                                                peringatan = false;
+                                                $('#tombol-hapus').removeAttr("type").attr("type", "submit");
+                                                $('#tombol-hapus').trigger( "click" );
+                                            }
+                                        });
+                                }
+                            });
+                        </script>
                         <br/><br/>
                         <div id="peta"></div>
 
@@ -130,11 +199,7 @@
         </div>
     </div>
 </div>
-<a href="{{ route('post') }}">
-    <button type="button" class="btn btn-outline-danger btn-fw">
-        <i class="ti-trash"></i> Hapus
-    </button>
-</a>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#example').DataTable();
