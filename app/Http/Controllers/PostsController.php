@@ -7,6 +7,7 @@ use App\Jenis_post;
 use App\Status_post;
 use App\Kecamatan;
 use App\Pemilik;
+use App\Detail_fasilitas_post;
 use Illuminate\Http\Request;
 use File;
 
@@ -129,7 +130,16 @@ class PostsController extends Controller
                     ->setBindings([$post])
                     ->get();
         //return $query;
-        return view ('admin.post.view',['post' => $query]);
+        $fasilitas = Detail_fasilitas_post::select('detail_fasilitas_posts.id', 'fasilitas_posts.nama')
+                    ->leftJoin('fasilitas_posts', 'fasilitas_posts.id', '=', 'detail_fasilitas_posts.fasilitas_posts')
+                    ->where('detail_fasilitas_posts.post_id', '=', '?')
+                    ->setBindings([$post])
+                    ->get();
+        //return $fasilitas;
+        return view ('admin.post.view',[
+                                        'post' => $query,
+                                        'fasilitas' => $fasilitas
+                                    ]);
     }
 
 
@@ -201,12 +211,14 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
+        $gambar = Post::where('id', $post->id)->first();
+        File::delete('foto/'.$gambar->cover);
         Post::destroy($post->id);
         $pesan = "Post '<b>".$post->nama."</b>' berhasil dihapus !";
         return redirect('/post')->with('status-hapus', $pesan);
     }
 
-    public function destroy_foto(Post $post)
+    public function destroy_cover(Post $post)
     {   
         // hapus file
         $gambar = Post::where('id', $post->id)->first();
@@ -217,16 +229,21 @@ class PostsController extends Controller
                 'cover' => null
             ]);
         $pesan = "Foto depan berhasil dihapus !";
-        return redirect()->back()->with('status-foto', $pesan);
+        return redirect()->back()->with('status-cover', $pesan);
     }
 
-    public function edit_foto(Post $post)
+    public function edit_cover(Post $post)
     {   
         return view ('admin.post.edit-foto', compact('post') );
     }
 
-    public function update_foto(Request $request, Post $post)
+    public function update_cover(Request $request, Post $post)
     {   
+        $gambar = Post::where('id', $post->id)->first();
+        if($gambar->cover){
+            File::delete('foto/'.$gambar->cover);
+        }
+        
         $this->validate($request, [
 			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover,required'
 		]);
@@ -240,6 +257,6 @@ class PostsController extends Controller
                 'cover' => $nama_file
             ]);
         $pesan = "Foto depan berhasil di-upload !";
-        return redirect('/post/'.$post->id)->with('status-foto', $pesan);
+        return redirect('/post/'.$post->id)->with('status-cover', $pesan);
     }
 }

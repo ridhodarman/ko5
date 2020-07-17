@@ -127,7 +127,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
                                     class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Product type</h6>
+                                    <h6 class="title">Cari</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_1" style="">
@@ -142,14 +142,15 @@
                                         </div>
                                     </form>
 
+                                    Popular Keywords:
                                     <ul class="list-menu">
-                                        <li><a href="#">People </a></li>
-                                        <li><a href="#">Watches </a></li>
-                                        <li><a href="#">Cinema </a></li>
-                                        <li><a href="#">Clothes </a></li>
-                                        <li><a href="#">Home items </a></li>
-                                        <li><a href="#">Animals</a></li>
-                                        <li><a href="#">People </a></li>
+                                        <a href="#" class="badge badge-light">Kos pasar baru </a>
+                                        <a href="{{ route('cari') }}/1/2/" class="badge badge-light">Kos cowok unand </a>
+                                        <a href="#" class="badge badge-light">Kos cewek unand </a>
+                                        <a href="#" class="badge badge-light">Kos cowok unp </a>
+                                        <a href="#" class="badge badge-light">Kos cewek unp </a>
+                                        <a href="#" class="badge badge-light">Kontrakan unand </a>
+                                        <a href="#" class="badge badge-light">Kontrakan unp</a>
                                     </ul>
 
                                 </div> <!-- card-body.// -->
@@ -290,24 +291,43 @@
 
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
-                            <span class="mr-md-auto">32 Items found </span>
-                            <select class="mr-2 form-control">
-                                <option>Latest items</option>
-                                <option>Trending</option>
-                                <option>Most Popular</option>
-                                <option>Cheapest</option>
-                            </select>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-outline-secondary" data-toggle="tooltip" title="List view">
-                                    <i class="fa fa-bars"></i></a>
-                                <a href="#" class="btn  btn-outline-secondary active" data-toggle="tooltip"
-                                    title="Grid view">
-                                    <i class="fa fa-th"></i></a>
-                            </div>
+                            <span class="mr-md-auto">{{ count($post) }} Items found </span>
                         </div>
                     </header><!-- sect-heading -->
 
                     <div class="row">
+                        
+                        @foreach ($post as $p)
+                        <div class="col-md-4">
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap">
+                                    @if ($p->cover)
+                                        <a href="#"><img src="{{ URL::asset('foto/'.$p->cover) }}"></a>
+                                    @else
+                                        <a href="#"><img src="{{ URL::asset('null.png') }}"></a>
+                                    @endif
+                                    <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> view</a>
+                                </div> <!-- img-wrap.// -->
+                                <figcaption class="info-wrap">
+                                    <!-- <div class="fix-height"> -->
+                                    <div>
+                                        <a href="#" class="title">
+                                            <div style="font-weight: bolder;">{{$p->nama}}</div>
+                                            <div style="font-size: 85%; color: darkgrey;">
+                                            @if (isset($p->keterangan))
+                                                {{ $p->keterangan }}
+                                            @endif
+                                            </div>
+                                        </a>
+                                        <div class="price-wrap mt-2">
+                                            <span class="price" style="color: green;">Rp. 1280</span>
+                                        </div> <!-- price-wrap.// -->
+                                    </div>
+                                    <a href="#" class="btn btn-block btn-primary">Lihat Kos</a>
+                                </figcaption>
+                            </figure>
+                        </div> <!-- col.// -->
+                        @endforeach
                         <div class="col-md-4">
                             <figure class="card card-product-grid">
                                 <div class="img-wrap">

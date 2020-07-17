@@ -16,9 +16,9 @@
         </div>
     </div>
 </div>
-@if (session('status-foto'))
+@if (session('status-cover'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {!! session('status-foto') !!}
+  {!! session('status-cover') !!}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -69,67 +69,8 @@
                                 <td>:</td>
                                 <td>{{$p->pemilik}}</td>
                             </tr>
-                            <tr>
-                                <td>Foto Depan</td>
-                                <td>:</td>
-                                <td>
-                                    @if ($p->cover)
-                                    <a target="_blank" href="/foto/{{$p->cover}}">
-                                        <img src="/foto/{{$p->cover}}">
-                                    </a>
-                                    <form action="{{ route('post') }}/{{$p->id}}/foto" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="button" class="btn btn-outline-danger badge badge-danger" id="hapus-foto">
-                                            <i class="fa fa-ban"></i> Hapus
-                                        </button>
-                                    </form>
-                                    <script>
-                                        let peringatan2=true;
-                                        $('#hapus-foto').on('click', function (e) {
-                                            if(peringatan2==true){
-                                                swal({
-                                                    title: "Are you sure?",
-                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                    icon: "warning",
-                                                    buttons: true,
-                                                    dangerMode: true,
-                                                })
-                                                    .then((willDelete) => {
-                                                        if (willDelete) {
-                                                            peringatan2 = false;
-                                                            $('#hapus-foto').removeAttr("type").attr("type", "submit");
-                                                            $('#hapus-foto').trigger( "click" );
-                                                        }
-                                                    });
-                                            }
-                                        });
-                                    </script>
-                                    @else
-                                        <font color="gray">tidak ada</font>
-                                    @endif
-                                    <a href="{{ route('post') }}/{{$p->id}}/foto" class="badge badge-secondary"><i class="ti-file"></i> upload new photo</a>
-                                </td>
-                            </tr>
                         </table>
-                        @php
-                            echo '
-                                <script>
-                                    let l ='.$p->lat.';
-                                    let b ='.$p->lng.';
-                                </script>
-                            ';
-                        @endphp
-                    </div>
-                    <div class="col-md-6">
-                        @if($p->lat!="" && $p->lng!="")
-                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
-                        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
-                        <style type="text/css">
-                            #peta {
-                                height: 60vh;
-                            }
-                        </style>
+                        <br/>
                         <a href="{{ route('post') }}/{{$p->id}}/edit">
                             <button class="btn btn-inverse-info btn-fw">Edit</button>
                         </a> &emsp;
@@ -162,7 +103,25 @@
                                 }
                             });
                         </script>
-                        <br/><br/>
+                        @php
+                            echo '
+                                <script>
+                                    let l ='.$p->lat.';
+                                    let b ='.$p->lng.';
+                                </script>
+                            ';
+                        @endphp
+                    </div>
+                    <div class="col-md-6">
+                        @if($p->lat!="" && $p->lng!="")
+                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+                        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+                        <style type="text/css">
+                            #peta {
+                                height: 60vh;
+                            }
+                        </style>
+                        <br/>
                         <div id="peta"></div>
 
                         <script type="text/javascript">
@@ -191,19 +150,133 @@
                             marker.addTo(peta);
                         </script>
                         @endif
+                        
+                        <table class="table" style="text-align: center;">
+                            <tr>
+                                <td>
+                                    <h5>Foto Cover :</h5>
+                                    @if ($p->cover)
+                                    <a target="_blank" href="/foto/{{$p->cover}}">
+                                        <img src="/foto/{{$p->cover}}">
+                                    </a>
+                                    <form action="{{ route('post') }}/{{$p->id}}/cover" method="POST" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="button" class="btn badge badge-danger" id="hapus-foto" style="scale: 90%;">
+                                            <i class="fa fa-ban"></i> remove
+                                        </button>
+                                    </form>
+                                    <script>
+                                        let peringatan2=true;
+                                        $('#hapus-foto').on('click', function (e) {
+                                            if(peringatan2==true){
+                                                swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                })
+                                                    .then((willDelete) => {
+                                                        if (willDelete) {
+                                                            peringatan2 = false;
+                                                            $('#hapus-foto').removeAttr("type").attr("type", "submit");
+                                                            $('#hapus-foto').trigger( "click" );
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                    </script>
+                                    @else
+                                        <font color="gray">tidak ada</font>
+                                    @endif
+                                    <a href="{{ route('post') }}/{{$p->id}}/cover" class="badge badge-secondary"><i class="ti-file"></i> upload new photo</a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 @endforeach
-
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#example').DataTable();
-        $("#post2").css("color", "black");
-    });
-</script>
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div style="float: right;">
+                    <a href="{{ route('post') }}/{{$p->id}}/fasilitas/tambah">
+                        <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
+                    </a>
+                </div>
+                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Fasilitas</p>
+                <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
+                    <tbody>
+                        @foreach ($fasilitas as $f)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{$f->nama}}</td>
+                            <td>
+                                <form action="{{ route('post') }}/fasilitas/{{$f->id}}/hapus" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="btn badge badge-danger" id="hapus-fas-{{$f->id}}">
+                                        <i class="fa fa-ban"></i> remove
+                                    </button>
+                                </form>
+                                <script>
+                                    let peringatanf{{$f->id}}=true;
+                                    $("#hapus-fas-{{$f->id}}").on('click', function (e) {
+                                        if(peringatanf{{$f->id}}==true){
+                                            swal({
+                                                text: 'Yakin hapus "{{$f->nama}}" dari daftar fasilitas ?',
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        peringatanf{{$f->id}} = false;
+                                                        $("#hapus-fas-{{$f->id}}").removeAttr("type").attr("type", "submit");
+                                                        $("#hapus-fas-{{$f->id}}").trigger( "click" );
+                                                    }
+                                                });
+                                        }
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Harga</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Foto</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Kamar</p>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

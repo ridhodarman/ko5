@@ -18,9 +18,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/cari', function () {  return view('cari.index'); })->name('cari');
+Route::get('/cari', 'PencarianController@index')->name('cari');
+Route::get('/cari/{jenis}/{kampus}', 'PencarianController@keyword');
 
 Route::get('/post', 'PostsController@index')->middleware('auth')->name('post');
 Route::get('/post/tambah', 'PostsController@create')->middleware('auth');
@@ -29,9 +31,9 @@ Route::get('/post/{id}', 'PostsController@show')->middleware('auth');
 Route::get('/post/{post}/edit', 'PostsController@edit')->middleware('auth');
 Route::patch('/post/{post}/edit', 'PostsController@update')->middleware('auth');
 Route::delete('/post/{post}', 'PostsController@destroy')->middleware('auth');
-Route::delete('/post/{post}/foto', 'PostsController@destroy_foto')->middleware('auth');
-Route::get('/post/{post}/foto', 'PostsController@edit_foto')->middleware('auth');
-Route::patch('/post/{post}/foto', 'PostsController@update_foto')->middleware('auth');
+Route::delete('/post/{post}/cover', 'PostsController@destroy_cover')->middleware('auth');
+Route::get('/post/{post}/cover', 'PostsController@edit_cover')->middleware('auth');
+Route::patch('/post/{post}/cover', 'PostsController@update_cover')->middleware('auth');
 Route::get('/post/kecamatan/{value}', 'PostsController@view')->middleware('auth');
 
 Route::get('/jenis', 'Jenis_postsController@index')->middleware('auth')->name('jenis');
@@ -90,3 +92,11 @@ Route::get('/fasilitas/{id}', 'Fasilitas_postsController@show')->middleware('aut
 Route::get('/fasilitas/{fasilitas_post}/edit', 'Fasilitas_postsController@edit')->middleware('auth');
 Route::patch('/fasilitas/{fasilitas_post}/edit', 'Fasilitas_postsController@update')->middleware('auth');
 Route::delete('/fasilitas/{fasilitas_post}', 'Fasilitas_postsController@destroy')->middleware('auth');
+
+Route::get('/detail_fasilitas_post', 'Detail_fasilitas_postController@index')->middleware('auth')->name('detail_fasilitas');
+Route::get('/detail_fasilitas_post/tambah', 'Detail_fasilitas_postController@create')->middleware('auth');
+Route::post('/detail_fasilitas_post', 'Detail_fasilitas_postController@store')->middleware('auth');
+Route::get('/detail_fasilitas_post/{id}', 'Detail_fasilitas_postController@show')->middleware('auth');
+Route::get('/detail_fasilitas_post/{detail_fasilitas_post}/edit', 'Detail_fasilitas_postController@edit')->middleware('auth');
+Route::patch('/detail_fasilitas_post/{detail_fasilitas_post}/edit', 'Detail_fasilitas_postController@update')->middleware('auth');
+Route::delete('/detail_fasilitas_post/{detail_fasilitas_post}', 'Detail_fasilitas_postController@destroy')->middleware('auth');
