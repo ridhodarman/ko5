@@ -7,6 +7,8 @@ use DB;
 use App\Post;
 use App\Kampus_sekolah;
 use App\Fasilitas_post;
+use App\Jenis_post;
+use App\Status_post;
 
 class PencarianController extends Controller
 {
@@ -20,7 +22,14 @@ class PencarianController extends Controller
     }
 
     public function sidebar(){
-        return view ('cari.inc.sidebar');
+        $fasilitas = Fasilitas_post::select('id', 'nama')->get();
+        $jenis = Jenis_post::select('id', 'nama')->get();
+        $status = Status_post::select('id', 'nama')->get();
+        return view ('cari.inc.sidebar',[
+                                            'fasilitas' => $fasilitas,
+                                            'jenis' => $jenis,
+                                            'status' => $status
+                                        ]);
     }
 
     public function keyword($jenis, $kampus, $teks){

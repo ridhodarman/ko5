@@ -121,7 +121,7 @@
             <div class="row">
                 <aside id="sidebar" class="col-md-3"></aside><!-- col.// -->
                 <script>
-                    $('#sidebar').load(`{{ route('sidebar') }}/`);
+                    $('#sidebar').load(`{{ route('sidebar') }}`);
                 </script>
                 <main class="col-md-9">
 
