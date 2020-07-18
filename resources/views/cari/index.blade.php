@@ -119,194 +119,61 @@
         <div class="container">
 
             <div class="row">
-                <aside class="col-md-3">
-
-                    <div class="card">
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
-                                    class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Cari</h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_1" style="">
-                                <div class="card-body">
-                                    <form class="pb-3">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-light" type="button"><i
-                                                        class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    Popular Keywords:
-                                    <ul class="list-menu">
-                                        <a href="#" class="badge badge-light">Kos pasar baru </a>
-                                        <a href="{{ route('cari') }}/1/2/" class="badge badge-light">Kos cowok unand </a>
-                                        <a href="#" class="badge badge-light">Kos cewek unand </a>
-                                        <a href="#" class="badge badge-light">Kos cowok unp </a>
-                                        <a href="#" class="badge badge-light">Kos cewek unp </a>
-                                        <a href="#" class="badge badge-light">Kontrakan unand </a>
-                                        <a href="#" class="badge badge-light">Kontrakan unp</a>
-                                    </ul>
-
-                                </div> <!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group  .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
-                                    class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Brands </h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_2" style="">
-                                <div class="card-body">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Mercedes
-                                            <b class="badge badge-pill badge-light float-right">120</b> </div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Toyota
-                                            <b class="badge badge-pill badge-light float-right">15</b> </div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Mitsubishi
-                                            <b class="badge badge-pill badge-light float-right">35</b> </div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Nissan
-                                            <b class="badge badge-pill badge-light float-right">89</b> </div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <div class="custom-control-label">Honda
-                                            <b class="badge badge-pill badge-light float-right">30</b> </div>
-                                    </label>
-                                </div> <!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
-                                    class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Price range </h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_3" style="">
-                                <div class="card-body">
-                                    <input type="range" class="custom-range" min="0" max="100" name="">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>Min</label>
-                                            <input class="form-control" placeholder="$0" type="number">
-                                        </div>
-                                        <div class="form-group text-right col-md-6">
-                                            <label>Max</label>
-                                            <input class="form-control" placeholder="$1,0000" type="number">
-                                        </div>
-                                    </div> <!-- form-row.// -->
-                                    <button class="btn btn-block btn-primary">Apply</button>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
-                                    class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Sizes </h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_4" style="">
-                                <div class="card-body">
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> XS </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> SM </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> LG </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> XXL </span>
-                                    </label>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false"
-                                    class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">More filter </h6>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse in" id="collapse_5" style="">
-                                <div class="card-body">
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" checked=""
-                                            class="custom-control-input">
-                                        <div class="custom-control-label">Any condition</div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Brand new </div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Used items</div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Very old</div>
-                                    </label>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                    </div> <!-- card.// -->
-
-                </aside> <!-- col.// -->
+                <aside id="sidebar" class="col-md-3"></aside><!-- col.// -->
+                <script>
+                    $('#sidebar').load(`{{ route('sidebar') }}/`);
+                </script>
                 <main class="col-md-9">
 
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
-                            <span class="mr-md-auto">{{ count($post) }} Items found </span>
+                            <span class="mr-md-auto">
+                                {{ count($post) }} <font style="color: darkgray;"> Items found </font>
+                                @if (isset($teks))
+                                    | <font style="color: darkgray;">menampilkan hasil pencarian dari:</font> {!! $teks !!} 
+                                @endif
+                            </span>
                         </div>
                     </header><!-- sect-heading -->
 
                     <div class="row">
-                        
+
                         @foreach ($post as $p)
                         <div class="col-md-4">
                             <figure class="card card-product-grid">
                                 <div class="img-wrap">
-                                    @if ($p->cover)
-                                        <a href="#"><img src="{{ URL::asset('foto/'.$p->cover) }}"></a>
-                                    @else
-                                        <a href="#"><img src="{{ URL::asset('null.png') }}"></a>
-                                    @endif
-                                    <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> view</a>
+                                    @php
+                                        if($p->cover){
+                                            $gambar = 'foto/'.$p->cover;
+                                        }
+                                        else {
+                                            $gambar = "null.png";
+                                        }
+                                    @endphp
+                                    <a href="#"><img src="{{ URL::asset($gambar) }}"></a>
+                                    <a class="btn-overlay" href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><i class="fa fa-search-plus"></i> Quick View</a>
+                                    <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">{{$p->nama}}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{ URL::asset($gambar) }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Lihat Tempat</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div> <!-- img-wrap.// -->
                                 <figcaption class="info-wrap">
                                     <!-- <div class="fix-height"> -->
@@ -314,16 +181,14 @@
                                         <a href="#" class="title">
                                             <div style="font-weight: bolder;">{{$p->nama}}</div>
                                             <div style="font-size: 85%; color: darkgrey;">
-                                            @if (isset($p->keterangan))
-                                                {{ $p->keterangan }}
-                                            @endif
+                                                {!! $p->keterangan !!}
                                             </div>
                                         </a>
                                         <div class="price-wrap mt-2">
                                             <span class="price" style="color: green;">Rp. 1280</span>
                                         </div> <!-- price-wrap.// -->
                                     </div>
-                                    <a href="#" class="btn btn-block btn-primary">Lihat Kos</a>
+                                    <a href="#" class="btn btn-block btn-primary">Lihat Tempat</a>
                                 </figcaption>
                             </figure>
                         </div> <!-- col.// -->

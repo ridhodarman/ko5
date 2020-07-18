@@ -21,8 +21,9 @@ Auth::routes();
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/sidebar', 'PencarianController@sidebar')->name('sidebar');
 Route::get('/cari', 'PencarianController@index')->name('cari');
-Route::get('/cari/{jenis}/{kampus}', 'PencarianController@keyword');
+Route::get('/cari/{jenis}/{kampus}/{teks}', 'PencarianController@keyword');
 
 Route::get('/post', 'PostsController@index')->middleware('auth')->name('post');
 Route::get('/post/tambah', 'PostsController@create')->middleware('auth');
