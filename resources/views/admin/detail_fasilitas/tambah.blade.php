@@ -4,7 +4,7 @@
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Tambah Kelurahan</h4>
+                <h4 class="font-weight-bold mb-0">Tambah Fasilitas Post: {{ $post->nama }}</h4>
             </div>
             <div>
                 <a href="{{ route('kelurahan') }}">
@@ -21,29 +21,26 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('kelurahan') }}" method="post">
+                <form class="forms-sample" action="{{ route('detail_fasilitas_post') }}" method="post">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Nama Kelurahan</label>
+                        <label class="col-sm-2 col-form-label">Fasilitas</label>
                         <div class="col-sm-10">
-                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                                value="{{ old('nama') }}">
-                            @error('nama')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <label class="col-sm-2 col-form-label">Kecamatan</label>
-                        <div class="col-sm-10">
-                            <select name="kecamatan_id" class="form-control" style="color: black;">
+                            <select name="fasilitas_posts" class="form-control" style="color: black;">
                                 <option></option>
-                                @foreach ($kecamatan as $k)
-                                <option value="{{$k->id}}">{{$k->nama}}</option>
+                                @foreach ($fasilitas as $f)
+                                <option value="{{$f->id}}">{{$f->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" name="post_id" class="form-control @error('nama') is-invalid @enderror"
+                        value="{{ $post->id }}">
+                    @error('nama')
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                    @enderror
                     <div style="float: right;">
                         <button type="submit" class="btn btn-primary mr-2">Tambah</button>
                     </div>

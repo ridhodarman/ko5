@@ -59,7 +59,8 @@ class PostsController extends Controller
             'alamat' => 'not_regex:/`/i',
             'deskripsi' => 'not_regex:/`/i',
             'lat' => 'numeric',
-            'lng' => 'numeric'
+            'lng' => 'numeric',
+            'link_kontak' => 'not_regex:/`/i'
 		]);
         
         $file = $request->file('file');
@@ -185,7 +186,8 @@ class PostsController extends Controller
             'alamat' => 'not_regex:/`/i',
             'deskripsi' => 'not_regex:/`/i',
             'lat' => 'numeric',
-            'lng' => 'numeric'
+            'lng' => 'numeric',
+            'link_kontak' => 'not_regex:/`/i'
 		]);
         Post::where('id', $post->id)
             ->update([
@@ -197,6 +199,7 @@ class PostsController extends Controller
                 'kelurahan_id' => $request->kelurahan_id,
                 'lat' => $request->lat,
                 'lng' => $request->lng,
+                'link_kontak' => $request->link_kontak,
                 'pemilik_id' => $request->pemilik_id
             ]);
         $pesan = "Data post <b>".$request->nama."</b> berhasil diubah";
@@ -229,7 +232,7 @@ class PostsController extends Controller
                 'cover' => null
             ]);
         $pesan = "Foto depan berhasil dihapus !";
-        return redirect()->back()->with('status-cover', $pesan);
+        return redirect()->back()->with('status', $pesan);
     }
 
     public function edit_cover(Post $post)
@@ -257,6 +260,6 @@ class PostsController extends Controller
                 'cover' => $nama_file
             ]);
         $pesan = "Foto depan berhasil di-upload !";
-        return redirect('/post/'.$post->id)->with('status-cover', $pesan);
+        return redirect('/post/'.$post->id)->with('status', $pesan);
     }
 }

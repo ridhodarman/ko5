@@ -16,9 +16,18 @@
         </div>
     </div>
 </div>
-@if (session('status-cover'))
+@if (session('status'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {!! session('status-cover') !!}
+  {!! session('status') !!}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
+
+@if (session('status2'))
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {!! session('status2') !!}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -207,7 +216,7 @@
         <div class="card">
             <div class="card-body">
                 <div style="float: right;">
-                    <a href="{{ route('post') }}/{{$p->id}}/fasilitas/tambah">
+                    <a href="{{ route('detail_fasilitas_post') }}/tambah/{{$p->id}}">
                         <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
                     </a>
                 </div>
@@ -219,7 +228,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{$f->nama}}</td>
                             <td>
-                                <form action="{{ route('post') }}/fasilitas/{{$f->id}}/hapus" method="POST" class="d-inline">
+                                <form action="{{ route('detail_fasilitas_post') }}/{{$f->id}}/{{$p->id}}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="btn badge badge-danger" id="hapus-fas-{{$f->id}}">

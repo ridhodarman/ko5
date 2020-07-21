@@ -98,16 +98,16 @@
     </header> <!-- section-header.// -->
 
 
-
+    @foreach ($post as $p)
     <!-- ========================= SECTION PAGETOP ========================= -->
     <section class="section-pagetop bg">
         <div class="container">
-            <h2 class="title-page">Category products</h2>
+            <h2 class="title-page">{{ $p->nama }}</h2>
             <nav>
                 <ol class="breadcrumb text-white">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Best category</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Great articles</li>
+                    <li class="breadcrumb-item"><a href='{{ route("cari") }}'>Pencarian</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $p->nama }}</li>
                 </ol>
             </nav>
         </div> <!-- container //  -->
@@ -119,99 +119,86 @@
         <div class="container">
 
             <div class="row">
-                <aside id="sidebar" class="col-md-3"></aside><!-- col.// -->
-                <script>
-                    $('#sidebar').load(`{{ route('sidebar') }}`);
-                </script>
-                <main class="col-md-9">
+                <main class="col-md-12">
 
-                    <header class="border-bottom mb-4 pb-3">
+                    <!-- <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">
-                                {{ count($post) }} <font style="color: darkgray;"> Items found </font>
-                                @if (isset($teks))
-                                    | <font style="color: darkgray;">menampilkan hasil pencarian dari:</font> {!! $teks !!} 
-                                @endif
+                                 
                             </span>
                         </div>
-                    </header><!-- sect-heading -->
+                    </header> -->
 
                     <div class="row">
+                        @php
+                        if($p->cover){
+                        $gambar = 'foto/'.$p->cover;
+                        }
+                        else {
+                        $gambar = "null.png";
+                        }
+                        @endphp
 
-                        @foreach ($post as $p)
-                        <div class="col-md-4">
-                            <figure class="card card-product-grid">
-                                <div class="img-wrap">
-                                    @php
-                                        if($p->cover){
-                                            $gambar = 'foto/'.$p->cover;
-                                        }
-                                        else {
-                                            $gambar = "null.png";
-                                        }
-                                    @endphp
-                                    <a href="#"><img src="{{ URL::asset($gambar) }}"></a>
-                                    <a class="btn-overlay" href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><i class="fa fa-search-plus"></i> Quick View</a>
-                                    <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">{{$p->nama}}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ URL::asset($gambar) }}">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Lihat Tempat</button>
-                                                </div>
-                                            </div>
+                        <div class="col-md-8 card-product-grid crop" style="padding-top: 10px;">
+                            <link rel="stylesheet" href="{{ URL::asset('aset/slider/style.css') }}">
+                            <div class="slider">
+                                <div class="slide_viewer">
+                                    <div class="slide_group">
+                                        <div class="slide">
+                                            <img src="{{ URL::asset($gambar) }}" class="gambar">
+                                        </div>
+                                        <div class="slide">
+                                            <img src="{{ URL::asset($gambar) }}" class="gambar">
+                                        </div>
+                                        <div class="slide">
+                                        </div>
+                                        <div class="slide">
                                         </div>
                                     </div>
-                                </div> <!-- img-wrap.// -->
-                                <figcaption class="info-wrap">
-                                    <!-- <div class="fix-height"> -->
-                                    <div>
-                                        <a href="#" class="title">
-                                            <div style="font-weight: bolder;">{{$p->nama}}</div>
-                                            <div style="font-size: 85%; color: darkgrey;">
-                                                {!! $p->keterangan !!}
-                                            </div>
-                                        </a>
-                                        <div class="price-wrap mt-2">
-                                            <span class="price" style="color: green;">Rp. 1280</span>
-                                        </div> <!-- price-wrap.// -->
-                                    </div>
-                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank" class="btn btn-block btn-primary">Lihat Tempat</a>
-                                </figcaption>
-                            </figure>
+                                </div>
+                            </div><!-- End // .slider -->
+
+                            <div class="slide_buttons">
+                            </div>
+
+                            <div class="directional_nav">
+                                <div class="previous_btn" title="Previous">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="65px"
+                                        height="65px" viewBox="-11 -11.5 65 66">
+                                        <g>
+                                            <g>
+                                                <path fill="#474544"
+                                                    d="M-10.5,22.118C-10.5,4.132,4.133-10.5,22.118-10.5S54.736,4.132,54.736,22.118
+                                          c0,17.985-14.633,32.618-32.618,32.618S-10.5,40.103-10.5,22.118z M-8.288,22.118c0,16.766,13.639,30.406,30.406,30.406 c16.765,0,30.405-13.641,30.405-30.406c0-16.766-13.641-30.406-30.405-30.406C5.35-8.288-8.288,5.352-8.288,22.118z" />
+                                                <path fill="#474544"
+                                                    d="M25.43,33.243L14.628,22.429c-0.433-0.432-0.433-1.132,0-1.564L25.43,10.051c0.432-0.432,1.132-0.432,1.563,0	c0.431,0.431,0.431,1.132,0,1.564L16.972,21.647l10.021,10.035c0.432,0.433,0.432,1.134,0,1.564	c-0.215,0.218-0.498,0.323-0.78,0.323C25.929,33.569,25.646,33.464,25.43,33.243z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="next_btn" title="Next">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="65px"
+                                        height="65px" viewBox="-11 -11.5 65 66">
+                                        <g>
+                                            <g>
+                                                <path fill="#474544"
+                                                    d="M22.118,54.736C4.132,54.736-10.5,40.103-10.5,22.118C-10.5,4.132,4.132-10.5,22.118-10.5	c17.985,0,32.618,14.632,32.618,32.618C54.736,40.103,40.103,54.736,22.118,54.736z M22.118-8.288	c-16.765,0-30.406,13.64-30.406,30.406c0,16.766,13.641,30.406,30.406,30.406c16.768,0,30.406-13.641,30.406-30.406 C52.524,5.352,38.885-8.288,22.118-8.288z" />
+                                                <path fill="#474544"
+                                                    d="M18.022,33.569c 0.282,0-0.566-0.105-0.781-0.323c-0.432-0.431-0.432-1.132,0-1.564l10.022-10.035 			L17.241,11.615c 0.431-0.432-0.431-1.133,0-1.564c0.432-0.432,1.132-0.432,1.564,0l10.803,10.814c0.433,0.432,0.433,1.132,0,1.564 L18.805,33.243C18.59,33.464,18.306,33.569,18.022,33.569z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div><!-- End // .directional_nav -->
+                            <!-- partial -->
+                            <script src="{{ URL::asset('aset/slider/script.js') }}"></script>s
                         </div> <!-- col.// -->
-                        @endforeach
-                        <div class="col-md-4">
-                            <figure class="card card-product-grid">
-                                <div class="img-wrap">
-                                    <span class="badge badge-danger"> NEW </span>
-                                    <img src="{{ URL::asset('aset/images/items/1.jpg') }}">
-                                    <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
-                                </div> <!-- img-wrap.// -->
-                                <figcaption class="info-wrap">
-                                    <div class="fix-height">
-                                        <a href="#" class="title">Great item name goes here</a>
-                                        <div class="price-wrap mt-2">
-                                            <span class="price">$1280</span>
-                                            <del class="price-old">$1980</del>
-                                        </div> <!-- price-wrap.// -->
-                                    </div>
-                                    <a href="#" class="btn btn-block btn-primary">Add to cart </a>
-                                </figcaption>
-                            </figure>
-                        </div> <!-- col.// -->
+                        
+                        <div class="col-md-6">
+                            s
+                        </div>
 
                         <div class="col-md-4">
                             <figure class="card card-product-grid">
@@ -357,6 +344,7 @@
 
         </div> <!-- container .//  -->
     </section>
+    @endforeach
     <!-- ========================= SECTION CONTENT END// ========================= -->
 
     <!-- ========================= FOOTER ========================= -->

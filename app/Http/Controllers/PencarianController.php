@@ -69,4 +69,14 @@ class PencarianController extends Controller
                                     'teks' => $teks2
                                 ]);
     }
+
+    public function show($id){
+        $post = Post::where('id', $id)->get();
+        //return $kampus;
+        
+        //return $post;
+        return view ('cari.show',[
+            'post' => $post
+        ]);
+    }
 }

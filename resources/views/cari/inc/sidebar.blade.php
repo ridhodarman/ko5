@@ -24,7 +24,7 @@
                     <ul class="list-menu">
                         <a href="#" class="badge badge-light">Kos pasar baru </a>
                         <a class="badge badge-light" 
-                            href='{{ route('cari') }}/1/2/@php echo base64_encode("Kos cowok unand") @endphp' >
+                            href='{{ route("cari") }}/1/2/@php echo base64_encode("Kos cowok unand") @endphp' >
                             Kos cowok unand
                         </a>
                         <a href="#" class="badge badge-light">Kos cewek unand </a>
