@@ -37,7 +37,11 @@ class HargasController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [ 'harga' => 'numeric' ]);
+        $this->validate($request, [ 
+                            'harga' => 'required|numeric',
+                            'pembayaran' => 'required|not_regex:/`/i',
+                            'keterangan' => 'not_regex:/`/i'
+                        ]);
         Harga::create($request->all());
         $pesan = "Harga per <b>".$request->pembayaran.'</b> berhasil ditambahkan';
         return redirect('/post/'.$request->post_id)->with('status', $pesan);

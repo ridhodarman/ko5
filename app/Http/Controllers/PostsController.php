@@ -138,7 +138,7 @@ class PostsController extends Controller
                     ->setBindings([$post])
                     ->get();
         //return $fasilitas;
-        $harga = Harga::select('id', 'harga', 'pembayaran')
+        $harga = Harga::select('id', 'harga', 'pembayaran', 'keterangan')
                     ->where('post_id', '=', '?')
                     ->setBindings([$post])
                     ->get();

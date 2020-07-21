@@ -18,7 +18,7 @@ class CreateHargasTable extends Migration
             $table->foreignId('post_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('harga');
             $table->string('pembayaran');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();;
             $table->timestamps();
         });
     }

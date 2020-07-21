@@ -78,6 +78,11 @@
                                 <td>:</td>
                                 <td>{{$p->pemilik}}</td>
                             </tr>
+                            <tr>
+                                <td>CP</td>
+                                <td>:</td>
+                                <td><a href="//{{$p->link_kontak}}" target="_blank">{{$p->link_kontak}}</a></td>
+                            </tr>
                         </table>
                         <br/>
                         <a href="{{ route('post') }}/{{$p->id}}/edit">
@@ -277,8 +282,8 @@
                     <tbody>
                         @foreach ($harga as $h)
                         <tr>
-                            <td>Rp. {{ number_format( $h->harga) }} /
-                            {{$h->pembayaran}}</td>
+                            <td>Rp. {{ number_format( $h->harga) }} / {{$h->pembayaran}}</td>
+                            <td style="color: gray;">{{$h->keterangan}}</td>
                             <td>
                                 <form action="{{ route('harga') }}/{{$h->id}}/{{$p->id}}" method="POST" class="d-inline">
                                     @method('delete')

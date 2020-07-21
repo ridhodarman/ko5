@@ -24,16 +24,16 @@
                 <form class="forms-sample" action="{{ route('harga') }}" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rp</span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="harga" aria-label="Username" 
+                                    <input type="text" class="form-control @error('harga') is-invalid @enderror" placeholder="harga" aria-label="Username" 
                                         name="harga" id="harga" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     <div class="input-group-append @error('harga') is-invalid @enderror">
-                                        <span class="input-group-text">.00</span>
+                                        <span class="input-group-text">,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -43,8 +43,7 @@
                             </div>
                             @enderror
                         </div>
-                        </>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="col-sm-10">
                                 <select name="pembayaran" class="form-control" style="color: black;">
                                     <option value="tahun">per tahun</option>
@@ -54,6 +53,14 @@
                                     <option value="hari">per hari</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror" placeholder="keterangan *opsional (misal: bisa nego)" name="keterangan">
+                            @error('keterangan')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <input type="hidden" name="post_id" class="form-control @error('post_id') is-invalid @enderror"

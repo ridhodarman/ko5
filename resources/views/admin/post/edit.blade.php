@@ -106,7 +106,7 @@
                         <label class="col-sm-2 col-form-label">Link Kontak</label>
                         <div class="col-sm-10">
                             <input type="text" name="link_kontak" class="form-control @error('link_kontak') is-invalid @enderror"
-                                value="{{ old('link_kontak', $p->link_kontak) }} placeholder="bit.ly/....">
+                                value="{{ old('link_kontak', $p->link_kontak) }}" placeholder="bit.ly/....">
                             @error('link_kontak')
                             <div class="alert alert-danger">
                                 {{ $message }}
