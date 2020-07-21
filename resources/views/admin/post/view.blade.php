@@ -267,7 +267,51 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+                <div style="float: right;">
+                    <a href="{{ route('harga') }}/tambah/{{$p->id}}">
+                        <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
+                    </a>
+                </div>
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Harga</p>
+                <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
+                    <tbody>
+                        @foreach ($harga as $h)
+                        <tr>
+                            <td>Rp. {{ number_format( $h->harga) }} /
+                            {{$h->pembayaran}}</td>
+                            <td>
+                                <form action="{{ route('harga') }}/{{$h->id}}/{{$p->id}}" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="btn badge badge-danger" id="hapus-h-{{$h->id}}">
+                                        <i class="fa fa-ban"></i> remove
+                                    </button>
+                                </form>
+                                <script>
+                                    let peringatanf{{$h->id}}=true;
+                                    $("#hapus-h-{{$h->id}}").on('click', function (e) {
+                                        if(peringatanf{{$h->id}}==true){
+                                            swal({
+                                                text: 'Yakin hapus "{{ $h->harga }} / {{$h->pembayaran}}" dari daftar harga ?',
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        peringatanf{{$h->id}} = false;
+                                                        $("#hapus-h-{{$h->id}}").removeAttr("type").attr("type", "submit");
+                                                        $("#hapus-h-{{$h->id}}").trigger( "click" );
+                                                    }
+                                                });
+                                        }
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

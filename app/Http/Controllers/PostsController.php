@@ -8,6 +8,7 @@ use App\Status_post;
 use App\Kecamatan;
 use App\Pemilik;
 use App\Detail_fasilitas_post;
+use App\Harga;
 use Illuminate\Http\Request;
 use File;
 
@@ -137,9 +138,14 @@ class PostsController extends Controller
                     ->setBindings([$post])
                     ->get();
         //return $fasilitas;
+        $harga = Harga::select('id', 'harga', 'pembayaran')
+                    ->where('post_id', '=', '?')
+                    ->setBindings([$post])
+                    ->get();
         return view ('admin.post.view',[
                                         'post' => $query,
-                                        'fasilitas' => $fasilitas
+                                        'fasilitas' => $fasilitas,
+                                        'harga' => $harga
                                     ]);
     }
 
