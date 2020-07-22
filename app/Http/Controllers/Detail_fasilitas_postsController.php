@@ -98,12 +98,12 @@ class Detail_fasilitas_postsController extends Controller
      * @param  \App\Detail_fasilitas_post  $detail_fasilitas_post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Detail_fasilitas_post $detail_fasilitas_post, $post)
+    public function destroy(Detail_fasilitas_post $detail_fasilitas_post)
     {
         //return $detail_fasilitas_post;
         Detail_fasilitas_post::destroy($detail_fasilitas_post->id);
         $f = Fasilitas_post::where('id', $detail_fasilitas_post->fasilitas_posts)->first();
         $pesan = "Fasilitas '<b>".$f->nama."</b>' berhasil dihapus !";
-        return redirect('/post/'.$post)->with('status2', $pesan);
+        return redirect('/post/'.$detail_fasilitas_post->post_id)->with('status2', $pesan);
     }
 }

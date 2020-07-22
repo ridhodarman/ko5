@@ -4,7 +4,7 @@
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Tambah Fasilitas Post: {{ $post->nama }}</h4>
+                <h4 class="font-weight-bold mb-0">Tambah Foto Post: {{ $post->nama }}</h4>
             </div>
             <div>
                 <a href="{{ route('post') }}/{{ $post->id }}">
@@ -21,17 +21,18 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('detail_fasilitas_post') }}" method="post">
+                <form class="forms-sample" action="{{ route('fotos') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Fasilitas</label>
+                        <label class="col-sm-2 col-form-label">Pilih Foto</label>
                         <div class="col-sm-10">
-                            <select name="fasilitas_posts" class="form-control" style="color: black;">
-                                <option></option>
-                                @foreach ($fasilitas as $f)
-                                <option value="{{$f->id}}">{{$f->nama}}</option>
-                                @endforeach
-                            </select>
+                            <input type="file" name="file" value="{{ old('file') }}"
+                            class="form-control @error('file') is-invalid @enderror">
+                            @error('file')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <input type="hidden" name="post_id" class="form-control @error('post_id') is-invalid @enderror"

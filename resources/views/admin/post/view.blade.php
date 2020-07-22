@@ -233,7 +233,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{$f->nama}}</td>
                             <td>
-                                <form action="{{ route('detail_fasilitas_post') }}/{{$f->id}}/{{$p->id}}" method="POST" class="d-inline">
+                                <form action="{{ route('detail_fasilitas_post') }}/{{$f->id}}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="btn badge badge-danger" id="hapus-fas-{{$f->id}}">
@@ -285,7 +285,7 @@
                             <td>Rp. {{ number_format( $h->harga) }} / {{$h->pembayaran}}</td>
                             <td style="color: gray;">{{$h->keterangan}}</td>
                             <td>
-                                <form action="{{ route('harga') }}/{{$h->id}}/{{$p->id}}" method="POST" class="d-inline">
+                                <form action="{{ route('harga') }}/{{$h->id}}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="btn badge badge-danger" id="hapus-h-{{$h->id}}">
@@ -324,7 +324,52 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+                <div style="float: right;">
+                <a href="{{ route('foto') }}/tambah/{{$p->id}}">
+                        <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
+                    </a>
+                </div>
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Foto</p>
+                <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
+                    <tbody>
+                    @foreach ($foto as $g)
+                        <tr>
+                            <td>
+                                <a target="_blank" href="/foto/{{$g->url}}"> <img src="/foto/{{$g->url}}"> </a>
+                            </td>
+                            <td>
+                                <form action="{{ route('foto') }}/{{$g->id}}" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="btn badge badge-danger" id="hapus-p-{{$g->id}}">
+                                        <i class="fa fa-ban"></i> remove
+                                    </button>
+                                </form>
+                                <script>
+                                    let peringatanf{{$g->id}}=true;
+                                    $("#hapus-p-{{$g->id}}").on('click', function (e) {
+                                        if(peringatanf{{$g->id}}==true){
+                                            swal({
+                                                text: "Yakin hapus foto ini ?",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        peringatanf{{$g->id}} = false;
+                                                        $("#hapus-p-{{$g->id}}").removeAttr("type").attr("type", "submit");
+                                                        $("#hapus-p-{{$g->id}}").trigger( "click" );
+                                                    }
+                                                });
+                                        }
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

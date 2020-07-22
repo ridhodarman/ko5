@@ -103,9 +103,14 @@ Route::post('/detail_fasilitas_post', 'Detail_fasilitas_postsController@store')-
 //Route::get('/detail_fasilitas_post/{id}', 'Detail_fasilitas_postsController@show')->middleware('auth');
 //Route::get('/detail_fasilitas_post/{detail_fasilitas_post_post}/edit', 'Detail_fasilitas_postsController@edit')->middleware('auth');
 //Route::patch('/detail_fasilitas_post/{detail_fasilitas_post_post}/edit', 'Detail_fasilitas_postsController@update')->middleware('auth');
-Route::delete('/detail_fasilitas_post/{detail_fasilitas_post}/{post}', 'Detail_fasilitas_postsController@destroy')->middleware('auth');
+Route::delete('/detail_fasilitas_post/{detail_fasilitas_post}', 'Detail_fasilitas_postsController@destroy')->middleware('auth');
 
-Route::get('/harga', 'hargasController@index')->middleware('auth')->name('harga');
-Route::get('/harga/tambah/{post}', 'hargasController@create')->middleware('auth');
-Route::post('/harga', 'hargasController@store')->middleware('auth');
-Route::delete('/harga/{harga}/{post}', 'hargasController@destroy')->middleware('auth');
+Route::get('/harga', 'HargasController@index')->middleware('auth')->name('harga');
+Route::get('/harga/tambah/{post}', 'HargasController@create')->middleware('auth');
+Route::post('/harga', 'HargasController@store')->middleware('auth');
+Route::delete('/harga/{harga}', 'HargasController@destroy')->middleware('auth');
+
+Route::get('/foto', 'FotosController@index')->middleware('auth')->name('foto');
+Route::get('/foto/tambah/{post}', 'FotosController@create')->middleware('auth');
+Route::post('/fotos', 'FotosController@store')->middleware('auth')->name('fotos');
+Route::delete('/foto/{foto}', 'FotosController@destroy')->middleware('auth');

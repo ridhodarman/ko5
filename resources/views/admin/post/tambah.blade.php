@@ -198,7 +198,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputConfirmPassword1">Bujur</label>
+                                <label>Bujur</label>
                                 <input type="text" class="form-control @error('lng') is-invalid @enderror" id="lng"
                                     name="lng" placeholder="100.000" value="{{ old('lng') }}">
                                 @error('lng')
@@ -208,7 +208,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputConfirmPassword1">Foto</label>
+                                <label>Foto</label>
                                 <input type="file" name="file" value="{{ old('file') }}"
                                 class="form-control @error('file') is-invalid @enderror">
                                 @error('file')

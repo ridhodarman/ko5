@@ -7,9 +7,9 @@
                 <h4 class="font-weight-bold mb-0">Tambah Harga: {{ $post->nama }}</h4>
             </div>
             <div>
-                <a href="{{ route('kelurahan') }}">
+                <a href="{{ route('post') }}/{{ $post->id }}">
                     <button type="button" class="btn btn-outline-info btn-fw">
-                        <i class=" ti-angle-double-left "></i> Kembali ke daftar kelurahan
+                        <i class=" ti-angle-double-left "></i> Kembali ke detail post
                     </button>
                 </a>
             </div>

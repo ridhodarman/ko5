@@ -9,6 +9,7 @@ use App\Kecamatan;
 use App\Pemilik;
 use App\Detail_fasilitas_post;
 use App\Harga;
+use App\Foto;
 use Illuminate\Http\Request;
 use File;
 
@@ -142,10 +143,16 @@ class PostsController extends Controller
                     ->where('post_id', '=', '?')
                     ->setBindings([$post])
                     ->get();
+        $foto = Foto::select('id','url')
+                    ->where('post_id', '=', '?')
+                    ->setBindings([$post])
+                    ->get();
+        //return $foto;
         return view ('admin.post.view',[
                                         'post' => $query,
                                         'fasilitas' => $fasilitas,
-                                        'harga' => $harga
+                                        'harga' => $harga,
+                                        'foto' => $foto
                                     ]);
     }
 
