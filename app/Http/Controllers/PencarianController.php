@@ -22,42 +22,49 @@ class PencarianController extends Controller
     }
 
     public function sidebar(){
-        $fasilitas = Fasilitas_post::select('id', 'nama')->get();
-        $jenis = Jenis_post::select('id', 'nama')->get();
-        $status = Status_post::select('id', 'nama')->get();
+        $fasilitas = Fasilitas_post::select('id', 'nama')->orderBy('nama')->get();
+        $jenis = Jenis_post::select('id', 'nama')->orderBy('nama')->get();
+        $status = Status_post::select('id', 'nama')->orderBy('nama')->get();
+        $kampus = Kampus_sekolah::select('id', 'nama')->orderBy('nama')->get();
         return view ('cari.inc.sidebar',[
                                             'fasilitas' => $fasilitas,
                                             'jenis' => $jenis,
-                                            'status' => $status
+                                            'status' => $status,
+                                            'kampus' => $kampus
                                         ]);
     }
 
-    public function keyword($jenis, $kampus, $teks){
-        $kampus = Kampus_sekolah::where('id', $kampus)->first();
-        //return $kampus;
-        $query = DB::table(DB::raw('posts, kampus_sekolahs')) 
-                        ->Select('posts.id', 'posts.nama', 'cover', 'kampus_sekolahs.nama AS kampus')
-                        ->addSelect(DB::raw('
+    public function keyword($lat, $lng, $teks){
+        $lat2 = base64_decode($lat);
+        $lng2 = base64_decode($lng);
+        $teks2 = base64_decode($teks);
+        $query = DB::table(DB::raw('posts')) 
+                        ->Select('posts.id', 'posts.nama', 'cover', 'jenis_posts.nama AS jenis', 'pembayaran')
+                        ->addSelect(DB::raw("
+                            min(harga) AS harga,
                             6371 * acos( 
-                                cos( radians(-0.3198473) ) 
+                                cos( radians('$lat2') ) 
                                 * cos( radians( posts.lat ) ) 
-                                * cos( radians( posts.lng ) - radians(100.3918649) ) 
-                                + sin( radians(-0.3198473) ) 
+                                * cos( radians( posts.lng ) - radians('$lng2') ) 
+                                + sin( radians('$lat2') ) 
                                 * sin( radians( posts.lat ) )
                             ) as distance        
-                        '))
-                    ->where('posts.jenis_posts', '=', '?')
-                    ->setBindings([$jenis])
-                    ->orderBy('distance')
+                        "))
+                    ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
+                    ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->get();
 
         $post = array();
         foreach ($query as $row) {
+            $harga = str_replace (",", ".", number_format( $row->harga ) );
+            $jarak = str_replace (".", ",", round($row->distance, 2) );
             $data = array(
                 "id" => $row->id,
                 "nama" => $row->nama,
                 "cover" => $row->cover,
-                "keterangan" => "sekitar ".round($row->distance, 2)." meter dari pusat kampus ".$row->kampus
+                "harga" => $row->harga,
+                "harga" => "Rp. ". $harga ." / ".$row->pembayaran,
+                "keterangan" => "<span class='badge badge-light'>".$row->jenis."</span>sekitar ". $jarak ." Kilometer dari pusat ".$teks2
             );
             array_push($post, $data);
         }
@@ -65,9 +72,12 @@ class PencarianController extends Controller
         //return $object;
         $teks2 = base64_decode($teks);
         return view ('cari.index',[
-                                    'post' => $object,
-                                    'teks' => $teks2
+                                    'post' => $object
                                 ]);
+    }
+
+    public function cari(Request $request){
+        return $request;
     }
 
     public function show($id){

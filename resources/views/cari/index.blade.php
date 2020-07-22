@@ -129,9 +129,6 @@
                         <div class="form-inline">
                             <span class="mr-md-auto">
                                 {{ count($post) }} <font style="color: darkgray;"> Items found </font>
-                                @if (isset($teks))
-                                    | <font style="color: darkgray;">menampilkan hasil pencarian dari:</font> {!! $teks !!} 
-                                @endif
                             </span>
                         </div>
                     </header><!-- sect-heading -->
@@ -178,14 +175,14 @@
                                 <figcaption class="info-wrap">
                                     <!-- <div class="fix-height"> -->
                                     <div>
-                                        <a href="#" class="title">
+                                        <a href="{{ route('info') }}/{{$p->id}}" class="title">
                                             <div style="font-weight: bolder;">{{$p->nama}}</div>
-                                            <div style="font-size: 85%; color: darkgrey;">
+                                            <div style="font-size: 85%; color: rgb(46, 46, 46);">
                                                 {!! $p->keterangan !!}
                                             </div>
                                         </a>
-                                        <div class="price-wrap mt-2">
-                                            <span class="price" style="color: green;">Rp. 1280</span>
+                                        <div class="price-wrap mt-1 mb-1">
+                                            <span class="price" style="color: green;">{{ $p->harga }}</span>
                                         </div> <!-- price-wrap.// -->
                                     </div>
                                     <a href="{{ route('info') }}/{{$p->id}}" target="_blank" class="btn btn-block btn-primary">Lihat Tempat</a>
