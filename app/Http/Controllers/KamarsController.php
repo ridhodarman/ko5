@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Harga;
+use App\Kamar;
 use Illuminate\Http\Request;
 use App\Post;
 
-class HargasController extends Controller
+class KamarsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class HargasController extends Controller
     public function create($post)
     {
         $p = Post::select('id','nama')->where('id', $post)->first();
-        return view ('admin.harga.tambah',['post' => $p]);
+        return view ('admin.kamar.tambah',['post' => $p]);
     }
 
     /**
@@ -38,21 +38,22 @@ class HargasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [ 
-                            'harga' => 'required|numeric',
-                            'pembayaran' => 'required|not_regex:/`/i'
+                            'panjang' => 'required|numeric',
+                            'lebar' => 'required|numeric',
+                            'jumlah' => 'numeric'
                         ]);
-        Harga::create($request->all());
-        $pesan = "Harga per <b>".$request->pembayaran.'</b> berhasil ditambahkan';
+        Kamar::create($request->all());
+        $pesan = "Kamar <b>".$request->panjang." x ".$request->lebar.'</b> berhasil ditambahkan';
         return redirect('/post/'.$request->post_id)->with('status', $pesan);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Harga  $harga
+     * @param  \App\Kamar  $kamar
      * @return \Illuminate\Http\Response
      */
-    public function show(Harga $harga)
+    public function show(Kamar $kamar)
     {
         //
     }
@@ -60,10 +61,10 @@ class HargasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Harga  $harga
+     * @param  \App\Kamar  $kamar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Harga $harga)
+    public function edit(Kamar $kamar)
     {
         //
     }
@@ -72,10 +73,10 @@ class HargasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Harga  $harga
+     * @param  \App\Kamar  $kamar
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Harga $harga)
+    public function update(Request $request, Kamar $kamar)
     {
         //
     }
@@ -83,13 +84,13 @@ class HargasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Harga  $harga
+     * @param  \App\Kamar  $kamar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Harga $harga)
+    public function destroy(Kamar $kamar)
     {
-        Harga::destroy($harga->id);
-        $pesan = "harga Rp. ".$harga->harga." / ".$harga->pembayaran." berhasil dihapus";
-        return redirect('/post/'.$harga->post_id)->with('status2', $pesan);
+        Kamar::destroy($kamar->id);
+        $pesan = "kamar ".$kamar->panjang." x ".$kamar->lebar." berhasil dihapus";
+        return redirect('/post/'.$kamar->post_id)->with('status2', $pesan);
     }
 }

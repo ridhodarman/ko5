@@ -50,6 +50,11 @@
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}">
+                            @error('alamat')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">

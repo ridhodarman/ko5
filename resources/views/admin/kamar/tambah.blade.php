@@ -4,7 +4,7 @@
     <div class="col-md-12 grid-margin">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h4 class="font-weight-bold mb-0">Tambah Harga: {{ $post->nama }}</h4>
+                <h4 class="font-weight-bold mb-0">Tambah Kamar: {{ $post->nama }}</h4>
             </div>
             <div>
                 <a href="{{ route('post') }}/{{ $post->id }}">
@@ -21,42 +21,39 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('harga') }}" method="post">
+                <form class="forms-sample" action="{{ route('kamar') }}" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
-                                    </div>
-                                    <input type="text" class="form-control @error('harga') is-invalid @enderror" placeholder="harga" aria-label="Username" 
-                                        name="harga" id="harga" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                                    <input type="text" class="form-control @error('panjang') is-invalid @enderror" 
+                                    placeholder="panjang (misal: 4.5)" aria-label="Username" name="panjang">
                                     <div class="input-group-append">
-                                        <span class="input-group-text">,00</span>
+                                        <span class="input-group-text">X</span>
+                                    </div>
+                                    <input type="text" class="form-control @error('lebar') is-invalid @enderror" 
+                                    placeholder="lebar (misal: 5)" aria-label="Username" name="lebar">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">meter</span>
                                     </div>
                                 </div>
                             </div>
-                            @error('harga')
+                            @error('panjang')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                            @error('lebar')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
                             @enderror
                         </div>
-                        <div class="col-sm-4">
-                            <div class="col-sm-10">
-                                <select name="pembayaran" class="form-control" style="color: black;">
-                                    <option value="tahun">per tahun</option>
-                                    <option value="6 bulan">per 6 bulan</option>
-                                    <option value="bulan">per bulan</option>
-                                    <option value="minggu">per minggu</option>
-                                    <option value="hari">per hari</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror" placeholder="keterangan *opsional (misal: bisa nego)" name="keterangan">
-                            @error('keterangan')
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control @error('jumlah') is-invalid @enderror" 
+                            placeholder="jumlah kamar" name="jumlah" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                            @error('jumlah')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>

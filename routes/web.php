@@ -114,3 +114,8 @@ Route::get('/foto', 'FotosController@index')->middleware('auth')->name('foto');
 Route::get('/foto/tambah/{post}', 'FotosController@create')->middleware('auth');
 Route::post('/fotos', 'FotosController@store')->middleware('auth')->name('fotos');
 Route::delete('/foto/{foto}', 'FotosController@destroy')->middleware('auth');
+
+Route::get('/kamar', 'KamarsController@index')->middleware('auth')->name('kamar');
+Route::get('/kamar/tambah/{post}', 'KamarsController@create')->middleware('auth');
+Route::post('/kamar', 'KamarsController@store')->middleware('auth');
+Route::delete('/kamar/{kamar}', 'KamarsController@destroy')->middleware('auth');

@@ -10,6 +10,7 @@ use App\Pemilik;
 use App\Detail_fasilitas_post;
 use App\Harga;
 use App\Foto;
+use App\Kamar;
 use Illuminate\Http\Request;
 use File;
 
@@ -58,11 +59,8 @@ class PostsController extends Controller
         $this->validate($request, [
 			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover',
             'nama' => 'required|not_regex:/`/i',
-            'alamat' => 'not_regex:/`/i',
-            'deskripsi' => 'not_regex:/`/i',
-            'lat' => 'numeric',
-            'lng' => 'numeric',
-            'link_kontak' => 'not_regex:/`/i'
+            'lat' => 'numeric|nullable',
+            'lng' => 'numeric|nullable',
 		]);
         
         $file = $request->file('file');
@@ -148,11 +146,16 @@ class PostsController extends Controller
                     ->setBindings([$post])
                     ->get();
         //return $foto;
+        $kamar = Kamar::select('id', 'panjang', 'lebar', 'jumlah')
+                    ->where('post_id', '=', '?')
+                    ->setBindings([$post])
+                    ->get();
         return view ('admin.post.view',[
                                         'post' => $query,
                                         'fasilitas' => $fasilitas,
                                         'harga' => $harga,
-                                        'foto' => $foto
+                                        'foto' => $foto,
+                                        'kamar' => $kamar
                                     ]);
     }
 
@@ -196,11 +199,8 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|not_regex:/`/i',
-            'alamat' => 'not_regex:/`/i',
-            'deskripsi' => 'not_regex:/`/i',
             'lat' => 'numeric',
-            'lng' => 'numeric',
-            'link_kontak' => 'not_regex:/`/i'
+            'lng' => 'numeric'
 		]);
         Post::where('id', $post->id)
             ->update([
@@ -226,9 +226,16 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
-    {
+    {   
         $gambar = Post::where('id', $post->id)->first();
         File::delete('foto/'.$gambar->cover);
+        
+        //hapus foto
+        $foto = Foto::where('post_id', $post->id)->get();
+        foreach ($foto as $f){
+            File::delete('foto/'.$f->url);
+        }
+
         Post::destroy($post->id);
         $pesan = "Post '<b>".$post->nama."</b>' berhasil dihapus !";
         return redirect('/post')->with('status-hapus', $pesan);
@@ -236,7 +243,7 @@ class PostsController extends Controller
 
     public function destroy_cover(Post $post)
     {   
-        // hapus file
+        // hapus cover
         $gambar = Post::where('id', $post->id)->first();
         File::delete('foto/'.$gambar->cover);
     

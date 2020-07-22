@@ -85,16 +85,16 @@
                             </tr>
                         </table>
                         <br/>
-                        <a href="{{ route('post') }}/{{$p->id}}/edit">
-                            <button class="btn btn-inverse-info btn-fw">Edit</button>
-                        </a> &emsp;
                         <form action="{{ route('post') }}/{{$p->id}}" method="POST" class="d-inline">
                             @method('delete')
                             @csrf
                             <button type="button" class="btn btn-outline-danger btn-fw" id="tombol-hapus">
-                                <i class="ti-trash"></i> Hapus
+                                <i class="ti-trash"></i> Hapus Post
                             </button>
-                        </form>
+                        </form>&emsp;
+                        <a href="{{ route('post') }}/{{$p->id}}/edit">
+                            <button class="btn btn-inverse-info btn-fw">Edit</button>
+                        </a> 
                         
                         <script>
                             let peringatan=true;
@@ -163,6 +163,8 @@
                             var marker = new L.Marker([l, b]);
                             marker.addTo(peta);
                         </script>
+                        @else
+                        <h4>Lokasi belum ditambahkan</h4>
                         @endif
                         
                         <table class="table" style="text-align: center;">
@@ -280,7 +282,7 @@
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Harga</p>
                 <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
                     <tbody>
-                        @foreach ($harga as $h)
+                    @foreach ($harga as $h)
                         <tr>
                             <td>Rp. {{ number_format( $h->harga) }} / {{$h->pembayaran}}</td>
                             <td style="color: gray;">{{$h->keterangan}}</td>
@@ -293,9 +295,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanf{{$h->id}}=true;
+                                    let peringatanh{{$h->id}}=true;
                                     $("#hapus-h-{{$h->id}}").on('click', function (e) {
-                                        if(peringatanf{{$h->id}}==true){
+                                        if(peringatanh{{$h->id}}==true){
                                             swal({
                                                 text: 'Yakin hapus "{{ $h->harga }} / {{$h->pembayaran}}" dari daftar harga ?',
                                                 icon: "warning",
@@ -304,7 +306,7 @@
                                             })
                                                 .then((willDelete) => {
                                                     if (willDelete) {
-                                                        peringatanf{{$h->id}} = false;
+                                                        peringatanh{{$h->id}} = false;
                                                         $("#hapus-h-{{$h->id}}").removeAttr("type").attr("type", "submit");
                                                         $("#hapus-h-{{$h->id}}").trigger( "click" );
                                                     }
@@ -346,9 +348,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanf{{$g->id}}=true;
+                                    let peringatang{{$g->id}}=true;
                                     $("#hapus-p-{{$g->id}}").on('click', function (e) {
-                                        if(peringatanf{{$g->id}}==true){
+                                        if(peringatang{{$g->id}}==true){
                                             swal({
                                                 text: "Yakin hapus foto ini ?",
                                                 icon: "warning",
@@ -357,7 +359,7 @@
                                             })
                                                 .then((willDelete) => {
                                                     if (willDelete) {
-                                                        peringatanf{{$g->id}} = false;
+                                                        peringatang{{$g->id}} = false;
                                                         $("#hapus-p-{{$g->id}}").removeAttr("type").attr("type", "submit");
                                                         $("#hapus-p-{{$g->id}}").trigger( "click" );
                                                     }
@@ -377,7 +379,54 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+            <div style="float: right;">
+                <a href="{{ route('kamar') }}/tambah/{{$p->id}}">
+                        <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
+                    </a>
+                </div>
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Kamar</p>
+                <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
+                    <tbody>
+                    @php $total=0; @endphp
+                    @foreach ($kamar as $k)
+                        <tr>
+                            <td> {{$k->panjang}} x {{$k->lebar}} </td>
+                            <td style="color: gray;">{{$k->jumlah}}</td>
+                            @php $total=$total+$k->jumlah; @endphp
+                            <td>
+                                <form action="{{ route('kamar') }}/{{$k->id}}" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="btn badge badge-danger" id="hapus-k-{{$k->id}}">
+                                        <i class="fa fa-ban"></i> remove
+                                    </button>
+                                </form>
+                                <script>
+                                    let peringatank{{$k->id}}=true;
+                                    $("#hapus-k-{{$k->id}}").on('click', function (e) {
+                                        if(peringatank{{$k->id}}==true){
+                                            swal({
+                                                text: "Yakin hapus kamar {{$k->panjang}} x {{$k->lebar}} ?",
+                                                icon: "warning",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        peringatank{{$k->id}} = false;
+                                                        $("#hapus-k-{{$k->id}}").removeAttr("type").attr("type", "submit");
+                                                        $("#hapus-k-{{$k->id}}").trigger( "click" );
+                                                    }
+                                                });
+                                        }
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div style="float: right;"> Total Kamar : {{$total}} </div>
             </div>
         </div>
     </div>
