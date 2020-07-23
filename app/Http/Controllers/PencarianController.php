@@ -20,6 +20,7 @@ class PencarianController extends Controller
     {
         $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
+                    ->orderBy('posts.created_at')
                     ->get();
         return view ('cari.index',['post' => $post]);
         //return $query;
@@ -86,63 +87,92 @@ class PencarianController extends Controller
         $nama = strtolower($request->nama_kos);
         $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                    ->where('posts.nama', 'like', '%' . $nama . '%')
+                    ->whereRaw("LOWER('posts.nama') LIKE '%". $nama."%'")
+                    ->orderBy('posts.created_at')
                     ->get();
-        return view ('cari.index',['post' => $post]);
+        return view ('cari.index',['post' => $post, 
+                                    'nama_kos' => $request->nama_kos
+                                ]);
         //return $query;
     }
 
     public function cari(Request $request){
         //return $request;
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
+                ->addSelect(DB::raw("min(harga)"))
+                ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
+                ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id');
+        
 
         $filter="";
         if (isset($request->fasilitas)){
+            $post = $post->leftjoin('detail_fasilitas_posts', 'posts.id',  '=', 'detail_fasilitas_posts.post_id')
+            ->whereIn('detail_fasilitas_posts.fasilitas_posts', $request->fasilitas)
+            ->groupBy('detail_fasilitas_posts.post_id', 'posts.id');
+
             foreach($request->fasilitas as $f){
-                $fasilitas = Fasilitas_post::select('nama')->where('id', $f)->get();
-                $filter= $filter."<span class='badge badge-pill badge-light'>".$fasilitas[0]['nama']."</span> ";
+                $fasilitas = Fasilitas_post::select('nama')->where('id', $f)->first();
+                $filter= $filter."<span class='badge badge-pill badge-light'>".$fasilitas->nama."</span> ";
             }
         }
 
         if (isset($request->jenis)){
+            $post = $post->whereIn('jenis_posts.id', $request->jenis);
             foreach($request->jenis as $j){
-                $jenis = Jenis_post::select('nama')->where('id', $j)->get();
-                $filter= $filter."<span class='badge badge-pill badge-warning' style='color: black;'>".$jenis[0]['nama']."</span> ";
+                $jenis = Jenis_post::select('nama')->where('id', $j)->first();
+                $filter= $filter."<span class='badge badge-pill badge-warning' style='color: black;'>".$jenis->nama."</span> ";
             }
         }
 
         if (isset($request->status)){
+            $post = $post->whereIn('posts.status_posts', $request->status);
             foreach($request->status as $s){
-                $status = Status_post::select('nama')->where('id', $s)->get();
-                $filter= $filter."<span class='badge badge-pill badge-info'>".$status[0]['nama']."</span> ";
+                $status = Status_post::select('nama')->where('id', $s)->first();
+                $filter= $filter."<span class='badge badge-pill badge-info'>".$status->nama."</span> ";
             }
         }
 
         if ($request->atur_harga=="rentang"){
+            $post = $post->whereBetween('harga', [$request->min, $request->max]);
             $min = $harga = str_replace (",", ".", number_format( $request->min ) );
             $filter= $filter."<span class='badge badge-pill badge-success'>min: Rp. ".$min."</span> ";
             $max = $harga = str_replace (",", ".", number_format( $request->max ) );
             $filter= $filter."<span class='badge badge-pill badge-success'>max: Rp. ".$max."</span> ";
+            
         }
 
         if ($request->urutan=="dekat_kampus"){
-            $kampus = Kampus_sekolah::select('nama')->where('id', $request->kampus)->get();
-            $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan harga dari yang paling dekat ".$kampus[0]['nama']."</span> ";
-            $urutan = 'harga ASC';
+            $kampus = Kampus_sekolah::select('nama', 'lat', 'lng')->where('id', $request->kampus)->first();
+            $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan lokasi dari yang paling dekat ".$kampus->nama."</span> ";
+            
+            $post = $post->addSelect(DB::raw("
+                            CONCAT_WS(' Kilometer perkiraan dari pusat kampus ',
+                                ROUND(
+                                    6371 * acos( 
+                                        cos( radians( $kampus->lat ) ) 
+                                        * cos( radians( posts.lat ) ) 
+                                        * cos( radians( posts.lng ) - radians( $kampus->lng ) ) 
+                                        + sin( radians( $kampus->lat ) ) 
+                                        * sin( radians( posts.lat ) )
+                                    ) 
+                                , 2) 
+                            , '$kampus->nama') AS keterangan
+                        "));
         }
         else {
             if ($request->urutan=="harga_rendah"){
                 $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan harga dari yang paling rendah</span> ";
-                $urutan = 'harga ASC';
+                $post = $post->orderBy('harga', 'asc');
             }
             else if ($request->urutan=="harga_tinggi"){
                 $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan lokasi dari yang paling tinggi</span> ";
-                $urutan = 'harga DESC';
+                $post = $post->orderBy('harga', 'desc');
             }
         }
         
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
-                    ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                    ->get();
+
+        $post = $post->get();
+        //return $post;
         return view ('cari.index',[
             'post' => $post,
             'filter' => $filter

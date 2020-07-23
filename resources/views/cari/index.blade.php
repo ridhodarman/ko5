@@ -23,7 +23,7 @@
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">
-                                {{ count($post) }} 
+                                <font id="jumlah"> {{ count($post) }} </font>
                                 <font style="color: darkgray;"> Items found </font>
                                 @if(isset($filter))
                                 | Filter: 
@@ -36,6 +36,7 @@
                     <div class="row">
 
                         @foreach ($post as $p)
+                        @if($p->id)
                         <div class="col-md-4">
                             <figure class="card card-product-grid">
                                 <div class="img-wrap">
@@ -47,7 +48,7 @@
                                             $gambar = "null.png";
                                         }
                                     @endphp
-                                    <a href="#"><img src="{{ URL::asset($gambar) }}"></a>
+                                    <a href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><img src="{{ URL::asset($gambar) }}"></a>
                                     <a class="btn-overlay" href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><i class="fa fa-search-plus"></i> Quick View</a>
                                     <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -66,7 +67,9 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Lihat Tempat</button>
+                                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank">
+                                                        <button type="button" class="btn btn-primary">Lihat Tempat</button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,6 +92,11 @@
                                 </figcaption>
                             </figure>
                         </div> <!-- col.// -->
+                        @else
+                        <script>
+                            $( "#jumlah" ).html("0");
+                        </script>
+                        @endif
                         @endforeach
                     </div> <!-- row end.// -->
 

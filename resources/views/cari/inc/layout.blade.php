@@ -64,7 +64,8 @@
                         <form action='{{ route("cari") }}/nama' class="search" method="POST">
                             @csrf
                             <div class="input-group w-100">
-                                <input type="text" class="form-control" placeholder="Cari nama kos / kontrakan" name="nama_kos">
+                                <input type="text" class="form-control" placeholder="Cari nama kos / kontrakan" name="nama_kos" 
+                                value="@if(isset($nama_kos)){{ $nama_kos }}@endif">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fa fa-search"></i>
