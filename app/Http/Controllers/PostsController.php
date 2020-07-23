@@ -284,4 +284,5 @@ class PostsController extends Controller
         $pesan = "Foto depan berhasil di-upload !";
         return redirect('/post/'.$post->id)->with('status', $pesan);
     }
+    
 }
