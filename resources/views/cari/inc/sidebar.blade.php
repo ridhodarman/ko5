@@ -1,3 +1,8 @@
+<style>
+    .badge-warning{
+        background-color: #FFC107;
+    }
+</style>
 <div class="card">
     <article class="filter-group">
         <header class="card-header">
@@ -8,14 +13,14 @@
         </header>
         <div class="filter-content collapse show" id="collapse_1" style="">
             <div class="card-body">
-                <form class="pb-3">
+                <!-- <form class="pb-3">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Cari nama kos">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
                 Popular Keywords:
                 <ul class="list-menu">
@@ -60,7 +65,8 @@
                 <div class="card-body">
                     @foreach ($fasilitas as $f)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$f->id}}" name="fasilitas[]"">
+                        <input type="checkbox" class="custom-control-input" 
+                            value="{{$f->id}}" name="fasilitas[]" id="fas-{{$f->id}}">
                         <div class="custom-control-label">{{$f->nama}}</div>
                     </label>
                     @endforeach
@@ -78,7 +84,8 @@
                 <div class="card-body">
                     @foreach ($jenis as $j)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$j->id}}" name="jenis[]" checked>
+                        <input type="checkbox" class="custom-control-input" 
+                        value="{{$j->id}}" name="jenis[]" id="jenis-{{$j->id}}" checked>
                         <div class="custom-control-label">{{$j->nama}}</div>
                     </label>
                     @endforeach
@@ -113,7 +120,7 @@
             <div class="filter-content collapse in" id="collapse_5" style="">
                 <div class="card-body">
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="urutan" checked="" class="custom-control-input" value="harga_rendah">
+                        <input type="radio" name="urutan" checked="" class="custom-control-input" value="harga_rendah" checked>
                         <div class="custom-control-label">Harga Rendah Ke Tinggi</div>
                     </label>
 
@@ -123,11 +130,11 @@
                     </label>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="urutan" id="radio_kampus" class="custom-control-input" value="kampus">
+                        <input type="radio" name="urutan" id="radio_kampus" class="custom-control-input" value="dekat_kampus">
                         <div class="custom-control-label">Paling dekat dengan kampus <font style="color: darkgray;">
                                 (pilih kampus)</font>
                         </div>
-                        <select class="form-control" id="pilih_kampus">
+                        <select class="form-control" id="pilih_kampus" name="kampus">
                             @foreach ($kampus as $k)
                             <option value="{{$k->id}}">{{$k->nama}}</option>
                             @endforeach
@@ -157,18 +164,18 @@
                 <div class="card-body">
                     <label class="custom-control custom-radio">
                         <input type="radio" name="atur_harga" class="custom-control-input" id="semua"
-                            onclick="aturharga()">
+                            onclick="aturharga()" checked>
                         <div class="custom-control-label">Semua Harga</div>
                     </label>
 
                     <label class="custom-control custom-radio">
                         <input type="radio" name="atur_harga" class="custom-control-input" onclick="aturharga()"
-                            id="show_harga">
+                            id="show_harga" value="rentang">
                         <div class="custom-control-label">Tetapkan Rentang Harga</div>
                     </label>
                     <div id="rentangnya">
                         <div style="float: right;"><label>Rp. <font id="nilai"></font></label></div>
-                        <input type="range" class="custom-range" min="0" max="150" name="" onchange="teksharga()"
+                        <input type="range" class="custom-range" min="0" max="150" onchange="teksharga()"
                             id="harga">
 
                         <div class="form-row">

@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/sidebar', 'PencarianController@sidebar')->name('sidebar');
 Route::get('/cari', 'PencarianController@index')->name('cari');
 Route::get('/cari/{lat}/{lng}/{teks}', 'PencarianController@keyword');
+Route::post('/cari/nama', 'PencarianController@nama');
 Route::post('/cari', 'PencarianController@cari');
 
 Route::get('/info', function () {  return abort(404); })->name('info');
