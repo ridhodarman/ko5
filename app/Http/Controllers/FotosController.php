@@ -44,7 +44,8 @@ class FotosController extends Controller
         $file = $request->file('file');
 
         $p = Post::select('id','nama')->where('id', $request->post_id)->first();
-        $nama_file = $p->nama."_".time().".".$file->getClientOriginalExtension();
+        $nama2 = preg_replace('/[^A-Za-z0-9\-]/', '', $p->nama);
+        $nama_file = $nama2."_".time().".".$file->getClientOriginalExtension();
         $tujuan_upload = 'foto';
         $file->move($tujuan_upload,$nama_file);
 

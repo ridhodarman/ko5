@@ -87,7 +87,8 @@ class PostsController extends Controller
             echo 'File Mime Type: '.$file->getMimeType();
             echo '<br>';
 
-            $nama_file = $request->nama."_".time().".".$file->getClientOriginalExtension();
+            $nama2 = preg_replace('/[^A-Za-z0-9\-]/', '', $request->nama);
+            $nama_file = $nama2."_".time().".".$file->getClientOriginalExtension();
     
                     // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'foto';
@@ -271,7 +272,8 @@ class PostsController extends Controller
 			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover,required'
 		]);
         $file = $request->file('file');
-        $nama_file = $request->nama."_".time().".".$file->getClientOriginalExtension();
+        $nama2 = preg_replace('/[^A-Za-z0-9\-]/', '', $request->nama);
+        $nama_file = $nama2."_".time().".".$file->getClientOriginalExtension();
         $tujuan_upload = 'foto';
         $file->move($tujuan_upload,$nama_file);
         

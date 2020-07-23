@@ -40,7 +40,7 @@
                     <a class="badge badge-light" href='{{ route("cari") }}/
                             @php echo base64_encode("-0.940535") @endphp/
                             @php echo base64_encode("100.366351") @endphp/
-                            @php echo base64_encode("kampus UNP air tawar") @endphp'>
+                            @php echo base64_encode("kampus FK Unand Jati") @endphp'>
                         Kos FK Unand jati
                     </a>
                 </ul>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                     @foreach ($fasilitas as $f)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$f->id}}" name="fasilitas">
+                        <input type="checkbox" class="custom-control-input" value="{{$f->id}}" name="fasilitas[]"">
                         <div class="custom-control-label">{{$f->nama}}</div>
                     </label>
                     @endforeach
@@ -78,7 +78,7 @@
                 <div class="card-body">
                     @foreach ($jenis as $j)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$j->id}}" name="jenis" checked>
+                        <input type="checkbox" class="custom-control-input" value="{{$j->id}}" name="jenis[]" checked>
                         <div class="custom-control-label">{{$j->nama}}</div>
                     </label>
                     @endforeach
@@ -96,7 +96,7 @@
                 <div class="card-body">
                     @foreach ($status as $s)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$s->id}}" name="status" checked>
+                        <input type="checkbox" class="custom-control-input" value="{{$s->id}}" name="status[]" checked>
                         <div class="custom-control-label">{{$s->nama}}</div>
                     </label>
                     @endforeach
@@ -174,7 +174,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Min</label>
-                                <input class="form-control" placeholder="0" type="number" name="min">
+                                <input class="form-control" placeholder="0" type="number" name="min" id="teks-min">
                             </div>
                             <div class="form-group text-right col-md-6">
                                 <label>Max</label>
@@ -184,6 +184,7 @@
                     </div>
                     <script>
                         $("#rentangnya").hide();
+                        document.getElementById("teks-min").value = 0;
                         document.getElementById("teks-harga").value = 99999999999999;
                         function aturharga() {
                             if ($('#show_harga').is(':checked')) {
@@ -192,6 +193,7 @@
                             }
                             else if ($('#semua').is(':checked')) {
                                 $("#rentangnya").hide();
+                                document.getElementById("teks-min").value = 0;
                                 document.getElementById("teks-harga").value = 99999999999999;
                             }
                         }

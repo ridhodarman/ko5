@@ -106,7 +106,7 @@
             <nav>
                 <ol class="breadcrumb text-white">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href='{{ route("cari") }}'>Pencarian</a></li>
+                    <li class="breadcrumb-item"><a href='{{ route("cari") }}'>Cari Kos</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $p->nama }}</li>
                 </ol>
             </nav>
@@ -147,13 +147,11 @@
                                         <div class="slide">
                                             <img src="{{ URL::asset($gambar) }}" class="gambar">
                                         </div>
+                                        @foreach ($foto as $g)
                                         <div class="slide">
-                                            <img src="{{ URL::asset($gambar) }}" class="gambar">
+                                            <img src="{{ URL::asset('foto/'.$g->url) }}" class="gambar">
                                         </div>
-                                        <div class="slide">
-                                        </div>
-                                        <div class="slide">
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div><!-- End // .slider -->
@@ -196,8 +194,67 @@
                             <script src="{{ URL::asset('aset/slider/script.js') }}"></script>s
                         </div> <!-- col.// -->
 
-                        <div class="col-md-6">
-                            s
+                        <div class="col-md-4 mb-5 mt-2 card">
+                            <!-- <center style="color: rgb(71, 71, 71);"> <b>{{ $p->nama }}</b> </center> -->
+                            <table class="table table-hover" style="vertical-align: middle;">
+                                <tr>
+                                    <td><b> Tipe </b></td>
+                                    <td>
+                                        {{ $p->jenis }}
+                                    </td>
+                                </tr>
+                                @if (count($kamar)>0)
+                                <tr>
+                                    <td><b> Kamar </b></td>
+                                    <td>
+                                        @foreach ($kamar as $k)
+                                        <span class="badge badge-secondary">ukuran {{ $k->panjang }} x {{ $k->lebar }} meter</span>
+                                            @if($k->jumlah)
+                                            <span class="badge badge-light">{{ $k->jumlah }} kamar</span>
+                                            @endif
+                                        <br/>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
+
+                                @if (count($harga)>0)
+                                <tr>
+                                    <td><b> Harga </b></td>
+                                    <td>
+                                        @foreach ($harga as $h)
+                                        <span style="color: green; font-weight: bolder;">
+                                            Rp.  {{ str_replace (",", ".", number_format( $h->harga  ) ) }} / {{ $h->pembayaran }} 
+                                        </span>
+                                            @if($h->keterangan)
+                                            <span class="badge badge-light">{{ $h->keterangan }}</span>
+                                            @endif
+                                        <br/>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
+
+                                <tr>
+                                    <td><b> Status </b></td>
+                                    <td>
+                                        <b> {{ $p->status }} </b>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b> CP </b></td>
+                                    <td>
+                                        <a href="//{{$p->link_kontak}}" target="_blank">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                {{$p->link_kontak}}
+                                                <span class="badge badge-light"><i class="fas fa-link"></i></span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </table>
                         </div>
 
                         <div class="col-md-4">

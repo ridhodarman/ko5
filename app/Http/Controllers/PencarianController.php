@@ -9,6 +9,9 @@ use App\Kampus_sekolah;
 use App\Fasilitas_post;
 use App\Jenis_post;
 use App\Status_post;
+use App\Foto;
+use App\Kamar;
+use App\Harga;
 
 class PencarianController extends Controller
 {
@@ -35,8 +38,8 @@ class PencarianController extends Controller
     }
 
     public function keyword($lat, $lng, $teks){
-        $lat2 = base64_decode($lat);
-        $lng2 = base64_decode($lng);
+        $lat2 = (double)base64_decode($lat);
+        $lng2 = (double)base64_decode($lng);
         $teks2 = base64_decode($teks);
         $query = DB::table(DB::raw('posts')) 
                         ->Select('posts.id', 'posts.nama', 'cover', 'jenis_posts.nama AS jenis', 'pembayaran')
@@ -81,12 +84,20 @@ class PencarianController extends Controller
     }
 
     public function show($id){
-        $post = Post::where('id', $id)->get();
-        //return $kampus;
+        $post = Post::select('posts.*', 'jenis_posts.nama AS jenis', 'status_posts.nama AS status')
+                ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
+                ->leftJoin('status_posts', 'posts.status_posts', '=', 'status_posts.id')
+                ->where('posts.id', $id)->get();
+        $foto = Foto::select('url')->where('post_id', $id)->get();
+        $kamar = Kamar::select('panjang', 'lebar', 'jumlah')->where('post_id', $id)->get();
+        $harga = Harga::select('harga', 'pembayaran', 'keterangan')->where('post_id', $id)->get();
         
         //return $post;
         return view ('cari.show',[
-            'post' => $post
+            'post' => $post,
+            'foto' => $foto,
+            'kamar' => $kamar,
+            'harga' => $harga
         ]);
     }
 }
