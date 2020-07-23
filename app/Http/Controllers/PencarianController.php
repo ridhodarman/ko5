@@ -146,7 +146,7 @@ class PencarianController extends Controller
             $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan lokasi dari yang paling dekat ".$kampus->nama."</span> ";
             
             $post = $post->addSelect(DB::raw("
-                            CONCAT_WS(' Kilometer perkiraan dari pusat kampus ',
+                            CONCAT_WS(' Kilometer perkiraan jarak dari pusat kampus ',
                                 ROUND(
                                     6371 * acos( 
                                         cos( radians( $kampus->lat ) ) 
@@ -172,6 +172,12 @@ class PencarianController extends Controller
         
 
         $post = $post->get();
+        foreach ($post as $p){
+            if($p->id==null){
+                $post = [];
+                $post = json_decode(json_encode($post), FALSE);
+            }
+        }
         //return $post;
         return view ('cari.index',[
             'post' => $post,

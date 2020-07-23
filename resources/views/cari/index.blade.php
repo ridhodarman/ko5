@@ -36,7 +36,7 @@
                     <div class="row">
 
                         @foreach ($post as $p)
-                        @if($p->id)
+                        
                         <div class="col-md-4">
                             <figure class="card card-product-grid">
                                 <div class="img-wrap">
@@ -92,11 +92,7 @@
                                 </figcaption>
                             </figure>
                         </div> <!-- col.// -->
-                        @else
-                        <script>
-                            $( "#jumlah" ).html("0");
-                        </script>
-                        @endif
+                        
                         @endforeach
                     </div> <!-- row end.// -->
 

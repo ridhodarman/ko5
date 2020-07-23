@@ -12,7 +12,7 @@
             </a>
         </header>
         <div class="filter-content collapse show" id="collapse_1" style="">
-            <div class="card-body">
+            <div class="card-body" style="margin-top: -15px;">
                 <!-- <form class="pb-3">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Cari nama kos">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </form> -->
-
+                
                 Popular Keywords:
                 <ul class="list-menu">
                     <a class="badge badge-light" href='{{ route("cari") }}/
