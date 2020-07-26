@@ -27,7 +27,7 @@ class Detail_fasilitas_postsController extends Controller
     public function create($post)
     {
         $p = Post::select('id','nama')->where('id', $post)->first();
-        $fasilitas = Fasilitas_post::select('id','nama')->get();
+        $fasilitas = Fasilitas_post::select('id','nama')->orderBy('nama')->get();
         return view ('admin.detail_fasilitas.tambah',['post' => $p, 'fasilitas' => $fasilitas]);
     }
 

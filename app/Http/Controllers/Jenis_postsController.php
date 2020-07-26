@@ -15,7 +15,7 @@ class Jenis_postsController extends Controller
      */
     public function index()
     {
-        $jenis = Jenis_post::select('id','nama')
+        $jenis = Jenis_post::select('id','nama')->orderBy('nama')
                             ->get();
         //return $jenis;
         return view ('admin.jenis.index',['jenis' => $jenis]);

@@ -17,6 +17,7 @@ class KelurahansController extends Controller
     {
         $kelurahan = Kelurahan::select('kelurahans.id','kelurahans.nama', 'kecamatans.nama AS kecamatan')
                             ->leftJoin('kecamatans', 'kelurahans.kecamatan_id', '=', 'kecamatans.id')
+                            ->orderBy('nama')
                             ->get();
         //return $kelurahan;
         return view ('admin.kelurahan.index',['kelurahan' => $kelurahan]);
@@ -122,6 +123,7 @@ class KelurahansController extends Controller
         $query = Kelurahan::select('id', 'nama')
                     ->where('kecamatan_id', '=', '?')
                     ->setBindings([$value])
+                    ->orderBy('nama')
                     ->get();
         return $query;
     }

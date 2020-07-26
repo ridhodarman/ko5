@@ -36,10 +36,10 @@ class PostsController extends Controller
      */
     public function create()
     {
-        $jenis = Jenis_post::select('id','nama')->get();
-        $status = Status_post::select('id','nama')->get();
-        $kecamatan = Kecamatan::select('id','nama')->get();
-        $pemilik = Pemilik::select('id','nama')->get();
+        $jenis = Jenis_post::select('id','nama')->orderBy('nama')->get();
+        $status = Status_post::select('id','nama')->orderBy('nama')->get();
+        $kecamatan = Kecamatan::select('id','nama')->orderBy('nama')->get();
+        $pemilik = Pemilik::select('id','nama')->orderBy('nama')->get();
         return view('admin.post.tambah',[
                                         'jenis' => $jenis,
                                         'status' => $status,
@@ -120,6 +120,7 @@ class PostsController extends Controller
                             'kelurahans.nama AS kelurahan',
                             'kecamatans.nama AS kecamatan',
                             'pemiliks.nama AS pemilik',
+                            'pemiliks.id AS pemilik_id',
                             'jenis_posts.nama AS jenis',
                             'status_posts.nama AS status'
                             )

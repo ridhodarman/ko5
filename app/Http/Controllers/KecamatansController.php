@@ -14,7 +14,7 @@ class KecamatansController extends Controller
      */
     public function index()
     {
-        $kecamatan = Kecamatan::select('id','nama')
+        $kecamatan = Kecamatan::select('id','nama')->orderBy('nama')
                             ->get();
         return view ('admin.kecamatan.index',['kecamatan' => $kecamatan]);
     }

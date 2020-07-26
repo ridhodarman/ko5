@@ -76,7 +76,11 @@
                             <tr>
                                 <td>Pemilik</td>
                                 <td>:</td>
-                                <td>{{$p->pemilik}}</td>
+                                <td>
+                                    <a href="{{ route('pemilik') }}/{{$p->pemilik_id}}" target="_blank">
+                                        {{$p->pemilik}}
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>CP</td>

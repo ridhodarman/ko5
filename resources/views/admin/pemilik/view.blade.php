@@ -26,9 +26,7 @@
                         <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">
                             Informasi Pemilik</p>
                         <table class="table table-hover">
-                            @php $n=1 @endphp
                             @foreach ($pemilik as $k)
-                            @if ($n==1)
                             <tr>
                                 <td>Nama Pemilik</td>
                                 <td>:</td>
@@ -54,8 +52,13 @@
                                 <td>:</td>
                                 <td>{{$k->updated_at}}</td>
                             </tr>
-                            @endif
-                            @php $n=$n+1 @endphp
+                            <tr>
+                                <td>Akun</td>
+                                <td>:</td>
+                                <td>
+                                    <a href="#">{{$k->email}}</a>&emsp;
+                                </td>
+                            </tr>
                             @endforeach
                             <tr>
                                 <td>Post</td>

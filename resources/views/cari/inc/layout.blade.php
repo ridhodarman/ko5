@@ -83,12 +83,21 @@
                                 <span class="badge badge-pill badge-danger notify">0</span>
                             </div>
                             <div class="widget-header icontext">
-                                <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                                <a href="{{ route('home') }}" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
                                 <div class="text">
-                                    <span class="text-muted">Welcome!</span>
                                     <div>
+                                        @if (Auth::user()->name)
+                                        {{ Auth::user()->name }}
+                                        <br/>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();"
+                                            class="badge badge-light">
+                                            {{ __('Logout') }}
+                                        </a>
+                                        @else
                                         <a href="{{ route('login') }}">Sign in</a> |
                                         <a href="{{ route('register') }}"> Register</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

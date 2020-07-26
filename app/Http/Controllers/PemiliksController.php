@@ -15,7 +15,7 @@ class PemiliksController extends Controller
      */
     public function index()
     {
-        $query = Pemilik::select('id', 'nama')
+        $query = Pemilik::select('id', 'nama')->orderBy('nama')
                     ->get();
         return view ('admin.pemilik.index',['pemilik' => $query]);
         //return $query;
@@ -57,8 +57,9 @@ class PemiliksController extends Controller
      */
     public function show($pemilik)
     {
-        $query = Pemilik::select('pemiliks.*', 'posts.nama AS post', 'posts.id AS post_id')
+        $query = Pemilik::select('pemiliks.*', 'posts.nama AS post', 'posts.id AS post_id', 'email')
                     ->leftJoin('posts', 'posts.pemilik_id', '=', 'pemiliks.id')
+                    ->leftJoin('users', 'pemiliks.user_id', '=', 'users.id')
                     ->where('pemiliks.id', '=', '?')
                     ->setBindings([$pemilik])
                     ->get();

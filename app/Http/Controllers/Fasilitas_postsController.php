@@ -14,7 +14,7 @@ class Fasilitas_postsController extends Controller
      */
     public function index()
     {
-        $fasilitas = Fasilitas_post::select('id','nama')
+        $fasilitas = Fasilitas_post::select('id','nama')->orderBy('nama')
                             ->get();
         //return $fasilitas;
         return view ('admin.fasilitas.index',['fasilitas' => $fasilitas]);

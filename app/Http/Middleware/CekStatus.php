@@ -23,6 +23,6 @@ class CekStatus
             }
         }
 
-        return abort(403);
+        return redirect()->route('login');
     }
 }
