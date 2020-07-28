@@ -88,7 +88,7 @@ class Jenis_postsController extends Controller
     public function update(Request $request, Jenis_post $jenis_post)
     {
         $request->validate([
-            'nama' => 'required|unique:jenis_posts|not_regex:/`/i'
+            'nama' => 'required|unique:jenis_posts,id|not_regex:/`/i'
         ]);
         Jenis_post::where('id', $jenis_post->id)
             ->update([

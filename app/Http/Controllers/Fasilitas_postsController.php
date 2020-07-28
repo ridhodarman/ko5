@@ -88,7 +88,7 @@ class Fasilitas_postsController extends Controller
     public function update(Request $request, Fasilitas_post $fasilitas_post)
     {
         $request->validate([
-            'nama' => 'required|unique:fasilitas_posts|not_regex:/`/i'
+            'nama' => 'required|unique:fasilitas_posts,id|not_regex:/`/i'
         ]);
         Fasilitas_post::where('id', $fasilitas_post->id)
             ->update([

@@ -87,7 +87,7 @@ class KecamatansController extends Controller
     public function update(Request $request, Kecamatan $kecamatan)
     {
         $request->validate([
-            'nama' => 'required|unique:kecamatans|not_regex:/`/i'
+            'nama' => 'required|unique:kecamatans,id|not_regex:/`/i'
         ]);
         Kecamatan::where('id', $kecamatan->id)
             ->update([

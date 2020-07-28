@@ -87,7 +87,7 @@ class Status_postsController extends Controller
     public function update(Request $request, Status_post $status_post)
     {
         $request->validate([
-            'nama' => 'required|unique:status_posts|not_regex:/`/i'
+            'nama' => 'required|unique:status_posts,id|not_regex:/`/i'
         ]);
         Status_post::where('id', $status_post->id)
             ->update([

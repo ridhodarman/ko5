@@ -90,7 +90,7 @@ class PemiliksController extends Controller
     public function update(Request $request, Pemilik $pemilik)
     {
         $request->validate([
-            'nama' => 'required|unique:pemiliks|not_regex:/`/i'
+            'nama' => 'required|unique:pemiliks,id|not_regex:/`/i'
         ]);
         Pemilik::where('id', $pemilik->id)
             ->update([
