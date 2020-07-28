@@ -176,8 +176,8 @@
                                 <td>
                                     <h5>Foto Cover :</h5>
                                     @if ($p->cover)
-                                    <a target="_blank" href="/foto/{{$p->cover}}">
-                                        <img src="/foto/{{$p->cover}}">
+                                    <a target="_blank" href="{{ URL::asset('foto/'.$p->cover) }}">
+                                        <img src="{{ URL::asset('foto/'.$p->cover) }}">
                                     </a>
                                     <form action="{{ route('post') }}/{{$p->id}}/cover" method="POST" class="d-inline">
                                         @method('delete')
@@ -341,7 +341,7 @@
                     @foreach ($foto as $g)
                         <tr>
                             <td>
-                                <a target="_blank" href="/foto/{{$g->url}}"> <img src="/foto/{{$g->url}}"> </a>
+                                <a target="_blank" href="{{ URL::asset('foto/'.$g->url) }}"> <img src="{{ URL::asset('foto/'.$g->url) }}"> </a>
                             </td>
                             <td>
                                 <form action="{{ route('foto') }}/{{$g->id}}" method="POST" class="d-inline">

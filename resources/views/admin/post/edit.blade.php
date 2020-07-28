@@ -93,7 +93,7 @@
                         $(function(){
                             $("#kecamatan").change(function(){
                                 if($(this).val() != 0){
-                                    $.get("/kelurahan/kecamatan/"+$(this).val(),function(kelurahan){
+                                    $.get("{{ route('kelurahan') }}/kecamatan/"+$(this).val(),function(kelurahan){
                                         var p_html = "<option></option>";
                                         for(var i=0;i<kelurahan.length;i++){
                                             p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";
@@ -265,7 +265,7 @@
     $("#pemilik").val("{{ old('pemilik_id', $p->pemilik_id) }}").change();
     $("#kecamatan").val("{{ old('kecamatan', $p->kecamatan_id) }}").change();
     $( document ).ready(function() {
-        $.get("/kelurahan/kecamatan/"+$('#kecamatan').val(),function(kelurahan){
+        $.get("{{ route('kelurahan') }}/kecamatan/"+$('#kecamatan').val(),function(kelurahan){
                                     var p_html = "<option></option>";
                                     for(var i=0;i<kelurahan.length;i++){
                                         p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";

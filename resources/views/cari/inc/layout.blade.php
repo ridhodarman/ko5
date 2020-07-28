@@ -86,7 +86,7 @@
                                 <a href="{{ route('home') }}" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
                                 <div class="text">
                                     <div>
-                                        @if (Auth::user()->name)
+                                        @if (Auth::check() && Auth::user()->name)
                                         {{ Auth::user()->name }}
                                         <br/>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();

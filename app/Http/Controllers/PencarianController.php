@@ -20,7 +20,7 @@ class PencarianController extends Controller
     {
         $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                    ->orderBy('posts.created_at')
+                    ->orderByDesc('posts.created_at')
                     ->get();
         return view ('cari.index',['post' => $post]);
         //return $query;

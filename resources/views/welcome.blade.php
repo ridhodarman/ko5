@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('cari') }}">Go to User Page</a>
+                    <a href="{{ route('cari') }}">Cari Kos</a>
                 </div>
             </div>
         </div>

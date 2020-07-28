@@ -91,7 +91,7 @@
                         $(function(){
                             $("#kecamatan").change(function(){
                                 if($(this).val() != 0){
-                                    $.get("/kelurahan/kecamatan/"+$(this).val(),function(kelurahan){
+                                    $.get("{{ route('kelurahan') }}/kecamatan/"+$(this).val(),function(kelurahan){
                                         var p_html = "<option></option>";
                                         for(var i=0;i<kelurahan.length;i++){
                                             p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";
@@ -192,6 +192,19 @@
                             </script>
                         </div>
                         <div class="col-md-6">
+                            <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-map-alt"></i> Zoom to..
+                                </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item">Go back</a>
+                                    <a class="dropdown-item">Delete</a>
+                                    <a class="dropdown-item">Swap</a>
+                                    <a class="dropdown-item">+More....</a>
+                                  </div>                          
+                                </div>
+                              </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"

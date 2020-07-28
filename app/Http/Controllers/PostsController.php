@@ -11,6 +11,7 @@ use App\Detail_fasilitas_post;
 use App\Harga;
 use App\Foto;
 use App\Kamar;
+use App\Kampus_sekolah;
 use Illuminate\Http\Request;
 use File;
 
@@ -40,11 +41,13 @@ class PostsController extends Controller
         $status = Status_post::select('id','nama')->orderBy('nama')->get();
         $kecamatan = Kecamatan::select('id','nama')->orderBy('nama')->get();
         $pemilik = Pemilik::select('id','nama')->orderBy('nama')->get();
+        $kampus = Kampus_sekolah::select('nama','lat', 'lng')->orderBy('nama')->get();
         return view('admin.post.tambah',[
                                         'jenis' => $jenis,
                                         'status' => $status,
                                         'kecamatan' => $kecamatan,
-                                        'pemilik' => $pemilik
+                                        'pemilik' => $pemilik,
+                                        'kampus' => $kampus
                                         ]);
     }
 
