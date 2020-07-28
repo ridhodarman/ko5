@@ -39,8 +39,8 @@ class Detail_fasilitas_postsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['fasilitas_posts' => 'required']);
         $f = Fasilitas_post::where('id', $request->fasilitas_posts)->first();
-
         $cek = Detail_fasilitas_post::where([
             ['post_id', '=', $request->post_id],
             ['fasilitas_posts', $request->fasilitas_posts],

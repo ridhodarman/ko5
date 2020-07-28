@@ -283,8 +283,6 @@
                             </div>
                         </div>
                     </div>
-                    <link rel="stylesheet" href="{{ URL::asset('css/jquery.fancybox.min.css') }}">
-                    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-select.min.css') }}">
                     <br />
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>

@@ -26,7 +26,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Fasilitas</label>
                         <div class="col-sm-10">
-                            <select name="fasilitas_posts" class="form-control" style="color: black;">
+                            <select class="selectpicker" data-style="btn-white btn-lg" data-width="100%"
+                                data-live-search="true" name="fasilitas_posts">
                                 <option></option>
                                 @foreach ($fasilitas as $f)
                                 <option value="{{$f->id}}">{{$f->nama}}</option>

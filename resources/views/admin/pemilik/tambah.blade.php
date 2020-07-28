@@ -46,7 +46,8 @@
                         </div>
                         <label class="col-sm-2 col-form-label">Akun User</label>
                         <div class="col-sm-10">
-                            <select name="user_id" class="form-control" style="color: black;">
+                            <select class="selectpicker" data-style="btn-white btn-lg" data-width="100%"
+                                data-live-search="true" name="user_id">
                                 <option></option>
                                 @foreach ($user as $u)
                                 <option value="{{$u->id}}">{{$u->name}} ({{$u->email}})</option>
