@@ -18,19 +18,19 @@
 </div>
 @if (session('status'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {!! session('status') !!}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+    {!! session('status') !!}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 @endif
 
 @if (session('status2'))
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {!! session('status2') !!}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+    {!! session('status2') !!}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 @endif
 <div class="row">
@@ -88,7 +88,7 @@
                                 <td><a href="//{{$p->link_kontak}}" target="_blank">{{$p->link_kontak}}</a></td>
                             </tr>
                         </table>
-                        <br/>
+                        <br />
                         <form action="{{ route('post') }}/{{$p->id}}" method="POST" class="d-inline">
                             @method('delete')
                             @csrf
@@ -98,12 +98,12 @@
                         </form>&emsp;
                         <a href="{{ route('post') }}/{{$p->id}}/edit">
                             <button class="btn btn-inverse-info btn-fw">Edit</button>
-                        </a> 
-                        
+                        </a>
+
                         <script>
-                            let peringatan=true;
+                            let peringatan = true;
                             $('#tombol-hapus').on('click', function (e) {
-                                if(peringatan==true){
+                                if (peringatan == true) {
                                     swal({
                                         title: "Are you sure?",
                                         text: "Once deleted, you will not be able to recover this data!",
@@ -115,19 +115,19 @@
                                             if (willDelete) {
                                                 peringatan = false;
                                                 $('#tombol-hapus').removeAttr("type").attr("type", "submit");
-                                                $('#tombol-hapus').trigger( "click" );
+                                                $('#tombol-hapus').trigger("click");
                                             }
                                         });
                                 }
                             });
                         </script>
                         @php
-                            echo '
-                                <script>
-                                    let l ='.$p->lat.';
-                                    let b ='.$p->lng.';
-                                </script>
-                            ';
+                        echo '
+                        <script>
+                            let l = '.$p->lat.';
+                            let b = '.$p->lng.';
+                        </script>
+                        ';
                         @endphp
                     </div>
                     <div class="col-md-6">
@@ -139,7 +139,7 @@
                                 height: 60vh;
                             }
                         </style>
-                        <br/>
+                        <br />
                         <div id="peta"></div>
 
                         <script type="text/javascript">
@@ -163,14 +163,14 @@
                                 maxZoom: 19,
                                 ext: 'png'
                             }).addTo(peta);
-                                                        
+
                             var marker = new L.Marker([l, b]);
                             marker.addTo(peta);
                         </script>
                         @else
                         <h4>Lokasi belum ditambahkan</h4>
                         @endif
-                        
+
                         <table class="table" style="text-align: center;">
                             <tr>
                                 <td>
@@ -182,14 +182,15 @@
                                     <form action="{{ route('post') }}/{{$p->id}}/cover" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button type="button" class="btn badge badge-danger" id="hapus-foto" style="scale: 90%;">
+                                        <button type="button" class="btn badge badge-danger" id="hapus-foto"
+                                            style="scale: 90%;">
                                             <i class="fa fa-ban"></i> remove
                                         </button>
                                     </form>
                                     <script>
-                                        let peringatan2=true;
+                                        let peringatan2 = true;
                                         $('#hapus-foto').on('click', function (e) {
-                                            if(peringatan2==true){
+                                            if (peringatan2 == true) {
                                                 swal({
                                                     title: "Are you sure?",
                                                     text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -201,16 +202,17 @@
                                                         if (willDelete) {
                                                             peringatan2 = false;
                                                             $('#hapus-foto').removeAttr("type").attr("type", "submit");
-                                                            $('#hapus-foto').trigger( "click" );
+                                                            $('#hapus-foto').trigger("click");
                                                         }
                                                     });
                                             }
                                         });
                                     </script>
                                     @else
-                                        <font color="gray">tidak ada</font>
+                                    <font color="gray">tidak ada</font>
                                     @endif
-                                    <a href="{{ route('post') }}/{{$p->id}}/cover" class="badge badge-secondary"><i class="ti-file"></i> upload new photo</a>
+                                    <a href="{{ route('post') }}/{{$p->id}}/cover" class="badge badge-secondary"><i
+                                            class="ti-file"></i> upload new photo</a>
                                 </td>
                             </tr>
                         </table>
@@ -231,7 +233,8 @@
                         <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
                     </a>
                 </div>
-                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Fasilitas</p>
+                <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Fasilitas
+                </p>
                 <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
                     <tbody>
                         @foreach ($fasilitas as $f)
@@ -239,7 +242,8 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{$f->nama}}</td>
                             <td>
-                                <form action="{{ route('detail_fasilitas_post') }}/{{$f->id}}" method="POST" class="d-inline">
+                                <form action="{{ route('detail_fasilitas_post') }}/{{$f->id}}" method="POST"
+                                    class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="btn badge badge-danger" id="hapus-fas-{{$f->id}}">
@@ -247,23 +251,23 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanf{{$f->id}}=true;
+                                    let peringatanf{{ $f-> id}}=true;
                                     $("#hapus-fas-{{$f->id}}").on('click', function (e) {
-                                        if(peringatanf{{$f->id}}==true){
-                                            swal({
-                                                text: 'Yakin hapus "{{$f->nama}}" dari daftar fasilitas ?',
-                                                icon: "warning",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        peringatanf{{$f->id}} = false;
-                                                        $("#hapus-fas-{{$f->id}}").removeAttr("type").attr("type", "submit");
-                                                        $("#hapus-fas-{{$f->id}}").trigger( "click" );
-                                                    }
-                                                });
-                                        }
+                                        if (peringatanf{ { $f -> id } }== true){
+                                        swal({
+                                            text: 'Yakin hapus "{{$f->nama}}" dari daftar fasilitas ?',
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    peringatanf{ { $f -> id } } = false;
+                                                    $("#hapus-fas-{{$f->id}}").removeAttr("type").attr("type", "submit");
+                                                    $("#hapus-fas-{{$f->id}}").trigger("click");
+                                                }
+                                            });
+                                    }
                                     });
                                 </script>
                             </td>
@@ -286,7 +290,7 @@
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Harga</p>
                 <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
                     <tbody>
-                    @foreach ($harga as $h)
+                        @foreach ($harga as $h)
                         <tr>
                             <td>Rp. {{ number_format( $h->harga) }} / {{$h->pembayaran}}</td>
                             <td style="color: gray;">{{$h->keterangan}}</td>
@@ -299,23 +303,23 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanh{{$h->id}}=true;
+                                    let peringatanh{{ $h-> id}}=true;
                                     $("#hapus-h-{{$h->id}}").on('click', function (e) {
-                                        if(peringatanh{{$h->id}}==true){
-                                            swal({
-                                                text: 'Yakin hapus "{{ $h->harga }} / {{$h->pembayaran}}" dari daftar harga ?',
-                                                icon: "warning",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        peringatanh{{$h->id}} = false;
-                                                        $("#hapus-h-{{$h->id}}").removeAttr("type").attr("type", "submit");
-                                                        $("#hapus-h-{{$h->id}}").trigger( "click" );
-                                                    }
-                                                });
-                                        }
+                                        if (peringatanh{ { $h -> id } }== true){
+                                        swal({
+                                            text: 'Yakin hapus "{{ $h->harga }} / {{$h->pembayaran}}" dari daftar harga ?',
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    peringatanh{ { $h -> id } } = false;
+                                                    $("#hapus-h-{{$h->id}}").removeAttr("type").attr("type", "submit");
+                                                    $("#hapus-h-{{$h->id}}").trigger("click");
+                                                }
+                                            });
+                                    }
                                     });
                                 </script>
                             </td>
@@ -331,17 +335,18 @@
         <div class="card">
             <div class="card-body">
                 <div style="float: right;">
-                <a href="{{ route('foto') }}/tambah/{{$p->id}}">
+                    <a href="{{ route('foto') }}/tambah/{{$p->id}}">
                         <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
                     </a>
                 </div>
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Foto</p>
                 <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
                     <tbody>
-                    @foreach ($foto as $g)
+                        @foreach ($foto as $g)
                         <tr>
                             <td>
-                                <a target="_blank" href="{{ URL::asset('foto/'.$g->url) }}"> <img src="{{ URL::asset('foto/'.$g->url) }}"> </a>
+                                <a target="_blank" href="{{ URL::asset('foto/'.$g->url) }}"> <img
+                                        src="{{ URL::asset('foto/'.$g->url) }}"> </a>
                             </td>
                             <td>
                                 <form action="{{ route('foto') }}/{{$g->id}}" method="POST" class="d-inline">
@@ -352,23 +357,23 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatang{{$g->id}}=true;
+                                    let peringatang{{ $g-> id}}=true;
                                     $("#hapus-p-{{$g->id}}").on('click', function (e) {
-                                        if(peringatang{{$g->id}}==true){
-                                            swal({
-                                                text: "Yakin hapus foto ini ?",
-                                                icon: "warning",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        peringatang{{$g->id}} = false;
-                                                        $("#hapus-p-{{$g->id}}").removeAttr("type").attr("type", "submit");
-                                                        $("#hapus-p-{{$g->id}}").trigger( "click" );
-                                                    }
-                                                });
-                                        }
+                                        if (peringatang{ { $g -> id } }== true){
+                                        swal({
+                                            text: "Yakin hapus foto ini ?",
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    peringatang{ { $g -> id } } = false;
+                                                    $("#hapus-p-{{$g->id}}").removeAttr("type").attr("type", "submit");
+                                                    $("#hapus-p-{{$g->id}}").trigger("click");
+                                                }
+                                            });
+                                    }
                                     });
                                 </script>
                             </td>
@@ -383,16 +388,16 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-            <div style="float: right;">
-                <a href="{{ route('kamar') }}/tambah/{{$p->id}}">
+                <div style="float: right;">
+                    <a href="{{ route('kamar') }}/tambah/{{$p->id}}">
                         <button class="btn btn-inverse-success btn-fw btn-xs">Tambah</button>
                     </a>
                 </div>
                 <p class="card-title text-md-center text-xl-left" style="color: black; font-weight: bolder;">Kamar</p>
                 <table id="example" class="table table-hover display" style="width:100%; text-align: center;">
                     <tbody>
-                    @php $total=0; @endphp
-                    @foreach ($kamar as $k)
+                        @php $total=0; @endphp
+                        @foreach ($kamar as $k)
                         <tr>
                             <td> {{$k->panjang}} x {{$k->lebar}} </td>
                             <td style="color: gray;">{{$k->jumlah}}</td>
@@ -406,23 +411,23 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatank{{$k->id}}=true;
+                                    let peringatank{{ $k-> id}}=true;
                                     $("#hapus-k-{{$k->id}}").on('click', function (e) {
-                                        if(peringatank{{$k->id}}==true){
-                                            swal({
-                                                text: "Yakin hapus kamar {{$k->panjang}} x {{$k->lebar}} ?",
-                                                icon: "warning",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        peringatank{{$k->id}} = false;
-                                                        $("#hapus-k-{{$k->id}}").removeAttr("type").attr("type", "submit");
-                                                        $("#hapus-k-{{$k->id}}").trigger( "click" );
-                                                    }
-                                                });
-                                        }
+                                        if (peringatank{ { $k -> id } }== true){
+                                        swal({
+                                            text: "Yakin hapus kamar {{$k->panjang}} x {{$k->lebar}} ?",
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    peringatank{ { $k -> id } } = false;
+                                                    $("#hapus-k-{{$k->id}}").removeAttr("type").attr("type", "submit");
+                                                    $("#hapus-k-{{$k->id}}").trigger("click");
+                                                }
+                                            });
+                                    }
                                     });
                                 </script>
                             </td>

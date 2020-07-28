@@ -186,6 +186,44 @@
                                     ext: 'png'
                                 }).addTo(map);
 
+                                var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+                                arcgis = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
+                                        maxZoom: 19,
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                ),
+                                group = L.LayerGroup([
+                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
+                                        maxZoom: 19,
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                ), 
+                                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.{ext}', {
+                                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                                    subdomains: 'abcd',
+                                    minZoom: 0,
+                                    maxZoom: 19,
+                                    ext: 'png'
+                                })
+                                    ]);
+
+                                var baseMaps = {
+                                    "ArcGIS": arcgis,
+                                    "OpenStreetMap": osm
+                                };
+
+                                var overlays =  {//add any overlays here
+                                    
+                                };
+
+                                L.control.layers(baseMaps,overlays, {position: 'bottomleft'}).addTo(map);
+
                                 // map.on('click', 
                                 // 	function(e){
                                 // 		//var coord = e.latlng.toString().split(',');
@@ -208,10 +246,30 @@
                                         document.getElementById("lat").value = lat[1];
                                         document.getElementById("lng").value = lng[0];
                                     });
-
+                                
+                                function gantilokasi(lat, lng){
+                                    var newLatLng = new L.LatLng(lat, lng);
+                                    myMarker.setLatLng(newLatLng); 
+                                    map.panTo(new L.LatLng(lat, lng));
+                                }
                             </script>
                         </div>
                         <div class="col-md-6">
+                            <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                                        data-toggle="dropdown">
+                                        <i class="ti-map-alt"></i> Zoom to..
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @foreach ($kampus as $k)
+                                            <a href="javascript:void(0);" class="dropdown-item" onclick="gantilokasi('{{$k->lat}}', '{{$k->lng}}')">{{$k->nama}}</a>
+                                        @endforeach
+                                        <a class="dropdown-item" href="{{ route('kampus') }}" target="blank">+More....</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"

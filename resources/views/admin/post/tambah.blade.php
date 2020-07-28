@@ -88,18 +88,18 @@
                         </div>
                     </div>
                     <script>
-                        $(function(){
-                            $("#kecamatan").change(function(){
-                                if($(this).val() != 0){
-                                    $.get("{{ route('kelurahan') }}/kecamatan/"+$(this).val(),function(kelurahan){
+                        $(function () {
+                            $("#kecamatan").change(function () {
+                                if ($(this).val() != 0) {
+                                    $.get("{{ route('kelurahan') }}/kecamatan/" + $(this).val(), function (kelurahan) {
                                         var p_html = "<option></option>";
-                                        for(var i=0;i<kelurahan.length;i++){
-                                            p_html += "<option value='"+kelurahan[i].id+"'>"+kelurahan[i].nama+"</option>";
+                                        for (var i = 0; i < kelurahan.length; i++) {
+                                            p_html += "<option value='" + kelurahan[i].id + "'>" + kelurahan[i].nama + "</option>";
                                         }
                                         $("#kelurahan").html(p_html);
-                                    },"json");
+                                    }, "json");
                                 }
-                                else{
+                                else {
                                     $("#kelurahan").html("<option></option>");
                                 }
                             });
@@ -108,7 +108,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Link Kontak</label>
                         <div class="col-sm-10">
-                            <input type="text" name="link_kontak" class="form-control @error('link_kontak') is-invalid @enderror"
+                            <input type="text" name="link_kontak"
+                                class="form-control @error('link_kontak') is-invalid @enderror"
                                 value="{{ old('link_kontak') }}" placeholder="bit.ly/....">
                             @error('link_kontak')
                             <div class="alert alert-danger">
@@ -150,21 +151,60 @@
 
                                 var map = new L.map('map', options);
 
-                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', 
-                                    { 
-                                        attribution: 'OSM', 
+                                var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
                                         maxZoom: 19,
                                         id: 'mapbox.streets',
                                         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
                                     }
                                 ).addTo(map);
-                                var Stamen_TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.{ext}', {
+                                var TonerLabels = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.{ext}', {
                                     attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                                     subdomains: 'abcd',
                                     minZoom: 0,
                                     maxZoom: 19,
                                     ext: 'png'
                                 }).addTo(map);
+
+
+                                var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+                                arcgis = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
+                                        maxZoom: 19,
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                ),
+                                group = L.LayerGroup([
+                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
+                                        maxZoom: 19,
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                ), 
+                                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.{ext}', {
+                                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                                    subdomains: 'abcd',
+                                    minZoom: 0,
+                                    maxZoom: 19,
+                                    ext: 'png'
+                                })
+                                    ]);
+
+                                var baseMaps = {
+                                    "ArcGIS": arcgis,
+                                    "OpenStreetMap": osm
+                                };
+
+                                var overlays =  {//add any overlays here
+                                    
+                                };
+
+                                L.control.layers(baseMaps,overlays, {position: 'bottomleft'}).addTo(map);
 
                                 // map.on('click', 
                                 // 	function(e){
@@ -188,27 +228,33 @@
                                         document.getElementById("lat").value = lat[1];
                                         document.getElementById("lng").value = lng[0];
                                     });
-
+                                
+                                function gantilokasi(lat, lng){
+                                    var newLatLng = new L.LatLng(lat, lng);
+                                    myMarker.setLatLng(newLatLng); 
+                                    map.panTo(new L.LatLng(lat, lng));
+                                }
                             </script>
                         </div>
                         <div class="col-md-6">
                             <div class="btn-group-vertical" role="group" aria-label="Basic example">
                                 <div class="btn-group">
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                                    <i class="ti-map-alt"></i> Zoom to..
-                                </button>
-                                  <div class="dropdown-menu">
-                                    <a class="dropdown-item">Go back</a>
-                                    <a class="dropdown-item">Delete</a>
-                                    <a class="dropdown-item">Swap</a>
-                                    <a class="dropdown-item">+More....</a>
-                                  </div>                          
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                                        data-toggle="dropdown">
+                                        <i class="ti-map-alt"></i> Zoom to..
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @foreach ($kampus as $k)
+                                            <a href="javascript:void(0);" class="dropdown-item" onclick="gantilokasi('{{$k->lat}}', '{{$k->lng}}')">{{$k->nama}}</a>
+                                        @endforeach
+                                        <a class="dropdown-item" href="{{ route('kampus') }}" target="blank">+More....</a>
+                                    </div>
                                 </div>
-                              </div>
+                            </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Lintang</label>
                                 <input type="text" class="form-control @error('lat') is-invalid @enderror" id="lat"
-                                    name="lat" placeholder="0.xxxx" value="{{ old('lat') }}">
+                                    name="lat" placeholder="-0.xxxx" value="{{ old('lat') }}">
                                 @error('lat')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -218,7 +264,7 @@
                             <div class="form-group">
                                 <label>Bujur</label>
                                 <input type="text" class="form-control @error('lng') is-invalid @enderror" id="lng"
-                                    name="lng" placeholder="100.000" value="{{ old('lng') }}">
+                                    name="lng" placeholder="100.0xx" value="{{ old('lng') }}">
                                 @error('lng')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -228,7 +274,7 @@
                             <div class="form-group">
                                 <label>Foto</label>
                                 <input type="file" name="file" value="{{ old('file') }}"
-                                class="form-control @error('file') is-invalid @enderror">
+                                    class="form-control @error('file') is-invalid @enderror">
                                 @error('file')
                                 <div class="alert alert-danger">
                                     {{ $message }}
@@ -243,8 +289,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Pemilik</label>
                         <div class="col-sm-10" style="background-color:#fafafa;">
-                            <select class="selectpicker"
-                                data-style="btn-white btn-lg" data-width="100%" data-live-search="true" name="pemilik_id">
+                            <select class="selectpicker" data-style="btn-white btn-lg" data-width="100%"
+                                data-live-search="true" name="pemilik_id">
                                 <option></option>
                                 @foreach ($pemilik as $p)
                                 <option value="{{$p->id}}">{{$p->nama}}</option>

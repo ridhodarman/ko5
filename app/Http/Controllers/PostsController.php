@@ -177,6 +177,7 @@ class PostsController extends Controller
         $status = Status_post::select('id','nama')->get();
         $pemilik = Pemilik::select('id','nama')->get();
         $kecamatan = Kecamatan::select('id','nama')->get();
+        $kampus = Kampus_sekolah::select('nama','lat', 'lng')->orderBy('nama')->get();
         $query = Post::select('posts.*', 'kecamatans.id AS kecamatan_id')
                     ->leftJoin('kelurahans', 'kelurahans.id', '=', 'posts.kelurahan_id')
                     ->leftJoin('kecamatans', 'kecamatans.id', '=', 'kelurahans.kecamatan_id')
@@ -188,7 +189,8 @@ class PostsController extends Controller
                                         'status' => $status,
                                         'post' => $query,
                                         'kecamatan' => $kecamatan,
-                                        'pemilik' => $pemilik
+                                        'pemilik' => $pemilik,
+                                        'kampus' => $kampus
                                         ]);
         //return $query;
     }
@@ -204,8 +206,8 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required|not_regex:/`/i',
-            'lat' => 'numeric',
-            'lng' => 'numeric'
+            'lat' => 'numeric|nullable',
+            'lng' => 'numeric|nullable'
 		]);
         Post::where('id', $post->id)
             ->update([
@@ -221,7 +223,7 @@ class PostsController extends Controller
                 'pemilik_id' => $request->pemilik_id
             ]);
         $pesan = "Data post <b>".$request->nama."</b> berhasil diubah";
-        return redirect('/post')->with('status', $pesan);
+        return redirect('/post/'.$post->id)->with('status', $pesan);
     }
 
     /**

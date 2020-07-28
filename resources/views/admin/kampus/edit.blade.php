@@ -85,6 +85,27 @@
                                     ext: 'png'
                                 }).addTo(map);
 
+                                var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+                                arcgis = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
+                                        maxZoom: 19,
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                );
+
+                                var baseMaps = {
+                                    "ArcGIS": arcgis,
+                                    "OpenStreetMap": osm
+                                };
+
+                                var overlays =  {//add any overlays here
+                                    
+                                };
+
+                                L.control.layers(baseMaps,overlays, {position: 'bottomleft'}).addTo(map);
+
                                 // map.on('click', 
                                 // 	function(e){
                                 // 		//var coord = e.latlng.toString().split(',');
