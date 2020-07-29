@@ -35,6 +35,26 @@
     <!-- custom javascript -->
     <script src="{{ URL::asset('aset/js/script.js') }}" type="text/javascript"></script>
 
+    <!-- untuk kilau -->
+    <style>
+        .glow {
+        color: #fff;
+        text-align: center;
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        -moz-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @-webkit-keyframes glow {
+        from {
+            text-shadow: 0 0 1px #fff, 0 0 0px #fff, 0 0 5px #e60073, 0 0 10px #e60073, 0 0 15px #e60073, 0 0 20px #e60073, 0 0 20px #e60073;
+        }
+        to {
+            text-shadow: 0 0 1px #fff, 0 0 0px #ff4da6, 0 0 6px #ff4da6, 0 0 11px #ff4da6, 0 0 16px #ff4da6, 0 0 21px #ff4da6, 0 0 21px #ff4da6;
+        }
+        }
+    </style>
+
     <script type="text/javascript">
         /// some script
 

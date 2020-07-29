@@ -23,11 +23,16 @@
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">
-                                <font id="jumlah"> {{ count($post) }} </font>
-                                <font style="color: darkgray;"> Items found </font>
+                                <span id="jumlah"> {{ $post->total() }} </span>
+                                <span style="color: darkgray;"> Items found </span>
                                 @if(isset($filter))
-                                | Filter: 
+                                |Filter: 
                                 {!! $filter !!}
+                                <a href="{{ route('cari') }}">
+                                    <span class="badge badge-danger glow">
+                                        <i class="fas fa-times-circle"></i> Clear all filters
+                                    </span>
+                                </a>
                                 @endif
                             </span>
                         </div>
@@ -38,7 +43,7 @@
                         @foreach ($post as $p)
                         
                         <div class="col-md-4">
-                            <figure class="card card-product-grid">
+                            <figure class="card card-product-grid" style="height: 95%;">
                                 <div class="img-wrap">
                                     @php
                                         if($p->cover){
@@ -81,11 +86,16 @@
                                         <a href="{{ route('info') }}/{{$p->id}}" class="title">
                                             <div style="font-weight: bolder;">{{$p->nama}}</div>
                                             <div style="font-size: 85%; color: rgb(46, 46, 46);">
-                                                {!! $p->keterangan !!}
+                                                <span class='badge badge-pill badge-light'>{{ $p->jenis  }}</span>
+                                                @if(isset($p->jarak))
+                                                Sekitar {{ str_replace (".", ",", round($p->jarak, 2) ) }} Kilometer dari pusat {{ $lokasi }}
+                                                @endif
                                             </div>
                                         </a>
                                         <div class="price-wrap mt-1 mb-1">
-                                            <span class="price" style="color: green;">{{ $p->harga }}</span>
+                                            <span class="price" style="color: green;">
+                                                Rp. {{ str_replace (",", ".", number_format($p->harga) ) }} / {{ $p->pembayaran }}
+                                            </span>
                                         </div> <!-- price-wrap.// -->
                                     </div>
                                     <a href="{{ route('info') }}/{{$p->id}}" target="_blank" class="btn btn-block btn-primary">Lihat Tempat</a>
@@ -99,13 +109,19 @@
 
                     <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            {{ $post->links() }}
                         </ul>
                     </nav>
+
+                    <!-- <nav class="mt-4" aria-label="Page navigation sample">
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav> -->
 
                 </main> <!-- col.// -->
 

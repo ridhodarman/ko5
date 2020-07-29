@@ -18,10 +18,11 @@ class PencarianController extends Controller
 {
     public function index()
     {
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->orderByDesc('posts.created_at')
-                    ->get();
+                    ->paginate(12);
+                    //->get();
         return view ('cari.index',['post' => $post]);
         //return $query;
     }
@@ -43,7 +44,7 @@ class PencarianController extends Controller
         $lat2 = (double)base64_decode($lat);
         $lng2 = (double)base64_decode($lng);
         $teks2 = base64_decode($teks);
-        $query = DB::table(DB::raw('posts')) 
+        $post = DB::table(DB::raw('posts')) 
                         ->Select('posts.id', 'posts.nama', 'cover', 'jenis_posts.nama AS jenis', 'pembayaran')
                         ->addSelect(DB::raw("
                             min(harga) AS harga,
@@ -53,31 +54,20 @@ class PencarianController extends Controller
                                 * cos( radians( posts.lng ) - radians('$lng2') ) 
                                 + sin( radians('$lat2') ) 
                                 * sin( radians( posts.lat ) )
-                            ) as distance        
+                            ) as jarak        
                         "))
                     ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                    ->get();
+                    ->groupBy('posts.id', 'hargas.post_id')
+                    ->orderBy('jarak')
+                    ->paginate(12);
 
-        $post = array();
-        foreach ($query as $row) {
-            $harga = str_replace (",", ".", number_format( $row->harga ) );
-            $jarak = str_replace (".", ",", round($row->distance, 2) );
-            $data = array(
-                "id" => $row->id,
-                "nama" => $row->nama,
-                "cover" => $row->cover,
-                "harga" => $row->harga,
-                "harga" => "Rp. ". $harga ." / ".$row->pembayaran,
-                "keterangan" => "<span class='badge badge-pill badge-light'>".$row->jenis."</span>sekitar ". $jarak ." Kilometer dari pusat ".$teks2
-            );
-            array_push($post, $data);
-        }
-        $object = json_decode(json_encode($post), FALSE);
-        //return $object;
         $teks2 = base64_decode($teks);
+        $filter = "<span class='badge badge-pill badge-primary'>sekitar ".$teks2."</span>";
         return view ('cari.index',[
-                                    'post' => $object
+                                    'post' => $post,
+                                    'lokasi' => $teks2,
+                                    'filter' => $filter
                                 ]);
     }
 
@@ -89,26 +79,32 @@ class PencarianController extends Controller
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->whereRaw("LOWER('posts.nama') LIKE '%". $nama."%'")
                     ->orderBy('posts.created_at')
-                    ->get();
+                    ->paginate(12);
+
+        $filter= "<span class='badge badge-pill badge-light'>Cari nama: <b>".$nama."</b></span> ";
         return view ('cari.index',['post' => $post, 
-                                    'nama_kos' => $request->nama_kos
+                                    'nama_kos' => $request->nama_kos,
+                                    'filter' => $filter
                                 ]);
         //return $query;
     }
 
     public function cari(Request $request){
         //return $request;
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
-                ->addSelect(DB::raw("min(harga)"))
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis')
+                ->addSelect(DB::raw("min(harga) as harga"))
                 ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id');
+                ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
+                ->groupBy('posts.id', 'hargas.post_id');
         
 
         $filter="";
         if (isset($request->fasilitas)){
+            $total = count ($request->fasilitas);
             $post = $post->leftjoin('detail_fasilitas_posts', 'posts.id',  '=', 'detail_fasilitas_posts.post_id')
             ->whereIn('detail_fasilitas_posts.fasilitas_posts', $request->fasilitas)
-            ->groupBy('detail_fasilitas_posts.post_id', 'posts.id');
+            ->groupBy('detail_fasilitas_posts.post_id', 'posts.id')
+            ->havingRaw('COUNT(*) = '. $total);
 
             foreach($request->fasilitas as $f){
                 $fasilitas = Fasilitas_post::select('nama')->where('id', $f)->first();
@@ -141,8 +137,10 @@ class PencarianController extends Controller
             
         }
 
+        $lokasi = "kampus ";
         if ($request->urutan=="dekat_kampus"){
             $kampus = Kampus_sekolah::select('nama', 'lat', 'lng')->where('id', $request->kampus)->first();
+            $lokasi = $lokasi.$kampus->nama;
             $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan lokasi dari yang paling dekat ".$kampus->nama."</span> ";
             
             $post = $post->addSelect(DB::raw("
@@ -156,7 +154,7 @@ class PencarianController extends Controller
                                         * sin( radians( posts.lat ) )
                                     ) 
                                 , 2) 
-                            , '$kampus->nama') AS keterangan
+                            , '$kampus->nama') AS jarak
                         "));
         }
         else {
@@ -171,17 +169,34 @@ class PencarianController extends Controller
         }
         
 
-        $post = $post->get();
-        foreach ($post as $p){
-            if($p->id==null){
-                $post = [];
-                $post = json_decode(json_encode($post), FALSE);
-            }
-        }
+        $post = $post->paginate(12);
+        // foreach ($post as $p){
+        //     if($p->id==null){
+        //         $post = [];
+        //         $post = json_decode(json_encode($post), FALSE);
+        //     }
+        // }
+
+        // $array = array();
+        // foreach ($post as $row) {
+        //     $harga = str_replace (",", ".", number_format( $row->harga ) );
+        //     $jarak = str_replace (".", ",", round($row->distance, 2) );
+        //     $data = array(
+        //         "id" => $row->id,
+        //         "nama" => $row->nama,
+        //         "cover" => $row->cover,
+        //         "harga" => "Rp. ". $harga ." / ".$row->pembayaran,
+        //         "keterangan" => $row->keterangan
+        //     );
+        //     array_push($array, $data);
+        // }
+        // $post = json_decode(json_encode($array), FALSE);
+
         //return $post;
         return view ('cari.index',[
             'post' => $post,
-            'filter' => $filter
+            'filter' => $filter,
+            'lokasi' => $lokasi            
         ]);
     }
 

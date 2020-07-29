@@ -85,7 +85,7 @@
                     @foreach ($jenis as $j)
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" 
-                        value="{{$j->id}}" name="jenis[]" id="jenis-{{$j->id}}" checked>
+                        value="{{$j->id}}" name="jenis[]" id="jenis-{{$j->id}}">
                         <div class="custom-control-label">{{$j->nama}}</div>
                     </label>
                     @endforeach
@@ -103,7 +103,7 @@
                 <div class="card-body">
                     @foreach ($status as $s)
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" value="{{$s->id}}" name="status[]" checked>
+                        <input type="checkbox" class="custom-control-input" value="{{$s->id}}" name="status[]">
                         <div class="custom-control-label">{{$s->nama}}</div>
                     </label>
                     @endforeach

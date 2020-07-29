@@ -167,22 +167,21 @@
             ';
             @endphp
 
-            <div class="col-md-8 mt-2" style="align-items: center;">
+            <div class="col-md-5 mt-2" style="align-items: center;">
                 @if ($p->lat != null && $p->lng != null)
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
                 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
                 <style type="text/css">
                     #peta {
-                        height: 80vh;
-                        margin-left: 5%;
+                        height: 60vh;
                     }
                 </style>
-                <div id="peta" style="width: 90%;"></div>
+                <div id="peta"></div>
 
                 <script type="text/javascript">
                     var mapOptions = {
                         center: [l, b],
-                        zoom: 15
+                        zoom: 16
                     }
 
                     var peta = new L.map('peta', mapOptions);
@@ -197,7 +196,7 @@
                     // var marker = new L.Marker([l,b]);
                     // marker.addTo(peta);
 
-                    var circle = L.circle([l, b], 90, {
+                    var circle = L.circle([l, b], 85, {
                         color: 'blue',
                         fillColor: 'blue',
                         fillOpacity: 0.3
@@ -207,7 +206,7 @@
                 @endif
             </div> <!-- col.// -->
 
-            <div class="col-md-4 card mt-2" style="display: table; vertical-align: middle;">
+            <div class="col-md-7 card mt-2" style="display: table; vertical-align: middle;">
                 <table class="table table-hover" style="vertical-align: middle;">
                     @if (count($fasilitas)>0)
                     <tr>
