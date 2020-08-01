@@ -53,7 +53,7 @@
                                             $gambar = "null.png";
                                         }
                                     @endphp
-                                    <a href="{{ route('info') }}/{{$p->id}}"><img src="{{ URL::asset($gambar) }}"></a>
+                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank"><img src="{{ URL::asset($gambar) }}"></a>
                                     <a class="btn-overlay" href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><i class="fa fa-search-plus"></i> Quick View</a>
                                     <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,7 +67,9 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <img src="{{ URL::asset($gambar) }}">
+                                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank">
+                                                        <img src="{{ URL::asset($gambar) }}">
+                                                    </a>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

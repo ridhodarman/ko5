@@ -39,7 +39,7 @@ class FotosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:fotos,url,required'
+			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2000|unique:fotos,url,required'
 		]);
         $file = $request->file('file');
 

@@ -39,33 +39,34 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <table id="example" class="table table-striped table-bordered table-hover display" style="width:100%">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Alamat</th>
-              <th>Tgl Dibuat</th>
-              <th>-</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($post as $p)
-            <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{$p->nama}}</td>
-              <td>{{$p->alamat}}</td>
-              <td>{{$p->created_at}}</td>
-              <td>
-                <a href="{{ route('post') }}/{{$p->id}}">
-                  <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> <b>D E T A I L</b> </button>
-                </a>
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-
+        <div class="table-responsive">
+          <table id="example" class="table table-striped table-bordered table-hover display" style="width:100%">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Tgl Dibuat</th>
+                <th>-</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($post as $p)
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{$p->nama}}</td>
+                <td>{{$p->alamat}}</td>
+                <td>{{$p->created_at}}</td>
+                <td>
+                  <a href="{{ route('post') }}/{{$p->id}}">
+                    <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> <b>D E T A I L</b> </button>
+                  </a>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

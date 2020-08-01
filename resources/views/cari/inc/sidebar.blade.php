@@ -28,25 +28,25 @@
                             @php echo base64_encode("-0.928748") @endphp/
                             @php echo base64_encode("100.428233") @endphp/
                             @php echo base64_encode("pasar baru") @endphp'>
-                        Kos pasar baru
+                        lokasi pasar baru
                     </a>
                     <a class="badge badge-light" href='{{ route("cari") }}/
                             @php echo base64_encode("-0.915512") @endphp/
                             @php echo base64_encode("100.457822") @endphp/
                             @php echo base64_encode("kampus unand limau manis") @endphp'>
-                        Kos unand limau manis
+                        lokasi unand limau manis
                     </a>
                     <a class="badge badge-light" href='{{ route("cari") }}/
                             @php echo base64_encode("-0.897338") @endphp/
                             @php echo base64_encode("100.350741") @endphp/
                             @php echo base64_encode("kampus UNP air tawar") @endphp'>
-                        Kos unp air tawar
+                        lokasi unp air tawar
                     </a>
                     <a class="badge badge-light" href='{{ route("cari") }}/
                             @php echo base64_encode("-0.940535") @endphp/
                             @php echo base64_encode("100.366351") @endphp/
                             @php echo base64_encode("kampus FK Unand Jati") @endphp'>
-                        Kos FK Unand jati
+                        lokasi FK Unand jati
                     </a>
                 </ul>
 

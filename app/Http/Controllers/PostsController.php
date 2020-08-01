@@ -60,7 +60,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover',
+			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2000|unique:posts,cover',
             'nama' => 'required|not_regex:/`/i',
             'lat' => 'numeric|nullable',
             'lng' => 'numeric|nullable',
@@ -275,7 +275,7 @@ class PostsController extends Controller
         }
         
         $this->validate($request, [
-			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000|unique:posts,cover,required'
+			'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2000|unique:posts,cover,required'
 		]);
         $file = $request->file('file');
         $nama2 = preg_replace('/[^A-Za-z0-9\-]/', '', $request->nama);

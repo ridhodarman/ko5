@@ -59,6 +59,8 @@ class PencarianController extends Controller
                     ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->groupBy('posts.id', 'hargas.post_id')
+                    ->whereNotNull('posts.lat')
+                    ->whereNotNull('posts.lng')
                     ->orderBy('jarak')
                     ->paginate(12);
 
@@ -144,7 +146,6 @@ class PencarianController extends Controller
             $filter= $filter."<span class='badge badge-pill badge-secondary'>Urutkan lokasi dari yang paling dekat ".$kampus->nama."</span> ";
             
             $post = $post->addSelect(DB::raw("
-                            CONCAT_WS(' Kilometer perkiraan jarak dari pusat kampus ',
                                 ROUND(
                                     6371 * acos( 
                                         cos( radians( $kampus->lat ) ) 
@@ -153,9 +154,10 @@ class PencarianController extends Controller
                                         + sin( radians( $kampus->lat ) ) 
                                         * sin( radians( posts.lat ) )
                                     ) 
-                                , 2) 
-                            , '$kampus->nama') AS jarak
-                        "));
+                                , 2) AS jarak
+                        "))
+                        ->whereNotNull('posts.lat')
+                        ->whereNotNull('posts.lng');
         }
         else {
             if ($request->urutan=="harga_rendah"){

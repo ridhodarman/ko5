@@ -181,7 +181,8 @@
                 <script type="text/javascript">
                     var mapOptions = {
                         center: [l, b],
-                        zoom: 16
+                        zoom: 16,
+                        dragging: !L.Browser.mobile
                     }
 
                     var peta = new L.map('peta', mapOptions);

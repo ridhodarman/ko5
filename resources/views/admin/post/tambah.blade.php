@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <link rel="stylesheet"
                                 href="https://d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.css" />
                             <script src="https://d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.js"></script>
@@ -139,8 +139,19 @@
                                 #map {
                                     height: 50vh;
                                 }
+                                #locate-position{
+                                    position:absolute;
+                                    top:140px;
+                                    left:25px;
+                                    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                }
                             </style>
                             <div id="map"></div>
+                            <button type="button" id="locate-position" class="btn btn-inverse-warning btn-icon" title="lokasi saya">
+                                <i class="ti-location-pin"></i>
+                            </button>
 
                             <script type="text/javascript">
 
@@ -234,9 +245,32 @@
                                     myMarker.setLatLng(newLatLng); 
                                     map.panTo(new L.LatLng(lat, lng));
                                 }
+
+                                //menampilkan lokasi sekarang
+                                $('#locate-position').on('click', function(){
+                                    map.locate({setView: true, maxZoom: 15});
+                                });
+                                function onLocationFound(e) {
+                                    // var radius = e.accuracy / 2;
+                                    // L.marker(e.latlng).addTo(map)
+                                        // .on('click', function(){
+                                        // confirm("are you sure?");
+                                        // });
+                                        //.bindPopup("You are within " + radius + " meters from this point").openPopup();
+                                    //L.circle(e.latlng, radius).addTo(map);
+                                    myMarker.setLatLng(e.latlng); 
+                                    map.panTo(e.latlng);
+                                }
+
+                                map.on('locationfound', onLocationFound);
+
+                                function onLocationError(e) {
+                                    alert(e.message);
+                                }
+                                map.on('locationerror', onLocationError);
                             </script>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="btn-group-vertical" role="group" aria-label="Basic example">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-outline-secondary dropdown-toggle"
