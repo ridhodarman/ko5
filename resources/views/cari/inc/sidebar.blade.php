@@ -134,14 +134,32 @@
                         <div class="custom-control-label">Paling dekat dengan kampus <font style="color: darkgray;">
                                 (pilih kampus)</font>
                         </div>
-                        <select class="form-control" id="pilih_kampus" name="kampus">
-                            @foreach ($kampus as $k)
-                            <option value="{{$k->id}}">{{$k->nama}}</option>
-                            @endforeach
-                        </select>
+                            <!-- Latest compiled and minified CSS -->
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+                        <!-- Latest compiled and minified JavaScript -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+                        <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+                        
+                        <!-- <select class="selectpicker form-control" data-style="btn-white btn-lg" data-width="100%"
+                                data-live-search="true" id="pilih_kampus" name="kampus"> -->
+                        
+                        <div id="pilih_kampus">
+                            <select class="selectpicker" data-live-search="true" name="kampus">
+                                @foreach ($kampus as $k)
+                                <option value="{{$k->id}}">{{$k->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </label>
 
                     <script>
+                        $(function() {
+                            $('.selectpicker').selectpicker();
+                        });
+
                         $("#pilih_kampus").hide();
                         $("[name='urutan']").click(function () {
                             $("#pilih_kampus").hide();

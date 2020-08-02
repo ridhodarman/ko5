@@ -37,11 +37,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <style>
-                        .bundar{
-                            border-radius: 25px;
-                        }
-                    </style>
                     <table id="example" class="table table-striped table-bordered table-hover display"
                         style="width:100%">
                         <thead>

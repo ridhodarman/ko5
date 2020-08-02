@@ -51,13 +51,13 @@
                                 <td>:</td>
                                 <td>
                                     @if ($user->role == 99)
-                                        <span class="badge badge-danger ">admin</span>
+                                        <span class="badge badge-danger bundar">admin</span>
                                     @elseif ($user->role == 1)
-                                        <span class="badge badge-primary ">VIP user</span>
+                                        <span class="badge badge-primary bundar">VIP user</span>
                                     @elseif ($user->role == 2)
-                                        <span class="badge badge-secondary ">pemilik kos/ kontrakan</span>
+                                        <span class="badge badge-secondary bundar">pemilik kos/ kontrakan</span>
                                     @else
-                                        <span class="badge badge-light ">regular user</span>
+                                        <span class="badge badge-light bundar">regular user</span>
                                     @endif
                                 </td>
                             </tr>
