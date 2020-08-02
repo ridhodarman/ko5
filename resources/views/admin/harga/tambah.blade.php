@@ -45,14 +45,35 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="col-sm-10">
-                                <select name="pembayaran" class="form-control" style="color: black;">
-                                    <option value="tahun">per tahun</option>
-                                    <option value="6 bulan">per 6 bulan</option>
-                                    <option value="bulan">per bulan</option>
-                                    <option value="minggu">per minggu</option>
-                                    <option value="hari">per hari</option>
+                                <select class="form-control" style="color: black;">
+                                    <option value="tahun" onclick="pembayarannya('tahun')">per tahun</option>
+                                    <option value="6 bulan" onclick="pembayarannya('6 bulan')">per 6 bulan</option>
+                                    <option value="bulan" onclick="pembayarannya('bulan')">per bulan</option>
+                                    <option value="minggu" onclick="pembayarannya('minggu')">per minggu</option>
+                                    <option value="hari" onclick="pembayarannya('hari')">per hari</option>
+                                    <option onclick="pembayarannya('null')">dan lain-lain</option>
                                 </select>
+                                <input type="text" class="form-control @error('pembayaran') is-invalid @enderror" 
+                                    name="pembayaran" placeholder="misal: 3 bulan" id="pembayaran">
+                                <script>
+                                    $( "#pembayaran" ).hide();
+                                    function pembayarannya(value) {
+                                        if (value == 'null'){
+                                            document.getElementById("pembayaran").value="";
+                                            $( "#pembayaran" ).show();
+                                        }
+                                        else {
+                                            document.getElementById("pembayaran").value=value;
+                                            $( "#pembayaran" ).hide();
+                                        }
+                                    }
+                                </script>
                             </div>
+                            @error('pembayaran')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="col-sm-4">
                             <input type="text" class="form-control @error('keterangan') is-invalid @enderror" placeholder="keterangan *opsional (misal: bisa nego)" name="keterangan">
