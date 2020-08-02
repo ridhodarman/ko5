@@ -53,25 +53,49 @@
                             <link rel="stylesheet"
                                 href="https://d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.css" />
                             <script src="https://d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.js"></script>
+                            <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+                            <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+                            <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
                             <style type="text/css">
                                 #map {
                                     height: 50vh;
                                 }
+                                #locate-position{
+                                    position:absolute;
+                                    top:140px;
+                                    left:25px;
+                                    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                                    width: 30px;
+                                    height: 30px;
+                                    color: black;
+                                }
+                                #pencarian{
+                                    position:absolute;
+                                    top:86px;
+                                    left:60px;
+                                    z-index:99999;
+                                }
                             </style>
                             <div id="map"></div>
+                            <div id="pencarian"></div>
+                            <button type="button" id="locate-position" class="btn btn-inverse-light btn-icon" title="lokasi saya">
+                                <i class="ti-location-pin"></i>
+                            </button>
 
                             <script type="text/javascript">
 
                                 var options = {
                                     center: [l, b],
-                                    zoom: 16
+                                    zoom: 15
                                 }
 
                                 var map = new L.map('map', options);
 
-                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                                    {
-                                        attribution: 'OSM',
+                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', 
+                                    { 
+                                        attribution: 'OSM', 
                                         maxZoom: 19,
                                         id: 'mapbox.streets',
                                         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
@@ -89,11 +113,27 @@
                                 arcgis = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                                     {
                                         attribution: 'OSM',
+                                        id: 'mapbox.streets',
+                                        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+                                    }
+                                ),
+                                group = L.LayerGroup([
+                                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                                    {
+                                        attribution: 'OSM',
                                         maxZoom: 19,
                                         id: 'mapbox.streets',
                                         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
                                     }
-                                );
+                                ), 
+                                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.{ext}', {
+                                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                                    subdomains: 'abcd',
+                                    minZoom: 0,
+                                    maxZoom: 19,
+                                    ext: 'png'
+                                })
+                                    ]);
 
                                 var baseMaps = {
                                     "ArcGIS": arcgis,
@@ -105,15 +145,6 @@
                                 };
 
                                 L.control.layers(baseMaps,overlays, {position: 'bottomleft'}).addTo(map);
-
-                                // map.on('click', 
-                                // 	function(e){
-                                // 		//var coord = e.latlng.toString().split(',');
-                                // 		//var lat = coord[0].split('(');
-                                // 		//var lng = coord[1].split(')');
-                                // 		//alert("You clicked the map at LAT: " + lat[1] + " and LONG: " + lng[0]);
-                                // 		L.marker(e.latlng).addTo(map);
-                                // 	});
 
                                 var myMarker = L.marker([l, b], { title: "MyPoint", alt: "The Big I", draggable: true })
                                     .addTo(map)
@@ -128,7 +159,65 @@
                                         document.getElementById("lat").value = lat[1];
                                         document.getElementById("lng").value = lng[0];
                                     });
+                                
+                                function zoompeta(lat, lng){
+                                    var newLatLng = new L.LatLng(lat, lng);
+                                    myMarker.setLatLng(newLatLng); 
+                                    map.panTo(new L.LatLng(lat, lng));
+                                }
 
+                                //menampilkan lokasi sekarang
+                                $('#locate-position').on('click', function(){
+                                    map.locate({setView: true, maxZoom: 15});
+                                });
+                                function onLocationFound(e) {
+                                    myMarker.setLatLng(e.latlng); 
+                                    map.panTo(e.latlng);
+                                }
+
+                                map.on('locationfound', onLocationFound);
+
+                                function onLocationError(e) {
+                                    alert(e.message);
+                                }
+                                map.on('locationerror', onLocationError);
+
+                                // untuk pencarian lokasi
+                                var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+                                var results = new L.LayerGroup().addTo(map);
+
+                                searchControl.on('results', function(data){
+                                    results.clearLayers();
+                                    for (var i = data.results.length - 1; i >= 0; i--) {
+                                        //results.addLayer(L.marker(data.results[i].latlng));
+                                        let koordinat = data.results[i].latlng;
+                                        let str = `${koordinat}`;
+                                        let str2 = str.replace("LatLng(", "");
+                                        let str3 = str2.replace(")", "");
+                                        let hasil = str3.split(",");
+                                        //alert(hasil)
+                                        var carilokasi = new L.LatLng(hasil[0], hasil[1]);
+                                        myMarker.setLatLng(carilokasi); 
+                                        map.panTo(carilokasi);
+                                    }
+                                });
+
+                                setTimeout(function(){$('.pointer').fadeOut('slow');},3400);
+
+                                // untuk memindahkan marker dengan klik peta
+                                function onMapClick(e) {
+                                    myMarker.setLatLng(e.latlng);
+                                    map.panTo(e.latlng);
+                                    let koordinat = e.latlng;
+                                    let str = `${koordinat}`;
+                                    let str2 = str.replace("LatLng(", "");
+                                    let str3 = str2.replace(")", "");
+                                    let hasil = str3.split(",");
+                                    document.getElementById("lat").value = hasil[0];
+                                    document.getElementById("lng").value = hasil[1];
+                                }
+                                map.on('click', onMapClick);
                             </script>
                         </div>
                         <div class="col-md-3">
