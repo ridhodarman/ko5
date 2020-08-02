@@ -122,4 +122,12 @@ Route::middleware(['cekstatus'])->group(function () {
     Route::get('/kamar/tambah/{post}', 'KamarsController@create');
     Route::post('/kamar', 'KamarsController@store');
     Route::delete('/kamar/{kamar}', 'KamarsController@destroy');
+
+    Route::get('/user', 'UsersController@index')->name('user');
+    Route::get('/user/tambah', 'UsersController@create');
+    Route::post('/user', 'UsersController@store');
+    Route::get('/user/{user}', 'UsersController@show');
+    Route::get('/user/{user}/edit', 'UsersController@edit');
+    Route::patch('/user/{user}/edit', 'UsersController@update');
+    Route::delete('/user/{user}', 'UsersController@destroy');
 });

@@ -36,32 +36,34 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <table id="example" class="table table-striped table-bordered table-hover display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Status</th>
-                            <th>-</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($status as $s)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{$s->nama}}</td>
-                            <td>
-                                <a href="status/{{$s->id}}">
-                                    <button class="btn btn-primary btn-xs">
-                                        <i class="fa fa-edit"></i>
-                                        <b>D E T A I L</b>
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped table-bordered table-hover display"
+                        style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Status</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($status as $s)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{$s->nama}}</td>
+                                <td>
+                                    <a href="status/{{$s->id}}">
+                                        <button class="btn btn-primary btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                            <b>D E T A I L</b>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

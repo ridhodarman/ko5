@@ -14,19 +14,22 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Welcome <b>@php echo Auth::user()->name @endphp</b> !
                     <br/>
+                    
+                    <img src="{{ route('foto') }}/dll/profile.png" width="100px">
                     <a href="#">
-                        <button class="btn btn-block btn-primary mt-5"><i class="fa fa-search"></i> Ubah profil</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm">Edit Profil</button>
                     </a>
-
+                    <br/>
                     @if (Auth::check() &&Auth::user()->role == 99 ) 
                     <a href="{{ route('post') }}">
-                        <button class="btn btn-block btn-primary mt-5"><i class="fa fa-search"></i> Pergi ke halaman admin</button>
+                        <button class="btn btn-success mt-2 mb-2"><i class="fa fa-search"></i> Pergi ke halaman admin</button>
                     </a>
+                    <br/>
                     @endif
                     <a href="{{ route('cari') }}">
-                        <button class="btn btn-block btn-primary mt-5"><i class="fa fa-search"></i> Pergi ke halaman user</button>
+                        <button class="btn btn-primary mt-2"><i class="fa fa-search"></i> Cari Kos / kontrakan</button>
                     </a>
                 </div>
             </div>
