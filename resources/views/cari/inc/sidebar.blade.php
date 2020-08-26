@@ -236,8 +236,8 @@
                 </div><!-- card-body.// -->
             </div>
         </article> <!-- filter-group .// -->
-        <div style="width: 120%; background-color: white; margin-left: -5px;">&nbsp;</div>
+        <!-- <div style="width: 100%; background-color: white; margin-left: -5px;">&nbsp;</div> -->
         @csrf
-        <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-search"></i> Cari</button>
-    </form>
 </div> <!-- card.// -->
+<button type="submit" class="btn btn-block btn-primary mt-2"><i class="fa fa-search"></i> Cari</button>
+</form>
