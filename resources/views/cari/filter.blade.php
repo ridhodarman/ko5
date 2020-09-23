@@ -114,11 +114,11 @@
                     </div> <!-- row end.// -->
 
 
-                    <!-- <nav class="mt-4" aria-label="Page navigation sample">
+                    <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">
-                            $post->links() 
+                            {{ $post->links()  }}
                         </ul>
-                    </nav> -->
+                    </nav>
 
                     <!-- <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">

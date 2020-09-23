@@ -113,12 +113,8 @@
                         @endforeach
                     </div> <!-- row end.// -->
 
-
-                    <nav class="mt-4" aria-label="Page navigation sample">
-                        <ul class="pagination">
-                            {{ $post->links() }}
-                        </ul>
-                    </nav>
+                    <br/>
+                    {{ $post->withQueryString()->links() }}
 
                     <!-- <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">

@@ -63,6 +63,7 @@ class PencarianController extends Controller
                     ->whereNotNull('posts.lng')
                     ->orderBy('jarak')
                     ->paginate(12);
+                    //->get();
 
         $teks2 = base64_decode($teks);
         $filter = "<span class='badge badge-pill badge-primary'>sekitar ".$teks2."</span>";
@@ -80,9 +81,9 @@ class PencarianController extends Controller
         $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->whereRaw("LOWER('posts.nama') LIKE '%". $nama."%'")
-                    ->orderBy('posts.created_at')
+                    ->orderBy('posts.nama')
                     ->paginate(12);
-
+        //return $post;
         $filter= "<span class='badge badge-pill badge-light'>Cari nama: <b>".$nama."</b></span> ";
         return view ('cari.index',['post' => $post, 
                                     'nama_kos' => $request->nama_kos,
@@ -171,8 +172,8 @@ class PencarianController extends Controller
         }
         
 
-        // $post = $post->paginate(12);
-        $post = $post->get();
+        $post = $post->paginate(12);
+        //$post = $post->get();
         // foreach ($post as $p){
         //     if($p->id==null){
         //         $post = [];
@@ -196,7 +197,7 @@ class PencarianController extends Controller
         // $post = json_decode(json_encode($array), FALSE);
 
         //return $post;
-        return view ('cari.filter',[
+        return view ('cari.index',[
             'post' => $post,
             'filter' => $filter,
             'lokasi' => $lokasi            

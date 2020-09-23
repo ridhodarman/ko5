@@ -24,8 +24,8 @@
     <link href="{{ URL::asset('aset/fonts/fontawesome/css/all.min.css') }}" type="text/css" rel="stylesheet">
 
     <!-- plugin: fancybox  -->
-    <script src="{{ URL::asset('aset/http://bootstrap-ecommerce.com/') }}" type="text/javascript"></script>
-    <link href="{{ URL::asset('aset/http://bootstrap-ecommerce.com/') }}" type="text/css" rel="stylesheet">
+    <!-- <script src="{{ URL::asset('aset/http://bootstrap-ecommerce.com/') }}" type="text/javascript"></script>
+    <link href="{{ URL::asset('aset/http://bootstrap-ecommerce.com/') }}" type="text/css" rel="stylesheet"> -->
 
     <!-- custom style -->
     <link href="{{ URL::asset('aset/css/ui.css') }}" rel="stylesheet" type="text/css" />
@@ -83,7 +83,7 @@
                         </a> <!-- brand-wrap.// -->
                     </div>
                     <div class="col-lg-6 col-sm-12">
-                        <form action='{{ route("cari") }}/nama' class="search" method="POST">
+                        <form action='{{ route("cari") }}/nama' class="search" method="GET">
                             @csrf
                             <div class="input-group w-100">
                                 <input type="text" class="form-control" placeholder="Cari nama kos / kontrakan.." name="nama_kos" 

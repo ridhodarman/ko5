@@ -53,7 +53,8 @@
             </div> <!-- card-body.// -->
         </div>
     </article> <!-- filter-group  .// -->
-    <form action='{{ route("cari") }}/filter' method="POST">
+    <form action='{{ route("cari") }}/filter' method="GET">
+        @csrf
         <article class="filter-group">
             <header class="card-header">
                 <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" class="">
@@ -237,8 +238,8 @@
             </div>
         </article> <!-- filter-group .// -->
         <!-- <div style="width: 100%; background-color: white; margin-left: -15px; height: 2px;">&nbsp;</div> -->
-        @csrf
         <button type="submit" class="btn btn-block btn-primary mt-2"><i class="fa fa-search"></i> Cari</button>
 </div> <!-- card.// -->
 
 </form>
+<br/>
