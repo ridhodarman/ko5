@@ -177,7 +177,8 @@
                                     <h5>Foto Cover :</h5>
                                     @if ($p->cover)
                                     <a target="_blank" href="{{ URL::asset('foto/'.$p->cover) }}">
-                                        <img src="{{ URL::asset('foto/'.$p->cover) }}">
+                                        <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                            data-original="{{ URL::asset('foto/'.$p->cover) }}" class="lazy img-fluid">
                                     </a>
                                     <form action="{{ route('post') }}/{{$p->id}}/cover" method="POST" class="d-inline">
                                         @method('delete')
@@ -251,9 +252,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanf{{ $f-> id}}=true;
+                                    let peringatanf{{$f->id}}=true;
                                     $("#hapus-fas-{{$f->id}}").on('click', function (e) {
-                                        if (peringatanf{ { $f -> id } }== true){
+                                        if (peringatanf{{$f->id }}== true){
                                         swal({
                                             text: 'Yakin hapus "{{$f->nama}}" dari daftar fasilitas ?',
                                             icon: "warning",
@@ -262,7 +263,7 @@
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    peringatanf{ { $f -> id } } = false;
+                                                    peringatanf{{$f->id}} = false;
                                                     $("#hapus-fas-{{$f->id}}").removeAttr("type").attr("type", "submit");
                                                     $("#hapus-fas-{{$f->id}}").trigger("click");
                                                 }
@@ -303,9 +304,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatanh{{ $h-> id}}=true;
+                                    let peringatanh{{$h->id}}=true;
                                     $("#hapus-h-{{$h->id}}").on('click', function (e) {
-                                        if (peringatanh{ { $h -> id } }== true){
+                                        if (peringatanh{{$h->id}}== true){
                                         swal({
                                             text: 'Yakin hapus "{{ $h->harga }} / {{$h->pembayaran}}" dari daftar harga ?',
                                             icon: "warning",
@@ -314,7 +315,7 @@
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    peringatanh{ { $h -> id } } = false;
+                                                    peringatanh{{$h->id}} = false;
                                                     $("#hapus-h-{{$h->id}}").removeAttr("type").attr("type", "submit");
                                                     $("#hapus-h-{{$h->id}}").trigger("click");
                                                 }
@@ -345,8 +346,10 @@
                         @foreach ($foto as $g)
                         <tr>
                             <td>
-                                <a target="_blank" href="{{ URL::asset('foto/'.$g->url) }}"> <img
-                                        src="{{ URL::asset('foto/'.$g->url) }}"> </a>
+                                <a target="_blank" href="{{ URL::asset('foto/'.$g->url) }}"> 
+                                    <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                            data-original="{{ URL::asset('foto/'.$g->url) }}" class="lazy img-fluid">
+                                </a>
                             </td>
                             <td>
                                 <form action="{{ route('foto') }}/{{$g->id}}" method="POST" class="d-inline">
@@ -357,9 +360,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatang{{ $g-> id}}=true;
+                                    let peringatang{{$g->id}}=true;
                                     $("#hapus-p-{{$g->id}}").on('click', function (e) {
-                                        if (peringatang{ { $g -> id } }== true){
+                                        if (peringatang{{$g->id}} == true){
                                         swal({
                                             text: "Yakin hapus foto ini ?",
                                             icon: "warning",
@@ -368,7 +371,7 @@
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    peringatang{ { $g -> id } } = false;
+                                                    peringatang{{$g->id}} = false;
                                                     $("#hapus-p-{{$g->id}}").removeAttr("type").attr("type", "submit");
                                                     $("#hapus-p-{{$g->id}}").trigger("click");
                                                 }
@@ -411,9 +414,9 @@
                                     </button>
                                 </form>
                                 <script>
-                                    let peringatank{{ $k-> id}}=true;
+                                    let peringatank{{$k->id}}=true;
                                     $("#hapus-k-{{$k->id}}").on('click', function (e) {
-                                        if (peringatank{ { $k -> id } }== true){
+                                        if (peringatank{{$k->id}} == true){
                                         swal({
                                             text: "Yakin hapus kamar {{$k->panjang}} x {{$k->lebar}} ?",
                                             icon: "warning",
@@ -422,7 +425,7 @@
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    peringatank{ { $k -> id } } = false;
+                                                    peringatank{{$k->id}} = false;
                                                     $("#hapus-k-{{$k->id}}").removeAttr("type").attr("type", "submit");
                                                     $("#hapus-k-{{$k->id}}").trigger("click");
                                                 }

@@ -250,6 +250,18 @@
     <!-- Custom js for this page-->
     <script src="{{ URL::asset('js/dashboard.js') }}"></script>
     <!-- End custom js for this page-->
+
+    <script src="{{ URL::asset('aset/lazyload/jquery.lazyload.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+            $("img.lazy").lazyload({effect : "fadeIn"});// untuk dipasang di <img src='xxxx'>
+            $("div.lazy").lazyload({effect : "fadeIn"});// untuk dipasang sebagai background / div
+        });
+
+        $('.modal').on("shown.bs.modal", function () {
+            $("img.lazy").lazyload();
+        });
+    </script>
 </body>
 <script src="{{ URL::asset('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.fancybox.min.js') }}"></script>

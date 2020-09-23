@@ -18,9 +18,12 @@ class PencarianController extends Controller
 {
     public function index()
     {
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis')
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis', 'pembayaran')
+                    ->addSelect(DB::raw("min(harga) AS harga"))
+                    ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                     ->orderByDesc('posts.created_at')
+                    ->groupBy('posts.id', 'hargas.post_id')
                     ->paginate(12);
                     //->get();
         return view ('cari.index',['post' => $post]);
@@ -78,10 +81,13 @@ class PencarianController extends Controller
     {
         //return $request;
         $nama = strtolower($request->nama_kos);
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan')
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS keterangan', 'pembayaran')
+                    ->addSelect(DB::raw("min(harga) AS harga"))
+                    ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')
                     ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
-                    ->whereRaw("LOWER('posts.nama') LIKE '%". $nama."%'")
+                    ->whereRaw('lower(posts.nama) like (?)',["%{$nama}%"])
                     ->orderBy('posts.nama')
+                    ->groupBy('posts.id', 'hargas.post_id')
                     ->paginate(12);
         //return $post;
         $filter= "<span class='badge badge-pill badge-light'>Cari nama: <b>".$nama."</b></span> ";
@@ -94,7 +100,7 @@ class PencarianController extends Controller
 
     public function cari(Request $request){
         //return $request;
-        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis')
+        $post = Post::select('posts.id', 'posts.nama', 'posts.cover', 'jenis_posts.nama AS jenis', 'pembayaran')
                 ->addSelect(DB::raw("min(harga) as harga"))
                 ->leftJoin('jenis_posts', 'posts.jenis_posts', '=', 'jenis_posts.id')
                 ->leftJoin('hargas', 'posts.id', '=', 'hargas.post_id')

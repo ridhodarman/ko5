@@ -40,7 +40,7 @@ class KamarsController extends Controller
         $this->validate($request, [ 
                             'panjang' => 'required|numeric',
                             'lebar' => 'required|numeric',
-                            'jumlah' => 'numeric'
+                            'jumlah' => 'numeric|nullable'
                         ]);
         Kamar::create($request->all());
         $pesan = "Kamar <b>".$request->panjang." x ".$request->lebar.'</b> berhasil ditambahkan';
