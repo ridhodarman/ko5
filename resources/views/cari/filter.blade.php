@@ -23,7 +23,7 @@
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">
-                                <span id="jumlah"> {{ $post->total() }} </span>
+                                <span id="jumlah"> {{ count($post) }} </span>
                                 <span style="color: darkgray;"> Items found </span>
                                 @if(isset($filter))
                                 |Filter: 
@@ -114,11 +114,11 @@
                     </div> <!-- row end.// -->
 
 
-                    <nav class="mt-4" aria-label="Page navigation sample">
+                    <!-- <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">
-                            {{ $post->links() }}
+                            $post->links() 
                         </ul>
-                    </nav>
+                    </nav> -->
 
                     <!-- <nav class="mt-4" aria-label="Page navigation sample">
                         <ul class="pagination">

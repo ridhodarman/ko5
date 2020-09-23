@@ -13,6 +13,13 @@
     </ol>
 </nav>
 <h2 class="title-page">{{ $p->nama }}</h2>
+<script src="{{ URL::asset('aset/lazyload/jquery.lazyload.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $("img.lazy").lazyload({effect : "fadeIn"});// untuk dipasang di <img src='xxxx'>
+        $("div.lazy").lazyload({effect : "fadeIn"});// untuk dipasang sebagai background / div
+    });
+</script>
 @endsection
 
 @section('isi')

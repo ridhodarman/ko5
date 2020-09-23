@@ -171,7 +171,8 @@ class PencarianController extends Controller
         }
         
 
-        $post = $post->paginate(12);
+        // $post = $post->paginate(12);
+        $post = $post->get();
         // foreach ($post as $p){
         //     if($p->id==null){
         //         $post = [];
@@ -195,7 +196,7 @@ class PencarianController extends Controller
         // $post = json_decode(json_encode($array), FALSE);
 
         //return $post;
-        return view ('cari.index',[
+        return view ('cari.filter',[
             'post' => $post,
             'filter' => $filter,
             'lokasi' => $lokasi            
