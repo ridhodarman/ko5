@@ -44,6 +44,12 @@ $('.slider').each(function() {
       });
       currentIndex = newIndex;
     });
+
+    let muatan = true;
+      if (muatan) {
+          $("img.lazy").lazyload();
+          muatan = false;
+      }
   }
   
   function advance() {

@@ -44,11 +44,13 @@
                     <div class="slide_viewer">
                         <div class="slide_group">
                             <div class="slide">
-                                <img src="{{ URL::asset($gambar) }}" class="gambar">
+                                <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                            data-original="{{ URL::asset($gambar) }}" class="lazy img-fluid gambar">
                             </div>
                             @foreach ($foto as $g)
                             <div class="slide">
-                                <img src="{{ URL::asset('foto/'.$g->url) }}" class="gambar">
+                                <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                            data-original="{{ URL::asset('foto/'.$g->url) }}" class="lazy img-fluid gambar">
                             </div>
                             @endforeach
                         </div>

@@ -66,6 +66,18 @@
 // jquery end
     </script>
 
+    <script src="{{ URL::asset('aset/lazyload/jquery.lazyload.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+            $("img.lazy").lazyload({effect : "fadeIn"});// untuk dipasang di <img src='xxxx'>
+            $("div.lazy").lazyload({effect : "fadeIn"});// untuk dipasang sebagai background / div
+        });
+
+        $('.modal').on("shown.bs.modal", function () {
+            $("img.lazy").lazyload();
+        });
+    </script>
+
 </head>
 
 <body>
@@ -162,8 +174,8 @@
     </footer>
     <!-- ========================= FOOTER END // ========================= -->
 
-
-
+    <!-- <script src="{{ URL::asset('aset/lazyload/jquery.min.js') }}" type="text/javascript"></script> -->
+    
 </body>
 
 <!-- Mirrored from bootstrap-ecommerce.com/bootstrap-ecommerce-html/page-listing-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Jul 2020 15:11:23 GMT -->

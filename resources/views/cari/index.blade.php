@@ -53,7 +53,10 @@
                                             $gambar = "null.png";
                                         }
                                     @endphp
-                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank"><img src="{{ URL::asset($gambar) }}"></a>
+                                    <a href="{{ route('info') }}/{{$p->id}}" target="_blank">
+                                        <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                            data-original="{{ URL::asset($gambar) }}" class="lazy img-fluid">
+                                    </a>
                                     <a class="btn-overlay" href="javascript:;" data-toggle="modal" data-target="#exampleModal{{$p->id}}"><i class="fa fa-search-plus"></i> Quick View</a>
                                     <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,7 +71,9 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <a href="{{ route('info') }}/{{$p->id}}" target="_blank">
-                                                        <img src="{{ URL::asset($gambar) }}">
+                                                        <img src="{{ URL::asset('aset/lazyload/images/blank.jpg') }}"
+                                                            data-original="{{ URL::asset($gambar) }}" class="lazy img-fluid">
+                                                        <!-- <img src="{{ URL::asset($gambar) }}"> -->
                                                     </a>
                                                 </div>
                                                 <div class="modal-footer">
